@@ -29,7 +29,7 @@ img{max-width:100%}
   --accent:#EE5A0A; --accent-ink:#B4400A; --accent-soft:#FFE6D6;
   --ok:#1B7F52; --ok-soft:#D8F0E3; --no:#B0331D; --no-soft:#FBE2DC;
   --stage:#D7E8F0; --stage-ground:#93B1C0;
-  --dog:#C8864A; --dog-dark:#8C5828; --treat:#6E3413; --skin:#EBBB93; --sleeve:#33627D; --pants:#2C4654; --mat:#86B49A; --toy:#2C7DA6; --dog2:#7A8790; --dog2-dark:#4F5B63;
+  --dog:#DB9E4C; --dog-dark:#AD7330; --dog-light:#F1CF92; --treat:#6E3413; --skin:#EBBB93; --sleeve:#33627D; --pants:#2C4654; --mat:#86B49A; --toy:#2C7DA6; --dog2:#7A8790; --dog2-dark:#4F5B63; --dog2-light:#A9B4BB;
   --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
   --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
@@ -39,7 +39,7 @@ img{max-width:100%}
   --accent:#FF7A2E; --accent-ink:#FF9C61; --accent-soft:#3A2113;
   --ok:#4CC78E; --ok-soft:#133428; --no:#FF8B74; --no-soft:#3A1C17;
   --stage:#192B36; --stage-ground:#3D5A69;
-  --dog:#D59A5E; --dog-dark:#9F6838; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC; --dog2:#9DAAB3; --dog2-dark:#6B7881;
+  --dog:#E2A957; --dog-dark:#B17A38; --dog-light:#EFCB8C; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC; --dog2:#9DAAB3; --dog2-dark:#6B7881; --dog2-light:#C3CDD3;
   color-scheme:dark;
 }}
 :root[data-theme="dark"]{
@@ -47,7 +47,7 @@ img{max-width:100%}
   --accent:#FF7A2E; --accent-ink:#FF9C61; --accent-soft:#3A2113;
   --ok:#4CC78E; --ok-soft:#133428; --no:#FF8B74; --no-soft:#3A1C17;
   --stage:#192B36; --stage-ground:#3D5A69;
-  --dog:#D59A5E; --dog-dark:#9F6838; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC; --dog2:#9DAAB3; --dog2-dark:#6B7881;
+  --dog:#E2A957; --dog-dark:#B17A38; --dog-light:#EFCB8C; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC; --dog2:#9DAAB3; --dog2-dark:#6B7881; --dog2-light:#C3CDD3;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -153,7 +153,7 @@ ul.dont li::before{background:var(--no);border-radius:1px;transform:rotate(45deg
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .chip svg{width:14px;height:14px;color:var(--accent)}
-.dog2 .dog-s{stroke:var(--dog2)}.dog2 .dog-f{fill:var(--dog2)}.dog2 .dog-far{stroke:var(--dog2-dark)}.dog2 .dog-ear{fill:var(--dog2-dark)}
+.dog2 .dog-s{stroke:var(--dog2)}.dog2 .dog-f{fill:var(--dog2)}.dog2 .dog-far{stroke:var(--dog2-dark)}.dog2 .dog-ear{fill:var(--dog2-dark)}.dog2 .dog-light{fill:var(--dog2-light)}.dog2 .dog-light-s{stroke:var(--dog2-light)}
 .two-art{background:var(--stage);border-radius:14px;overflow:hidden}
 .two-art svg{display:block;width:100%;height:auto}
 .two-art figcaption{font-size:13px;color:var(--muted);padding:0 14px 12px}
@@ -314,6 +314,8 @@ ol.howto li::before{content:counter(h);width:26px;height:26px;border-radius:8px;
 .dog-s{stroke:var(--dog);stroke-linecap:round;stroke-linejoin:round;fill:none}
 .dog-f{fill:var(--dog)}
 .dog-ear{fill:var(--dog-dark)}
+.dog-light{fill:var(--dog-light)}
+.dog-light-s{stroke:var(--dog-light);stroke-linecap:round;stroke-linejoin:round;fill:none}
 .ink-f{fill:var(--ink)}
 .collar{stroke:var(--accent);stroke-width:5;stroke-linecap:round}
 .toy{fill:var(--toy)}
@@ -1065,15 +1067,17 @@ function Player(host, onStep){
   E.restHand = mk("circle",{r:7.5,"class":"skin"},E.person);
   E.farF = mk("path",{"class":"dog-far"},svg);
   E.farB = mk("path",{"class":"dog-far"},svg);
-  E.tail = mk("path",{"class":"dog-s","stroke-width":8},svg);
+  E.tailF = mk("path",{"class":"dog-light-s","stroke-width":9},svg);
+  E.tail = mk("path",{"class":"dog-s","stroke-width":10},svg);
   E.body = mk("path",{"class":"dog-s","stroke-width":36},svg);
+  E.chest = mk("ellipse",{rx:9,ry:13,"class":"dog-light"},svg);
   E.neck = mk("path",{"class":"dog-s","stroke-width":22},svg);
   E.nearF = mk("path",{"class":"dog-s","stroke-width":12},svg);
   E.nearB = mk("path",{"class":"dog-s","stroke-width":12},svg);
   E.head = mk("g",{},svg);
   mk("circle",{cx:0,cy:0,r:17,"class":"dog-f"},E.head);
   mk("ellipse",{cx:15,cy:5,rx:13.5,ry:8.5,"class":"dog-f"},E.head);
-  mk("path",{d:"M-3 -14 Q-19 -8 -13 13 Q-5 8 -1 -6 Z","class":"dog-ear"},E.head);
+  mk("path",{d:"M-4 -13 Q-21 -8 -18 15 Q-14 25 -6 17 Q-2 5 -1 -7 Z","class":"dog-ear"},E.head);
   mk("circle",{cx:27,cy:3,r:4,"class":"ink-f"},E.head);
   mk("circle",{cx:5,cy:-4,r:2.6,"class":"ink-f"},E.head);
   E.collar = mk("path",{"class":"collar"},svg);
@@ -1149,6 +1153,9 @@ Player.prototype.render = function(s, k, ts){
   E.farF.setAttribute("d", "M"+X(P.S[0]+8)+" "+(P.S[1]+8)+" L"+pt(off(far.Fe))+" L"+pt(off(far.Fp)));
   E.farB.setAttribute("d", "M"+pt(off(P.H))+" L"+pt(off(far.Bk))+" L"+pt(off(far.Bp)));
   E.tail.setAttribute("d", "M"+pt(P.H)+" Q"+pt(P.Tc)+" "+pt(P.T));
+  var fy = function(y){ return Math.min(y, 173); };
+  E.tailF.setAttribute("d", "M"+pt([P.H[0]-6, P.H[1]+8])+" Q"+pt([P.Tc[0]+2, fy(P.Tc[1]+9)])+" "+pt([P.T[0]+3, fy(P.T[1]+8)]));
+  E.chest.setAttribute("cx", X(P.S[0]+7)); E.chest.setAttribute("cy", P.S[1]+11);
   var hx = X(P.Hd[0]), hy = P.Hd[1];
   E.head.setAttribute("transform", "translate("+hx+" "+hy+") scale("+f+" 1) rotate("+s.ht+")");
   /* collar */
@@ -1263,12 +1270,14 @@ function poseIcon(name, extra){
   return '<svg viewBox="-50 30 190 160" aria-hidden="true">' +
     (extra||"") +
     '<path class="dog-far" d="M'+(P.S[0]+8)+' '+(P.S[1]+8)+' L'+s([P.Fe[0]+8,P.Fe[1]])+' L'+s([P.Fp[0]+8,P.Fp[1]])+'"/>' +
-    '<path class="dog-s" stroke-width="8" d="M'+s(P.H)+' Q'+s(P.Tc)+' '+s(P.T)+'"/>' +
+    '<path class="dog-light-s" stroke-width="9" d="M'+(P.H[0]-6)+' '+(P.H[1]+8)+' Q'+(P.Tc[0]+2)+' '+Math.min(P.Tc[1]+9,173)+' '+(P.T[0]+3)+' '+Math.min(P.T[1]+8,173)+'"/>' +
+    '<path class="dog-s" stroke-width="10" d="M'+s(P.H)+' Q'+s(P.Tc)+' '+s(P.T)+'"/>' +
     '<path class="dog-s" stroke-width="36" d="M'+s(P.H)+' L'+s(P.S)+'"/>' +
+    '<ellipse class="dog-light" rx="9" ry="13" cx="'+(P.S[0]+7)+'" cy="'+(P.S[1]+11)+'"/>' +
     '<path class="dog-s" stroke-width="22" d="M'+s(P.S)+' L'+s(nk)+'"/>' +
     '<path class="dog-s" stroke-width="12" d="M'+P.S[0]+' '+(P.S[1]+8)+' L'+s(P.Fe)+' L'+s(P.Fp)+'"/>' +
     '<path class="dog-s" stroke-width="12" d="M'+s(P.H)+' L'+s(P.Bk)+' L'+s(P.Bp)+'"/>' +
-    '<g transform="translate('+P.Hd[0]+' '+P.Hd[1]+') rotate('+P.ht+')"><circle r="17" class="dog-f"/><ellipse cx="15" cy="5" rx="13.5" ry="8.5" class="dog-f"/><path d="M-3 -14 Q-19 -8 -13 13 Q-5 8 -1 -6 Z" class="dog-ear"/><circle cx="27" cy="3" r="4" class="ink-f"/><circle cx="5" cy="-4" r="2.6" class="ink-f"/></g>' +
+    '<g transform="translate('+P.Hd[0]+' '+P.Hd[1]+') rotate('+P.ht+')"><circle r="17" class="dog-f"/><ellipse cx="15" cy="5" rx="13.5" ry="8.5" class="dog-f"/><path d="M-4 -13 Q-21 -8 -18 15 Q-14 25 -6 17 Q-2 5 -1 -7 Z" class="dog-ear"/><circle cx="27" cy="3" r="4" class="ink-f"/><circle cx="5" cy="-4" r="2.6" class="ink-f"/></g>' +
     '</svg>';
 }
 var ROW_POSE = { marker:"alert", name:"up", sit:"look", down:"down", wait:"sit", place:"down", recall:"stand", heel:"stand", leave:"sniff", give:"stand" };
