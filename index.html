@@ -436,7 +436,7 @@ var STAGES = [
    dont:["Отпускать с поводка «на авось». Каждый удачный побег закрепляет привычку убегать.",
          "Звать, когда собака точно не придёт. Так вы учите её не слушать команду.",
          "Наказывать за медленный подход. Собака запомнит: подошла — получила неприятность."],
-   note:"В этом возрасте обычно начинается первая течка. Как её распознать, как гулять и когда стерилизовать — в разделе «Течка и стерилизация» выше.",
+   note:"В этом возрасте обычно начинается первая течка. Как её распознать, как гулять и когда стерилизовать — в разделе «Течка и стерилизация» внизу страницы.",
    check:["Подзыв на корде работает в 9 из 10 случаев","Проходит мимо собак на поводке без рывков","Ежедневно есть занятия на нюх или голову","Пройден уровень 3 программы «Без поводка»"],
    cmds:["recall","heel","wait"] },
  { id:"s6", range:"1–2 года", title:"Взрослая собака", sub:"Свобода и поддержание навыков",
@@ -1116,7 +1116,6 @@ function renderPath(){
   var html = '<div class="view-head"><div class="eyebrow">Путь</div><h1 class="h1">От первого дня дома до взрослой собаки</h1>' +
     '<p class="lead">Шесть этапов. В каждом — что делать, чего избегать, какие команды учить и чек-лист, чтобы понять, что можно двигаться дальше.</p></div>';
   if (!S.birth) html += profileForm("pa-");
-  html += '<div class="sec">' + twoCard() + heatCard() + '</div>';
   html += '<div class="sec"><div class="timeline">';
   STAGES.forEach(function(st, idx){
     var n = stageProgress(st), tot = st.check.length, isNow = st.id===cur, isOpen = openStage===st.id;
@@ -1143,6 +1142,7 @@ function renderPath(){
     html += '</article></div></div>';
   });
   html += '</div></div>';
+  html += '<div class="sec"><div class="sec-label">Особые темы</div>' + twoCard() + heatCard() + '</div>';
   var v = $("v-path"); v.innerHTML = html;
   bindProfile(v);
   v.querySelectorAll("[data-stage]").forEach(function(b){ b.addEventListener("click", function(){ var id=b.getAttribute("data-stage"); openStage = openStage===id ? "" : id; renderPath(); }); });
