@@ -29,7 +29,7 @@ img{max-width:100%}
   --accent:#EE5A0A; --accent-ink:#B4400A; --accent-soft:#FFE6D6;
   --ok:#1B7F52; --ok-soft:#D8F0E3; --no:#B0331D; --no-soft:#FBE2DC;
   --stage:#D7E8F0; --stage-ground:#93B1C0;
-  --dog:#DB9E4C; --dog-dark:#AD7330; --dog-light:#F1CF92; --treat:#6E3413; --skin:#EBBB93; --sleeve:#33627D; --pants:#2C4654; --mat:#86B49A; --toy:#2C7DA6; --dog2:#7A8790; --dog2-dark:#4F5B63; --dog2-light:#A9B4BB;
+  --dog:#DB9E4C; --dog-dark:#AD7330; --dog-light:#F1CF92; --nose:#2B1D14; --treat:#6E3413; --skin:#EBBB93; --sleeve:#33627D; --pants:#2C4654; --mat:#86B49A; --toy:#2C7DA6; --dog2:#7A8790; --dog2-dark:#4F5B63; --dog2-light:#A9B4BB;
   --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
   --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
@@ -39,7 +39,7 @@ img{max-width:100%}
   --accent:#FF7A2E; --accent-ink:#FF9C61; --accent-soft:#3A2113;
   --ok:#4CC78E; --ok-soft:#133428; --no:#FF8B74; --no-soft:#3A1C17;
   --stage:#192B36; --stage-ground:#3D5A69;
-  --dog:#E2A957; --dog-dark:#B17A38; --dog-light:#EFCB8C; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC; --dog2:#9DAAB3; --dog2-dark:#6B7881; --dog2-light:#C3CDD3;
+  --dog:#E2A957; --dog-dark:#B17A38; --dog-light:#EFCB8C; --nose:#1E140D; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC; --dog2:#9DAAB3; --dog2-dark:#6B7881; --dog2-light:#C3CDD3;
   color-scheme:dark;
 }}
 :root[data-theme="dark"]{
@@ -47,7 +47,7 @@ img{max-width:100%}
   --accent:#FF7A2E; --accent-ink:#FF9C61; --accent-soft:#3A2113;
   --ok:#4CC78E; --ok-soft:#133428; --no:#FF8B74; --no-soft:#3A1C17;
   --stage:#192B36; --stage-ground:#3D5A69;
-  --dog:#E2A957; --dog-dark:#B17A38; --dog-light:#EFCB8C; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC; --dog2:#9DAAB3; --dog2-dark:#6B7881; --dog2-light:#C3CDD3;
+  --dog:#E2A957; --dog-dark:#B17A38; --dog-light:#EFCB8C; --nose:#1E140D; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC; --dog2:#9DAAB3; --dog2-dark:#6B7881; --dog2-light:#C3CDD3;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -101,6 +101,7 @@ p{margin:0}
 .seg2 label.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .seg2 input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer}
 .seg2 label:focus-within{outline:2px solid var(--accent);outline-offset:1px}
+.sketch-grid{display:grid;grid-template-columns:1fr;gap:6px}.sketch-grid .scene{border-radius:12px;overflow:hidden}.sketch-icons{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.sketch-icons .row-ico{width:96px;height:96px}.sketch-icons svg{width:96px;height:96px}
 .err{color:var(--no);font-weight:600;font-size:14px}
 .onboard{position:fixed;inset:0;z-index:60;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 .onboard .wrap{padding-bottom:48px}
@@ -153,7 +154,7 @@ ul.dont li::before{background:var(--no);border-radius:1px;transform:rotate(45deg
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .chip svg{width:14px;height:14px;color:var(--accent)}
-.dog2 .dog-s{stroke:var(--dog2)}.dog2 .dog-f{fill:var(--dog2)}.dog2 .dog-far{stroke:var(--dog2-dark)}.dog2 .dog-ear{fill:var(--dog2-dark)}.dog2 .dog-light{fill:var(--dog2-light)}.dog2 .dog-light-s{stroke:var(--dog2-light)}
+.dog2 .dog-s{stroke:var(--dog2)}.dog2 .dog-f{fill:var(--dog2)}.dog2 .dog-far{stroke:var(--dog2-dark)}.dog2 .dog-ear{fill:var(--dog2-dark)}.dog2 .dog-far-f{fill:var(--dog2-dark)}.dog2 .dog-line{stroke:var(--dog2-dark)}.dog2 .dog-light{fill:var(--dog2-light)}.dog2 .dog-light-s{stroke:var(--dog2-light)}
 .two-art{background:var(--stage);border-radius:14px;overflow:hidden}
 .two-art svg{display:block;width:100%;height:auto}
 .two-art figcaption{font-size:13px;color:var(--muted);padding:0 14px 12px}
@@ -315,6 +316,9 @@ ol.howto li::before{content:counter(h);width:26px;height:26px;border-radius:8px;
 .dog-f{fill:var(--dog)}
 .dog-ear{fill:var(--dog-dark)}
 .dog-light{fill:var(--dog-light)}
+.nose-f{fill:var(--nose)}
+.dog-far-f{fill:var(--dog-dark)}
+.dog-line{stroke:var(--dog-dark);stroke-width:1.7;fill:none;stroke-linecap:round}
 .dog-light-s{stroke:var(--dog-light);stroke-linecap:round;stroke-linejoin:round;fill:none}
 .ink-f{fill:var(--ink)}
 .collar{stroke:var(--accent);stroke-width:5;stroke-linecap:round}
@@ -1003,14 +1007,14 @@ var ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="
 var NS = "http://www.w3.org/2000/svg";
 var RM = false; try { RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e){}
 var DOGX = 110;
-var BASE = { H:[0,100], S:[70,98], Hd:[96,66], Fe:[72,136], Fp:[74,170], Bk:[-4,134], Bp:[2,170], Tc:[-20,86], T:[-34,70], ht:0 };
+var BASE = { H:[0,100], S:[70,98], Hd:[96,66], Fe:[72,136], Fp:[74,170], Bk:[-13,139], Bp:[-6,170], Tc:[-24,95], T:[-46,92], ht:0 };
 function pose(over){ var p={}; for (var k in BASE) p[k]=Array.isArray(BASE[k])?BASE[k].slice():BASE[k]; for (var j in over) p[j]=over[j]; return p; }
 var SITB = { H:[10,150], S:[52,104], Hd:[74,70], Fe:[58,138], Fp:[60,170], Bk:[28,158], Bp:[44,170], Tc:[-8,166], T:[-26,170], ht:-8 };
 var POSES = {
   stand: pose({}),
-  alert: pose({Hd:[98,60], ht:-14, T:[-30,62]}),
-  up:    pose({Hd:[94,56], ht:-34, T:[-30,62]}),
-  sniff: pose({S:[70,104], Hd:[104,118], ht:38, Fe:[74,138], Fp:[78,170], Tc:[-20,90], T:[-34,78]}),
+  alert: pose({Hd:[98,60], ht:-14, Tc:[-24,92], T:[-44,82]}),
+  up:    pose({Hd:[94,56], ht:-34, Tc:[-24,92], T:[-44,82]}),
+  sniff: pose({S:[70,104], Hd:[104,118], ht:38, Fe:[74,138], Fp:[78,170], Tc:[-24,98], T:[-45,98]}),
   sit:   pose(SITB),
   look:  pose(Object.assign({}, SITB, {Hd:[70,62], ht:-36})),
   sitlow:pose(Object.assign({}, SITB, {S:[54,110], Hd:[80,120], ht:40, Fe:[60,140]})),
@@ -1050,6 +1054,88 @@ function ease(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
 function mk(tag, attrs, parent){ var e=document.createElementNS(NS,tag); if(attrs) for (var k in attrs) e.setAttribute(k, attrs[k]); if(parent) parent.appendChild(e); return e; }
 function rot(x,y,deg){ var r=deg*Math.PI/180, c=Math.cos(r), s=Math.sin(r); return [x*c - y*s, x*s + y*c]; }
 
+
+/* ---------- golden retriever drawing (local coords, dog faces +x) ---------- */
+var HEAD_SVG = '<path class="dog-f" d="M4 -8 C16 -10 27 -8 32 -2 C35 3 32 10 25 11 L6 12 Z"/>' +
+  '<ellipse class="dog-f" cx="0" cy="-1" rx="17" ry="15"/>' +
+  '<path class="dog-ear" d="M-7 -12 C-15 -12 -20 -3 -19 9 C-18 19 -13 25 -6 22 C-1 19 1 9 -1 -3 C-2 -9 -4 -12 -7 -12 Z"/>' +
+  '<ellipse class="nose-f" cx="9" cy="-5" rx="2.6" ry="2.5"/>' +
+  '<path class="dog-line" d="M5 -10 Q9 -13 14 -9"/>' +
+  '<ellipse class="nose-f" cx="31" cy="-1" rx="4.6" ry="3.8"/>' +
+  '<path class="dog-line" d="M15 9 C21 11 27 10 31 6"/>';
+function r1(n){ return Math.round(n*10)/10; }
+function P2(a){ return r1(a[0])+" "+r1(a[1]); }
+function lerp2(a,b,t){ return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t]; }
+function poly(pts){ return "M"+pts.map(P2).join(" L"); }
+function spline(pts){
+  var n = pts.length, d = "M"+P2(pts[0]);
+  for (var i=0;i<n;i++){
+    var p0=pts[(i-1+n)%n], p1=pts[i], p2=pts[(i+1)%n], p3=pts[(i+2)%n];
+    d += " C"+P2([p1[0]+(p2[0]-p0[0])/6, p1[1]+(p2[1]-p0[1])/6])+" "+P2([p2[0]-(p3[0]-p1[0])/6, p2[1]-(p3[1]-p1[1])/6])+" "+P2(p2);
+  }
+  return d+" Z";
+}
+/* returns an ordered list of parts: [key, tag, class, attrs] — the head is drawn separately */
+function dogParts(P, far){
+  var H=P.H, S=P.S, dx=S[0]-H[0], dy=S[1]-H[1], L=Math.hypot(dx,dy)||1, ux=dx/L, uy=dy/L, nx=-uy, ny=ux;
+  var B = function(u,v){ return [H[0]+ux*u*L+nx*v, H[1]+uy*u*L+ny*v]; };
+  var bodyPts = [[-0.22,2],[-0.12,-14],[0.25,-17],[0.65,-17],[1.0,-18],[1.17,-6],[1.15,10],[0.98,24],[0.72,22],[0.45,17],[0.18,16],[-0.08,15]].map(function(q){ return B(q[0],q[1]); });
+  var fringe = function(u0, u1, v, n, depth){
+    var d = "M"+P2(B(u0, v-6)), i;
+    for (i=0;i<n;i++){ var ua = u0+(u1-u0)*i/n, ub = u0+(u1-u0)*(i+1)/n, um = (ua+ub)/2; if (i===0) d += " L"+P2(B(ua, v)); d += " Q"+P2(B(um, v+depth*(i%2?0.75:1.15)))+" "+P2(B(ub, v)); }
+    return d + " L"+P2(B(u1, v-6))+" Z";
+  };
+  var tc = lerp2(H,P.Bk,0.42), ang = Math.atan2(P.Bk[1]-H[1], P.Bk[0]-H[0])*180/Math.PI - 90;
+  var fy = function(y){ return Math.min(y, 173); };
+  var o8 = function(a){ return [a[0]+8, a[1]]; };
+  var paw = function(a, dxp){ return {cx:r1(a[0]+dxp), cy:r1(a[1]+1.5), rx:7, ry:4.5}; };
+  var neckEnd = lerp2(S, P.Hd, 0.8), tl = tailShapes([H[0]-4, H[1]-4], P.Tc, P.T);
+  var fe = P.Fe, fp = P.Fp, ff1 = [fe[0]-6, fe[1]+3], ff2 = lerp2(fe, fp, 0.6); ff2 = [ff2[0]-6, ff2[1]];
+  return [
+    ["fF","path","dog-far",{d:poly([[S[0]+8,S[1]+8], o8(far.Fe), o8(far.Fp)]), "stroke-width":10}],
+    ["fFp","ellipse","dog-far-f",paw(o8(far.Fp),4)],
+    ["fB","path","dog-far",{d:poly([o8(H), o8(far.Bk), o8(far.Bp)]), "stroke-width":10}],
+    ["fBp","ellipse","dog-far-f",paw(o8(far.Bp),4)],
+    ["tailF","path","dog-light",{d:tl.plume}],
+    ["tail","path","dog-f",{d:tl.tail}],
+    ["fur","path","dog-light",{d:fringe(1.04, 0.4, 19, 6, 11)}],
+    ["trous","path","dog-light",{d:"M-8 -10 Q-22 -4 -14 2 Q-24 8 -15 12 Q-23 19 -11 19 Q-14 26 -2 23 L4 8 Z", transform:"translate("+r1(tc[0])+" "+r1(tc[1])+") rotate("+r1(ang)+")"}],
+    ["body","path","dog-f",{d:spline(bodyPts)}],
+    ["thigh","ellipse","dog-f",{cx:0, cy:0, rx:14, ry:20, transform:"translate("+r1(tc[0])+" "+r1(tc[1])+") rotate("+r1(ang)+")"}],
+    ["nB","path","dog-s",{d:poly([lerp2(H,P.Bk,0.6), P.Bk, P.Bp]), "stroke-width":11}],
+    ["nBp","ellipse","dog-f",paw(P.Bp,4)],
+    ["nFf","path","dog-light-s",{d:poly([ff1, ff2]), "stroke-width":6}],
+    ["nF","path","dog-s",{d:poly([[S[0],S[1]+8], fe, fp]), "stroke-width":12}],
+    ["nFp","ellipse","dog-f",paw(fp,4)],
+    ["neck","path","dog-s",{d:poly([[S[0]+3,S[1]-3], neckEnd]), "stroke-width":25}]
+  ];
+}
+function tailShapes(H, Tc, T){
+  var q = function(t){ var a=(1-t)*(1-t), b=2*(1-t)*t, c=t*t; return [a*H[0]+b*Tc[0]+c*T[0], a*H[1]+b*Tc[1]+c*T[1]]; };
+  var dq = function(t){ return [2*(1-t)*(Tc[0]-H[0])+2*t*(T[0]-Tc[0]), 2*(1-t)*(Tc[1]-H[1])+2*t*(T[1]-Tc[1])]; };
+  var up = [], lo = [], pl = [], i;
+  for (i=0;i<=8;i++){
+    var t = i/8, p = q(t), d = dq(t), l = Math.hypot(d[0], d[1]) || 1, nx = -d[1]/l, ny = d[0]/l;
+    if (ny < 0){ nx = -nx; ny = -ny; }
+    var w = 6.5*(1-t) + 2.2;
+    up.push([p[0]-nx*w, p[1]-ny*w]); lo.push([p[0]+nx*w, p[1]+ny*w]);
+    if (i >= 1){ var dep = w + 3 + 10*Math.sin(Math.PI*Math.min(1, t*1.05)) * (i%2 ? 0.75 : 1); pl.push([p[0]+nx*dep, Math.min(p[1]+ny*dep, 174)]); }
+  }
+  return { tail: spline(up.concat(lo.slice().reverse())), plume: spline(lo.slice(1).concat(pl.slice().reverse())) };
+}
+function collarPts(P){
+  var cx = P.S[0] + (P.Hd[0]-P.S[0])*.62, cy = P.S[1] + (P.Hd[1]-P.S[1])*.62;
+  var vx = P.Hd[0]-P.S[0], vy = P.Hd[1]-P.S[1], vl = Math.hypot(vx,vy)||1, nx = -vy/vl*13, ny = vx/vl*13;
+  return {c:[cx,cy], d:"M"+P2([cx+nx,cy+ny])+" L"+P2([cx-nx,cy-ny])};
+}
+function dogMarkup(P, ht, far){
+  var h = "";
+  dogParts(P, far || P).forEach(function(q){ var a = q[3], at = ""; for (var k in a) at += " "+k+'="'+a[k]+'"'; h += "<"+q[1]+' class="'+q[2]+'"'+at+"/>"; });
+  h += '<g transform="translate('+r1(P.Hd[0])+" "+r1(P.Hd[1])+") rotate("+ht+')">'+HEAD_SVG+"</g>";
+  h += '<path class="collar" d="'+collarPts(P).d+'"/>';
+  return h;
+}
+
 function Player(host, onStep){
   var svg = mk("svg",{viewBox:"0 0 360 196", role:"img", "aria-label":"Анимация: как выполнять упражнение"});
   host.appendChild(svg);
@@ -1065,22 +1151,11 @@ function Player(host, onStep){
   E.shoeR = mk("ellipse",{rx:11,ry:5,"class":"p-shoe"},E.person);
   E.restArm = mk("path",{"class":"p-arm"},E.person);
   E.restHand = mk("circle",{r:7.5,"class":"skin"},E.person);
-  E.farF = mk("path",{"class":"dog-far"},svg);
-  E.farB = mk("path",{"class":"dog-far"},svg);
-  E.tailF = mk("path",{"class":"dog-light-s","stroke-width":9},svg);
-  E.tail = mk("path",{"class":"dog-s","stroke-width":10},svg);
-  E.body = mk("path",{"class":"dog-s","stroke-width":36},svg);
-  E.chest = mk("ellipse",{rx:9,ry:13,"class":"dog-light"},svg);
-  E.neck = mk("path",{"class":"dog-s","stroke-width":22},svg);
-  E.nearF = mk("path",{"class":"dog-s","stroke-width":12},svg);
-  E.nearB = mk("path",{"class":"dog-s","stroke-width":12},svg);
-  E.head = mk("g",{},svg);
-  mk("circle",{cx:0,cy:0,r:17,"class":"dog-f"},E.head);
-  mk("ellipse",{cx:15,cy:5,rx:13.5,ry:8.5,"class":"dog-f"},E.head);
-  mk("path",{d:"M-4 -13 Q-21 -8 -18 15 Q-14 25 -6 17 Q-2 5 -1 -7 Z","class":"dog-ear"},E.head);
-  mk("circle",{cx:27,cy:3,r:4,"class":"ink-f"},E.head);
-  mk("circle",{cx:5,cy:-4,r:2.6,"class":"ink-f"},E.head);
-  E.collar = mk("path",{"class":"collar"},svg);
+  E.dog = mk("g",{},svg);
+  E.parts = {};
+  dogParts(POSES.stand, POSES.stand).forEach(function(q){ E.parts[q[0]] = mk(q[1], {"class":q[2]}, E.dog); });
+  E.head = mk("g",{},E.dog); E.head.innerHTML = HEAD_SVG;
+  E.collar = mk("path",{"class":"collar"},E.dog);
   E.toy = mk("circle",{r:8,"class":"toy"},svg);
   E.ftreat = mk("circle",{r:4.5,"class":"treat"},svg);
   E.leash = mk("path",{"class":"leash"},svg);
@@ -1143,26 +1218,12 @@ Player.prototype.render = function(s, k, ts){
     ["H","S","Hd","Tc","T"].forEach(function(key){ P[key][1] += bob; });
   }
   if (!RM){ var wag = Math.sin(ts * (k.mark ? 0.03 : 0.008)) * (k.mark ? 7 : 3); P.T[1] += wag; P.T[0] += wag*.4; }
-  var pt = function(a){ return X(a[0]) + " " + a[1]; };
-  E.body.setAttribute("d", "M"+pt(P.H)+" L"+pt(P.S));
-  var nk = [P.S[0] + (P.Hd[0]-P.S[0])*.75, P.S[1] + (P.Hd[1]-P.S[1])*.75];
-  E.neck.setAttribute("d", "M"+pt(P.S)+" L"+pt(nk));
-  E.nearF.setAttribute("d", "M"+X(P.S[0])+" "+(P.S[1]+8)+" L"+pt(P.Fe)+" L"+pt(P.Fp));
-  E.nearB.setAttribute("d", "M"+pt(P.H)+" L"+pt(P.Bk)+" L"+pt(P.Bp));
-  var off = function(a){ return [a[0]+8, a[1]]; };
-  E.farF.setAttribute("d", "M"+X(P.S[0]+8)+" "+(P.S[1]+8)+" L"+pt(off(far.Fe))+" L"+pt(off(far.Fp)));
-  E.farB.setAttribute("d", "M"+pt(off(P.H))+" L"+pt(off(far.Bk))+" L"+pt(off(far.Bp)));
-  E.tail.setAttribute("d", "M"+pt(P.H)+" Q"+pt(P.Tc)+" "+pt(P.T));
-  var fy = function(y){ return Math.min(y, 173); };
-  E.tailF.setAttribute("d", "M"+pt([P.H[0]-6, P.H[1]+8])+" Q"+pt([P.Tc[0]+2, fy(P.Tc[1]+9)])+" "+pt([P.T[0]+3, fy(P.T[1]+8)]));
-  E.chest.setAttribute("cx", X(P.S[0]+7)); E.chest.setAttribute("cy", P.S[1]+11);
+  E.dog.setAttribute("transform", f > 0 ? "translate("+r1(o)+" 0)" : "translate("+r1(o+70)+" 0) scale(-1 1)");
+  dogParts(P, far).forEach(function(q){ var el = E.parts[q[0]], a = q[3]; for (var key in a) el.setAttribute(key, a[key]); });
   var hx = X(P.Hd[0]), hy = P.Hd[1];
-  E.head.setAttribute("transform", "translate("+hx+" "+hy+") scale("+f+" 1) rotate("+s.ht+")");
-  /* collar */
-  var cx = P.S[0] + (P.Hd[0]-P.S[0])*.62, cy = P.S[1] + (P.Hd[1]-P.S[1])*.62;
-  var vx = P.Hd[0]-P.S[0], vy = P.Hd[1]-P.S[1], vl = Math.hypot(vx,vy)||1; var nx = -vy/vl*11, ny = vx/vl*11;
-  E.collar.setAttribute("d", "M"+X(cx+nx)+" "+(cy+ny)+" L"+X(cx-nx)+" "+(cy-ny));
-  var C = [X(cx), cy];
+  E.head.setAttribute("transform", "translate("+r1(P.Hd[0])+" "+r1(P.Hd[1])+") rotate("+r1(s.ht)+")");
+  var cp = collarPts(P); E.collar.setAttribute("d", cp.d);
+  var C = [X(cp.c[0]), cp.c[1]];
   /* toy */
   var mr = rot(24, 9, s.ht), mouth = [hx + f*mr[0], hy + mr[1]], gp = [X(130), 167];
   E.toy.setAttribute("cx", lerp(gp[0], mouth[0], s.tm)); E.toy.setAttribute("cy", lerp(gp[1], mouth[1], s.tm));
@@ -1263,22 +1324,8 @@ function twoCard(){
   return h + '</article>';
 }
 function poseIcon(name, extra){
-  var P = POSES[name], o = 0;
-  var X = function(x){ return x; };
-  var s = function(a){ return a[0]+" "+a[1]; };
-  var nk = [P.S[0]+(P.Hd[0]-P.S[0])*.75, P.S[1]+(P.Hd[1]-P.S[1])*.75];
-  return '<svg viewBox="-50 30 190 160" aria-hidden="true">' +
-    (extra||"") +
-    '<path class="dog-far" d="M'+(P.S[0]+8)+' '+(P.S[1]+8)+' L'+s([P.Fe[0]+8,P.Fe[1]])+' L'+s([P.Fp[0]+8,P.Fp[1]])+'"/>' +
-    '<path class="dog-light-s" stroke-width="9" d="M'+(P.H[0]-6)+' '+(P.H[1]+8)+' Q'+(P.Tc[0]+2)+' '+Math.min(P.Tc[1]+9,173)+' '+(P.T[0]+3)+' '+Math.min(P.T[1]+8,173)+'"/>' +
-    '<path class="dog-s" stroke-width="10" d="M'+s(P.H)+' Q'+s(P.Tc)+' '+s(P.T)+'"/>' +
-    '<path class="dog-s" stroke-width="36" d="M'+s(P.H)+' L'+s(P.S)+'"/>' +
-    '<ellipse class="dog-light" rx="9" ry="13" cx="'+(P.S[0]+7)+'" cy="'+(P.S[1]+11)+'"/>' +
-    '<path class="dog-s" stroke-width="22" d="M'+s(P.S)+' L'+s(nk)+'"/>' +
-    '<path class="dog-s" stroke-width="12" d="M'+P.S[0]+' '+(P.S[1]+8)+' L'+s(P.Fe)+' L'+s(P.Fp)+'"/>' +
-    '<path class="dog-s" stroke-width="12" d="M'+s(P.H)+' L'+s(P.Bk)+' L'+s(P.Bp)+'"/>' +
-    '<g transform="translate('+P.Hd[0]+' '+P.Hd[1]+') rotate('+P.ht+')"><circle r="17" class="dog-f"/><ellipse cx="15" cy="5" rx="13.5" ry="8.5" class="dog-f"/><path d="M-4 -13 Q-21 -8 -18 15 Q-14 25 -6 17 Q-2 5 -1 -7 Z" class="dog-ear"/><circle cx="27" cy="3" r="4" class="ink-f"/><circle cx="5" cy="-4" r="2.6" class="ink-f"/></g>' +
-    '</svg>';
+  var P = POSES[name];
+  return '<svg viewBox="-50 30 190 160" aria-hidden="true">' + (extra||"") + dogMarkup(P, P.ht) + '</svg>';
 }
 var ROW_POSE = { marker:"alert", name:"up", sit:"look", down:"down", wait:"sit", place:"down", recall:"stand", heel:"stand", leave:"sniff", give:"stand" };
 
@@ -1575,9 +1622,18 @@ document.addEventListener("visibilitychange", function(){
 
 function renderAll(){ renderChip(); renderPath(); renderCommands(); renderOff(); renderBasics(); }
 renderAll();
-if (!S.onboarded) openOnboard();
+if (location.hash === "#sketch"){
+  /* drawing preview: every pose at large size */
+  var app = $("app"); app.innerHTML = '<div class="sketch-grid" id="skg"></div><div class="sketch-icons" id="ski"></div>';
+  [["stand",{}],["sit",{}],["down",{}],["sniff",{}],["look",{hand:[220,50],tr:1}],["up",{}],["stand",{walk:2}],["alert",{toy:"mouth"}],["sitlow",{}]].forEach(function(q){
+    var c = document.createElement("div"); c.className = "scene"; $("skg").appendChild(c);
+    var pl = new Player(c); pl.load([Object.assign({p:q[0], d:1, h:99999}, q[1])]);
+  });
+  ["stand","sit","down","bow","sniff","up"].forEach(function(n){ var d = document.createElement("div"); d.className = "row-ico"; d.innerHTML = poseIcon(n); $("ski").appendChild(d); });
+} else if (!S.onboarded) openOnboard();
 var h = (location.hash||"").replace("#","");
-if (["path","commands","offleash","basics"].indexOf(h) >= 0) setTab(h);
+if (h==="sketch"){}
+else if (["path","commands","offleash","basics"].indexOf(h) >= 0) setTab(h);
 else if (["sleep","treats","chew"].indexOf(h) >= 0){ openTopic[h] = true; renderPath(); var tt=$("topic-"+h); if(tt) tt.scrollIntoView(); }
 else if (h==="heat"){ openHeat = true; renderPath(); var hc=$("heat-card"); if(hc) hc.scrollIntoView(); }
 else if (h==="two"){ openTwo = true; renderPath(); var tc=$("two-card"); if(tc) tc.scrollIntoView(); }
