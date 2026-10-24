@@ -150,6 +150,29 @@ ul.dont li::before{background:var(--no);border-radius:1px;transform:rotate(45deg
 .two-ico{display:inline-flex;gap:2px;color:var(--accent)}
 .two-ico svg{width:16px;height:16px}
 .two-ico svg+svg{color:var(--dog2)}
+.heat-box{background:var(--accent-soft);border-radius:16px;padding:14px 16px;display:grid;gap:10px}
+.heat-day{font-family:var(--f-display);font-weight:700;font-size:22px;line-height:1.15}
+.heat-phase{font-weight:600}
+.phasebar{position:relative;display:grid;grid-template-columns:9fr 9fr 6fr;gap:3px;padding-top:4px}
+.phasebar i{height:8px;border-radius:4px;background:var(--surface)}
+.phasebar i.on{background:var(--accent)}
+.phasebar b{position:absolute;top:0;width:3px;height:16px;border-radius:2px;background:var(--ink);transform:translateX(-1px)}
+.phase-legend{display:grid;grid-template-columns:9fr 9fr 6fr;gap:3px;font-size:11px;color:var(--muted);font-family:var(--f-mono)}
+.facts{display:grid;gap:6px;margin:0}
+.facts div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;font-size:14px;border-top:1px solid var(--line);padding-top:6px}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.heat-add{display:flex;gap:8px;flex-wrap:wrap;align-items:end}
+.heat-add .field{flex:1 1 160px}
+.hist{display:flex;flex-wrap:wrap;gap:6px}
+.hist span{display:inline-flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px 4px 3px 10px;font-size:13px}
+.hist button{border:0;background:none;color:var(--muted);cursor:pointer;padding:2px 6px;border-radius:99px;font-size:13px}
+.phases{display:grid;gap:8px}
+.phases div{display:grid;grid-template-columns:72px 1fr;gap:10px;background:var(--bg);border-radius:12px;padding:10px 12px;font-size:14px}
+.phases b{font-family:var(--f-mono);font-size:12px;font-weight:500;color:var(--accent-ink);padding-top:2px}
+.spay{display:grid;gap:8px}
+.spay div{background:var(--bg);border-radius:12px;padding:10px 12px;display:grid;gap:2px;font-size:14px}
+.spay b{font-weight:600;font-size:15px}
 .note{font-size:14px;color:var(--muted);border-left:3px solid var(--stage-ground);padding-left:12px}
 
 /* commands list */
@@ -342,9 +365,10 @@ ol.howto li::before{content:counter(h);width:26px;height:26px;border-radius:8px;
 
 /* ---------- storage ---------- */
 var KEY = "vosp-sobaki-v1";
-var S = {name:"", birth:"", home:"", checks:{}, cmd:{}, rec:{}, pre:{}};
+var S = {name:"", birth:"", home:"", checks:{}, cmd:{}, rec:{}, pre:{}, heat:[]};
 try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); for (var k in o) S[k] = o[k]; } } catch(e) {}
 if (!S.name) S.name = "Полли";
+if (!Array.isArray(S.heat)) S.heat = [];
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
 function dogName(){ return (S.name || "").trim() || "Полли"; }
 
@@ -412,7 +436,7 @@ var STAGES = [
    dont:["Отпускать с поводка «на авось». Каждый удачный побег закрепляет привычку убегать.",
          "Звать, когда собака точно не придёт. Так вы учите её не слушать команду.",
          "Наказывать за медленный подход. Собака запомнит: подошла — получила неприятность."],
-   note:"Кастрация и стерилизация влияют на поведение и здоровье. Оптимальный возраст зависит от размера породы — обсудите это с ветеринаром.",
+   note:"В этом возрасте обычно начинается первая течка. Как её распознать, как гулять и когда стерилизовать — в разделе «Течка и стерилизация» выше.",
    check:["Подзыв на корде работает в 9 из 10 случаев","Проходит мимо собак на поводке без рывков","Ежедневно есть занятия на нюх или голову","Пройден уровень 3 программы «Без поводка»"],
    cmds:["recall","heel","wait"] },
  { id:"s6", range:"1–2 года", title:"Взрослая собака", sub:"Свобода и поддержание навыков",
@@ -640,7 +664,97 @@ var TWO = {
 };
 var openTwo = false;
 
+var HEAT = {
+  title:"Течка и стерилизация",
+  sub:"Когда ждать, как гулять, Торин рядом, срок операции",
+  lead:"Первая течка обычно начинается между 6 и 12 месяцами: у мелких собак раньше, у крупных иногда только к 1,5–2 годам. Длится около трёх недель и повторяется примерно раз в полгода (разброс — от 5 до 11 месяцев).",
+  signs:["Набухает петля (наружные половые органы), собака часто её вылизывает.",
+         "Появляются кровянистые выделения. У чистоплотной собаки их бывает почти не видно.",
+         "Чаще писает и метит на прогулке.",
+         "Меняется поведение: беспокойство, прилипчивость или раздражительность, хуже слушается.",
+         "Кобели на улице проявляют к ней сильный интерес."],
+  phases:[{a:1,b:9,t:"Начало",d:"Кровянистые выделения, петля набухла. Кобели уже интересуются, но сама собака обычно их не подпускает."},
+          {a:10,b:18,t:"Охота",d:"Выделения светлеют. Самые опасные дни: собака может сама искать кобеля и подпускать его. У разных собак сроки сдвигаются на несколько дней."},
+          {a:19,b:24,t:"Окончание",d:"Выделения проходят, интерес кобелей спадает. Гуляйте на поводке ещё неделю."}],
+  walk:["Только на поводке — с первого дня и ещё неделю после окончания выделений. Программу «Без поводка» на это время ставим на паузу.",
+        "Не ходите на собачьи площадки и туда, где гуляют свободные собаки. Выбирайте тихое время и маршруты.",
+        "Ни на минуту не оставляйте {name} одну во дворе или у магазина.",
+        "Подбежал кобель без хозяина — встаньте между собаками и спокойно уходите, позовите хозяина.",
+        "Подзыв и внимание будут хуже — это гормоны. Снизьте требования и берите лакомства повкуснее.",
+        "Дома можно надевать специальные трусики, но не держите их постоянно и снимайте на прогулку."],
+  torin:["Кастрированный Торин не может сделать {name} щенков. Исключение — если кастрация была меньше 6 недель назад: тогда уточните у ветеринара.",
+         "Интерес к ней у него всё равно может появиться: нюхает, вылизывает, ходит следом, скулит, пытается сесть сверху. Чаще так бывает, если его кастрировали уже взрослым.",
+         "{name} во время течки может стать раздражительной и огрызаться на Торина, даже если раньше они отлично ладили. Это пройдёт вместе с течкой.",
+         "Назойливость прерывайте спокойно: позовите Торина, дайте ему жевалку или нюхательный коврик, наградите за то, что отошёл.",
+         "Если он не отстаёт или {name} нервничает — разведите их по комнатам или барьером на эти недели. У каждого — своё место для отдыха.",
+         "Уделяйте Торину отдельное время и прогулки — так ему проще переключиться."],
+  after:["Через 6–10 недель после течки бывает ложная беременность: собака устраивает гнездо, носит и охраняет игрушки, может появиться молоко. Лёгкая проходит сама за 2–3 недели — уберите игрушки, которые она «нянчит», и больше гуляйте. Если она подавлена, не ест или молока много — к ветеринару.",
+         "Срочно к ветеринару, если через несколько недель после течки собака вялая, много пьёт, у неё рвота, температура или выделения с неприятным запахом. Это может быть пиометра — гнойное воспаление матки, опасное для жизни."],
+  spay:[["Мелкие и средние собаки (во взрослом возрасте примерно до 20 кг)","Часто советуют стерилизовать до первой течки, около 5–6 месяцев, или через 2–3 месяца после первой."],
+        ["Крупные собаки (больше 20–25 кг)","Обычно советуют дождаться окончания роста — около 12–18 месяцев, то есть чаще после первой течки. У ряда крупных пород ранняя стерилизация связана с более частыми проблемами суставов и связок."],
+        ["Если течка уже была","Не во время течки, а примерно через 2–3 месяца после её начала, когда матка вернулась в норму и меньше кровоточивость тканей. И не во время ложной беременности."]],
+  why:"Совсем откладывать тоже не стоит: каждая течка повышает риск опухолей молочных желёз. По классическим, сейчас пересматриваемым оценкам, риск около 0,5 % при стерилизации до первой течки, около 8 % — после первой и около 26 % — после второй. Стерилизация также исключает пиометру и течки. Возможные минусы: у части собак выше риск недержания мочи и лишнего веса — порцию корма после операции обычно уменьшают.",
+  vet:"Точный срок зависит от породы, ожидаемого взрослого веса и здоровья {name}. Обсудите его с ветеринаром заранее, ещё до первой течки."
+};
+var openHeat = false;
+function addDays(d, n){ var x = new Date(d.getTime()); x.setDate(x.getDate()+n); return x; }
+function fmtD(d, withYear){ try { return d.toLocaleDateString("ru-RU", withYear ? {day:"numeric", month:"long", year:"numeric"} : {day:"numeric", month:"long"}); } catch(e){ return d.toISOString().slice(0,10); } }
+function fmtM(d){ try { return d.toLocaleDateString("ru-RU", {month:"long", year:"numeric"}); } catch(e){ return d.toISOString().slice(0,7); } }
+function heatState(){
+  var list = (S.heat||[]).slice().sort(); if (!list.length) return null;
+  var last = list[list.length-1], start = parseDate(last); if (!start) return null;
+  var day = daysSince(last) + 1;
+  return { list:list, start:start, day:day, active: day>=1 && day<=28 };
+}
+function heatBadge(){ var h = heatState(); return h && h.active ? '<span class="badge">Течка · день '+h.day+'</span>' : ''; }
+function heatTracker(){
+  var h = heatState(), out = '<div class="heat-box">', today = (function(){ var n=new Date(); return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0'); })();
+  if (h && h.active){
+    var ph = h.day<=9 ? 0 : h.day<=18 ? 1 : h.day<=24 ? 2 : 3;
+    var P = HEAT.phases;
+    out += '<div class="heat-day">День '+h.day+' из ~21</div>' +
+      '<div class="heat-phase">'+(ph<3 ? P[ph].t : 'Течка позади')+'</div>' +
+      '<div class="phasebar" aria-hidden="true"><i class="'+(ph===0?'on':'')+'"></i><i class="'+(ph===1?'on':'')+'"></i><i class="'+(ph===2?'on':'')+'"></i><b style="left:'+Math.min(100, (h.day-0.5)/24*100)+'%"></b></div>' +
+      '<div class="phase-legend"><span>1–9</span><span>10–18</span><span>19–24</span></div>' +
+      '<p class="small">'+(ph<3 ? P[ph].d : 'Выделений быть не должно. Ещё несколько дней гуляйте на поводке, затем возвращайтесь к программе «Без поводка».')+'</p>';
+  } else if (h){
+    out += '<div class="heat-phase">Последняя течка началась '+fmtD(h.start, true)+'</div>';
+  } else {
+    var b = parseDate(S.birth);
+    out += '<div class="heat-phase">Течек ещё не отмечено</div><p class="small">'+(b ? 'Первую течку стоит ждать примерно с '+fmtD(addDays(b,183), true)+' — у крупных пород позже.' : 'Укажите дату рождения в профиле — подскажу, когда ждать первую течку.')+' Отметьте день, когда заметили выделения или набухание петли.</p>';
+  }
+  if (h){
+    var nx = addDays(h.start, 182), s1 = addDays(h.start, 60), s2 = addDays(h.start, 90);
+    out += '<dl class="facts">' +
+      '<div><dt>Конец течки</dt><dd>≈ '+fmtD(addDays(h.start, 21))+'</dd></div>' +
+      '<div><dt>Без поводка снова можно</dt><dd>≈ '+fmtD(addDays(h.start, 28))+'</dd></div>' +
+      '<div><dt>Окно для стерилизации</dt><dd>'+fmtD(s1)+' – '+fmtD(s2, true)+'</dd></div>' +
+      '<div><dt>Следующая течка</dt><dd>≈ '+fmtM(nx)+'</dd></div></dl>';
+  }
+  out += '<div class="heat-add"><div class="field"><label for="heat-date">Первый день течки</label><input id="heat-date" type="date" value="'+today+'" max="'+today+'"></div><button class="btn" type="button" id="heat-add">Отметить</button></div>';
+  if (h && h.list.length) out += '<div class="hist" aria-label="История течек">'+h.list.slice().reverse().map(function(d){ return '<span>'+fmtD(parseDate(d), true)+'<button type="button" data-heat-del="'+d+'" aria-label="Удалить '+d+'">✕</button></span>'; }).join("")+'</div>';
+  return out + '</div>';
+}
+function heatCard(){
+  var T = HEAT, li = function(a){ return a.map(function(x){ return '<li>'+nm(x)+'</li>'; }).join(""); };
+  var h = '<article class="stage" id="heat-card"><button class="stage-head" type="button" data-heat aria-expanded="'+openHeat+'">' +
+    '<span class="stage-meta"><span class="range">Особая тема</span>'+heatBadge()+'</span>' +
+    '<span class="stage-title">'+T.title+'</span><span class="stage-sub">'+T.sub+'</span></button>';
+  if (openHeat){
+    h += '<div class="stage-body"><p class="lead-box">'+T.lead+'</p>' + heatTracker() +
+      '<div class="list-block"><div class="list-title neutral">Как понять, что началось</div><ul class="clean">'+li(T.signs)+'</ul></div>' +
+      '<div class="list-block"><div class="list-title neutral">Три фазы течки</div><div class="phases">'+T.phases.map(function(p){ return '<div><b>дни '+p.a+'–'+p.b+'</b><span><strong>'+p.t+'.</strong> '+p.d+'</span></div>'; }).join("")+'</div></div>' +
+      '<div class="list-block"><div class="list-title do">Прогулки во время течки</div><ul class="clean do">'+li(T.walk)+'</ul></div>' +
+      '<div class="list-block"><div class="list-title neutral">Торин кастрирован — что ждать дома</div><ul class="clean">'+li(T.torin)+'</ul></div>' +
+      '<div class="list-block"><div class="list-title dont">После течки — следите</div><ul class="clean dont">'+li(T.after)+'</ul></div>' +
+      '<div class="list-block"><div class="list-title neutral">Когда стерилизовать</div><div class="spay">'+T.spay.map(function(r){ return '<div><b>'+r[0]+'</b><span>'+r[1]+'</span></div>'; }).join("")+'</div></div>' +
+      '<p class="small">'+T.why+'</p><p class="note">'+nm(T.vet)+'</p></div>';
+  }
+  return h + '</article>';
+}
+
 var FAQ = [
+  ["Течка","С первого дня течки и ещё неделю после — только на поводке, даже если подзыв идеальный. Собака в охоте может сама уйти к кобелю, а кобели издалека идут на запах. Отметьте течку на вкладке «Путь» — здесь появится напоминание."],
   ["С нами гуляет Торин","Полли будет бегать туда же, куда Торин. Поэтому сначала свободен только Торин, а Полли — на корде. Отрабатывайте подзыв Полли по имени, пока Торин рядом, и награждайте обоих. Отпускать вместе — когда у каждой подзыв работает в 9 случаях из 10 по отдельности."],
   ["Собака убежала и не возвращается","Не бегите за ней — для собаки это игра в догонялки. Позовите один раз, присядьте или убегайте в противоположную сторону, пошуршите пакетом с лакомством. Когда вернулась — радуйтесь, даже если злы. Потом вернитесь на уровень назад, к корде."],
   ["Подходит, но не даётся в руки","Это результат того, что подзыв часто заканчивался поводком. Отработайте «касание шлейки» дома: касание — лакомство, сотни раз. Не хватайте резко, тянитесь к груди, а не к холке."],
@@ -1002,7 +1116,7 @@ function renderPath(){
   var html = '<div class="view-head"><div class="eyebrow">Путь</div><h1 class="h1">От первого дня дома до взрослой собаки</h1>' +
     '<p class="lead">Шесть этапов. В каждом — что делать, чего избегать, какие команды учить и чек-лист, чтобы понять, что можно двигаться дальше.</p></div>';
   if (!S.birth) html += profileForm("pa-");
-  html += '<div class="sec">' + twoCard() + '</div>';
+  html += '<div class="sec">' + twoCard() + heatCard() + '</div>';
   html += '<div class="sec"><div class="timeline">';
   STAGES.forEach(function(st, idx){
     var n = stageProgress(st), tot = st.check.length, isNow = st.id===cur, isOpen = openStage===st.id;
@@ -1018,6 +1132,7 @@ function renderPath(){
         '<div class="list-block"><div class="list-title do">Делать</div><ul class="clean do">'+st.do.map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul></div>' +
         '<div class="list-block"><div class="list-title dont">Не делать</div><ul class="clean dont">'+st.dont.map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul></div>';
       if (st.cmds.length) html += '<div class="list-block"><div class="list-title neutral">Команды этапа</div><div class="chips">'+st.cmds.map(function(c){ return '<button class="chip" type="button" data-cmd="'+c+'">'+ICON_PAW+CMD[c].name+'</button>'; }).join("")+'</div></div>';
+      if (st.id==="s4" || st.id==="s5") html += '<div class="chips"><button class="chip" type="button" data-openheat>'+ICON_PAW+'Течка и стерилизация</button></div>';
       if (st.id==="s1") html += '<div class="chips"><button class="chip" type="button" data-opentwo>'+ICON_PAW+'Полли и Торин</button></div>';
       if (st.id==="s3" || st.id==="s5" || st.id==="s6") html += '<div class="chips"><button class="chip" type="button" data-goto="offleash">Программа «Без поводка» →</button></div>';
       html += '<p class="note">'+st.note+'</p>' +
@@ -1032,6 +1147,10 @@ function renderPath(){
   bindProfile(v);
   v.querySelectorAll("[data-stage]").forEach(function(b){ b.addEventListener("click", function(){ var id=b.getAttribute("data-stage"); openStage = openStage===id ? "" : id; renderPath(); }); });
   v.querySelectorAll("[data-check]").forEach(function(c){ c.addEventListener("change", function(){ var id=c.getAttribute("data-check"); if (c.checked) S.checks[id]=1; else delete S.checks[id]; save(); var y=window.scrollY; renderPath(); window.scrollTo(0,y); }); });
+  var hb = v.querySelector("[data-heat]"); if (hb) hb.addEventListener("click", function(){ openHeat = !openHeat; renderPath(); });
+  v.querySelectorAll("[data-openheat]").forEach(function(b){ b.addEventListener("click", function(){ openHeat = true; renderPath(); var c=$("heat-card"); if(c) c.scrollIntoView({behavior: RM?"auto":"smooth", block:"start"}); }); });
+  var ha = $("heat-add"); if (ha) ha.addEventListener("click", function(){ var d = $("heat-date").value; if (!d) return; S.heat = (S.heat||[]).filter(function(x){ return x!==d; }); S.heat.push(d); S.heat.sort(); save(); var y=window.scrollY; renderPath(); renderOff(); window.scrollTo(0,y); });
+  v.querySelectorAll("[data-heat-del]").forEach(function(b){ b.addEventListener("click", function(){ var d=b.getAttribute("data-heat-del"); S.heat = (S.heat||[]).filter(function(x){ return x!==d; }); save(); var y=window.scrollY; renderPath(); renderOff(); window.scrollTo(0,y); }); });
   var tb = v.querySelector("[data-two]"); if (tb) tb.addEventListener("click", function(){ openTwo = !openTwo; renderPath(); });
   v.querySelectorAll("[data-opentwo]").forEach(function(b){ b.addEventListener("click", function(){ openTwo = true; renderPath(); var c=$("two-card"); if(c) c.scrollIntoView({behavior: RM?"auto":"smooth", block:"start"}); }); });
   bindCommon(v);
@@ -1061,6 +1180,7 @@ function recallStats(i){ var a = S.rec[i] || [], y = a.filter(function(x){return
 function renderOff(){
   var curLv = 0; for (var i=0;i<LEVELS.length;i++){ if (!recallStats(i).passed){ curLv=i; break; } curLv = i; }
   var html = '<div class="view-head"><div class="eyebrow">Без поводка</div><h1 class="h1">Свободная прогулка шаг за шагом</h1>' +
+    (function(){ var hs = heatState(); return hs && hs.active ? '<div class="heat-box" style="margin-bottom:12px"><div class="heat-phase">Течка, день '+hs.day+' — сейчас только на поводке</div><p class="small">Программа на паузе примерно до '+fmtD(addDays(hs.start,28))+'. Отрабатывайте подзыв и контакт на корде в тихих местах.</p></div>' : ''; })() +
     '<p class="lead">Свободный выгул — это не одна команда, а система: надёжный подзыв, привычка самой проверять, где вы, и умение остановиться по слову. Её строят на длинном поводке — корде — за 3–6 месяцев.</p></div>' +
     '<div class="player"><div class="scene" id="off-scene"></div><div class="step-text"><h3>Как выглядит работа на корде</h3><p>Собака сама оглянулась на вас — «Да!». Подбежала — лакомство, касание шлейки и снова «Гуляй!». Корда страхует, пока вы не уверены в подзыве.</p></div>' +
     '<div class="legend"><span><i style="background:var(--toy)"></i>корда</span><span><i style="background:var(--ok)"></i>маркер «Да!»</span><span><i style="background:var(--treat)"></i>лакомство</span></div></div>';
@@ -1195,6 +1315,7 @@ function renderAll(){ renderChip(); renderPath(); renderCommands(); renderOff();
 renderAll();
 var h = (location.hash||"").replace("#","");
 if (["path","commands","offleash","basics"].indexOf(h) >= 0) setTab(h);
+else if (h==="heat"){ openHeat = true; renderPath(); var hc=$("heat-card"); if(hc) hc.scrollIntoView(); }
 else if (h==="two"){ openTwo = true; renderPath(); var tc=$("two-card"); if(tc) tc.scrollIntoView(); }
 else if (CMD[h]) openCmd(h);
 })();
