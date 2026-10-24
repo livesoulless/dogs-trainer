@@ -1,0 +1,1110 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#EBF1F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1418" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font-size:14px;font-family:system-ui,-apple-system,sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Воспитание собаки</title>
+<meta name="apple-mobile-web-app-title" content="Собака">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Unbounded:wght@500;700&display=swap">
+<style>
+/* Layout: phone app — one column, fixed bottom tab bar, command details slide in as a full-screen sheet */
+:root{
+  --bg:#EBF1F4; --surface:#FFFFFF; --sunk:#DFE8ED; --ink:#15212A; --muted:#566874; --line:#CFDBE1;
+  --accent:#EE5A0A; --accent-ink:#B4400A; --accent-soft:#FFE6D6;
+  --ok:#1B7F52; --ok-soft:#D8F0E3; --no:#B0331D; --no-soft:#FBE2DC;
+  --stage:#D7E8F0; --stage-ground:#93B1C0;
+  --dog:#C8864A; --dog-dark:#8C5828; --treat:#6E3413; --skin:#EBBB93; --sleeve:#33627D; --pants:#2C4654; --mat:#86B49A; --toy:#2C7DA6;
+  --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1418; --surface:#162027; --sunk:#1C2931; --ink:#E5EDF1; --muted:#97A8B2; --line:#283741;
+  --accent:#FF7A2E; --accent-ink:#FF9C61; --accent-soft:#3A2113;
+  --ok:#4CC78E; --ok-soft:#133428; --no:#FF8B74; --no-soft:#3A1C17;
+  --stage:#192B36; --stage-ground:#3D5A69;
+  --dog:#D59A5E; --dog-dark:#9F6838; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E1418; --surface:#162027; --sunk:#1C2931; --ink:#E5EDF1; --muted:#97A8B2; --line:#283741;
+  --accent:#FF7A2E; --accent-ink:#FF9C61; --accent-soft:#3A2113;
+  --ok:#4CC78E; --ok-soft:#133428; --no:#FF8B74; --no-soft:#3A1C17;
+  --stage:#192B36; --stage-ground:#3D5A69;
+  --dog:#D59A5E; --dog-dark:#9F6838; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+button{font:inherit;color:inherit;-webkit-appearance:none;appearance:none;margin:0}
+body{overflow-wrap:break-word}
+section,main,.wrap{max-width:100%;overflow-x:clip}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+.wrap{width:100%;max-width:620px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 120px}
+
+/* top bar */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:6px 4px}
+.brand{display:flex;align-items:center;gap:8px;min-width:0;white-space:nowrap;overflow:hidden;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.brand svg{width:20px;height:20px;color:var(--accent)}
+.dogchip{flex:0 1 auto;max-width:60%;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px 6px 6px;font-size:13px;font-weight:600;cursor:pointer;min-width:0}
+.dogchip .av{width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--f-display);font-size:12px;flex:none}
+.dogchip span.t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.view-head{padding-block:22px 18px;display:grid;gap:10px}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink)}
+.h1{font-family:var(--f-display);font-weight:700;font-size:clamp(23px,6.4vw,34px);hyphens:auto;-webkit-hyphens:auto;line-height:1.12;letter-spacing:-.01em}
+.lead{color:var(--muted);max-width:60ch}
+.h2{font-family:var(--f-display);font-weight:500;font-size:19px;line-height:1.25}
+.sec{display:grid;gap:12px;margin-top:28px}
+.sec-label{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+
+/* profile */
+.profile{display:grid;gap:12px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fields .field:first-child{grid-column:1/-1}
+.field{display:grid;gap:4px;min-width:0}
+.field label{font-size:13px;color:var(--muted);font-weight:500}
+.field input{-webkit-appearance:none;appearance:none;display:block;width:100%;max-width:100%;min-width:0;min-height:46px;line-height:1.3;text-align:left;font:inherit;font-size:16px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.field input::-webkit-date-and-time-value{text-align:left;margin:0}
+.field input::-webkit-datetime-edit{padding:0}
+.field input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:11px 16px;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}
+.btn.ghost{background:var(--sunk);color:var(--ink)}
+.btn:focus-visible,.icon-btn:focus-visible,.tab:focus-visible,.row:focus-visible,.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.saved{font-size:13px;color:var(--ok);font-weight:600}
+
+/* timeline */
+.timeline{display:grid;gap:0;position:relative}
+.tl-item{display:grid;grid-template-columns:28px 1fr;gap:12px}
+.tl-rail{position:relative;display:flex;justify-content:center}
+.tl-rail::before{content:"";position:absolute;top:0;bottom:0;width:2px;background:var(--line)}
+.tl-item:first-child .tl-rail::before{top:22px}
+.tl-item:last-child .tl-rail::before{bottom:calc(100% - 22px)}
+.tl-dot{position:relative;margin-top:14px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--stage-ground)}
+.tl-item.done .tl-dot{background:var(--ok);border-color:var(--ok)}
+.tl-item.now .tl-dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 5px var(--accent-soft)}
+.tl-body{padding-bottom:12px;min-width:0}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.tl-item.now .stage{border-color:var(--accent)}
+.stage-head{display:grid;width:100%;text-align:left;background:none;border:0;padding:14px 16px;display:grid;gap:4px;cursor:pointer}
+.stage-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.range{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.badge{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--accent);color:#fff}
+.badge.ok{background:var(--ok-soft);color:var(--ok)}
+.stage-title{font-family:var(--f-display);font-weight:500;font-size:18px;line-height:1.25}
+.stage-sub{color:var(--muted);font-size:14px}
+.progress{display:flex;align-items:center;gap:8px;margin-top:6px}
+.bar{flex:1;height:6px;border-radius:99px;background:var(--sunk);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .3s}
+.progress span{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.stage-body{padding:0 16px 16px;display:grid;gap:16px}
+.lead-box{background:var(--sunk);border-radius:12px;padding:12px 14px;font-size:15px}
+.list-block{display:grid;gap:8px}
+.list-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.list-title.do{color:var(--ok)}
+.list-title.dont{color:var(--no)}
+.list-title.neutral{color:var(--muted)}
+ul.clean{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+ul.clean li{display:grid;grid-template-columns:18px 1fr;gap:8px;font-size:15px}
+ul.clean li::before{content:"";width:7px;height:7px;border-radius:50%;margin-top:9px;margin-left:4px;background:var(--stage-ground)}
+ul.do li::before{background:var(--ok)}
+ul.dont li::before{background:var(--no);border-radius:1px;transform:rotate(45deg)}
+.checks{display:grid;gap:6px}
+.check{display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:start;padding:8px 10px;border-radius:10px;background:var(--bg);cursor:pointer;font-size:15px}
+.check input{appearance:none;-webkit-appearance:none;width:22px;height:22px;border-radius:7px;border:2px solid var(--stage-ground);margin:0;display:grid;place-items:center;cursor:pointer;background:var(--surface)}
+.check input:checked{background:var(--ok);border-color:var(--ok)}
+.check input:checked::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:translateY(-1px) rotate(45deg)}
+.check input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.check.on span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.chip svg{width:14px;height:14px;color:var(--accent)}
+.note{font-size:14px;color:var(--muted);border-left:3px solid var(--stage-ground);padding-left:12px}
+
+/* commands list */
+.group{display:grid;gap:8px}
+.rows{display:grid;gap:8px}
+.row{width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:16px;padding:12px 14px;display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;cursor:pointer}
+.row-ico{width:52px;height:52px;border-radius:14px;background:var(--stage);display:grid;place-items:center;overflow:hidden}
+.row-ico svg{width:52px;height:52px}
+.row-main{min-width:0;display:grid;gap:2px}
+.row-name{font-family:var(--f-display);font-weight:500;font-size:16px}
+.row-cue{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status-dots{display:flex;gap:3px;margin-top:4px}
+.status-dots i{width:16px;height:4px;border-radius:2px;background:var(--sunk)}
+.status-dots i.on{background:var(--ok)}
+.status-label{font-size:12px;color:var(--muted)}
+.chev{width:18px;height:18px;color:var(--muted)}
+
+/* sheet */
+.sheet{position:fixed;inset:0;z-index:40;background:var(--bg);display:flex;flex-direction:column;animation:sheetIn .28s ease-out}
+@keyframes sheetIn{from{transform:translateX(24px);opacity:.4}to{transform:none;opacity:1}}
+.sheet-bar{flex:none;display:flex;align-items:center;gap:8px;padding-top:calc(env(safe-area-inset-top,0px) + 8px);padding-bottom:8px;padding-left:max(10px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));background:var(--bg);border-bottom:1px solid var(--line)}
+.icon-btn{border:0;background:none;display:inline-flex;align-items:center;gap:4px;padding:8px;border-radius:10px;cursor:pointer;color:var(--accent-ink);font-weight:600}
+.icon-btn svg{width:22px;height:22px}
+.sheet-title{font-family:var(--f-display);font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.sheet-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sheet-scroll .wrap{padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
+.cmd-head{display:grid;gap:8px;padding-block:18px 14px}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-size:13px;padding:4px 10px;border-radius:999px;background:var(--sunk);color:var(--ink)}
+.pill b{font-weight:600}
+
+/* player */
+.player{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.scene{background:var(--stage);position:relative}
+.scene svg{display:block;width:100%;height:auto;max-width:100%}
+.player-ctl{display:flex;align-items:center;gap:10px;padding:12px 14px;border-top:1px solid var(--line);flex-wrap:wrap}
+.steps-nav{display:flex;gap:6px;flex:1;flex-wrap:wrap}
+.step-chip{width:36px;height:36px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-family:var(--f-mono);font-weight:500;cursor:pointer}
+.step-chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.play{width:40px;height:40px;border-radius:50%;border:0;background:var(--accent);color:#fff;display:grid;place-items:center;cursor:pointer;flex:none}
+.play svg{width:18px;height:18px}
+.step-text{padding:4px 16px 16px;display:grid;gap:6px}
+.step-text h3{font-family:var(--f-display);font-weight:500;font-size:17px}
+.step-text p{font-size:15px}
+.legend{display:flex;flex-wrap:wrap;gap:12px;padding:0 16px 14px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+.steplist{counter-reset:s;display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.steplist li{counter-increment:s}
+.steplist button{width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:28px 1fr;gap:10px;cursor:pointer}
+.steplist button::before{content:counter(s);font-family:var(--f-mono);font-size:13px;width:26px;height:26px;border-radius:8px;background:var(--sunk);display:grid;place-items:center}
+.steplist li.on button{border-color:var(--accent)}
+.steplist li.on button::before{background:var(--accent);color:#fff}
+.steplist b{display:block;font-weight:600}
+.steplist span{font-size:14px;color:var(--muted)}
+.ready{background:var(--ok-soft);border-radius:14px;padding:14px;display:grid;gap:4px}
+.ready b{color:var(--ok);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--sunk);padding:4px;border-radius:14px}
+.seg button{border:0;background:none;border-radius:10px;padding:9px 4px;font-size:13px;line-height:1.2;min-width:0;font-weight:600;cursor:pointer;color:var(--muted)}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+
+/* off-leash */
+.rules{display:grid;gap:10px}
+.rule{display:grid;gap:4px;padding:14px 16px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.rule b{font-weight:600}
+.levels{display:grid;gap:12px;counter-reset:lv}
+.level{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:grid;gap:10px}
+.level.now{border-color:var(--accent)}
+.level-top{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.lv-num{width:44px;height:44px;border-radius:14px;background:var(--sunk);display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:18px}
+.level.now .lv-num{background:var(--accent);color:#fff}
+.level.passed .lv-num{background:var(--ok);color:#fff}
+.lv-title{font-family:var(--f-display);font-weight:500;font-size:17px;line-height:1.25}
+.lv-where{font-size:14px;color:var(--muted)}
+.crit{font-size:14px;background:var(--sunk);border-radius:10px;padding:8px 12px}
+.crit b{font-weight:600}
+.tracker{display:grid;gap:8px;border-top:1px dashed var(--line);padding-top:12px}
+.tr-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tr-btn{border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:9px 12px;font-weight:600;font-size:14px;cursor:pointer}
+.tr-btn.yes{color:var(--ok)}
+.tr-btn.no{color:var(--no)}
+.tr-dots{display:flex;gap:4px;flex:1;min-width:130px}
+.tr-dots i{width:12px;height:12px;border-radius:50%;background:var(--sunk);border:1px solid var(--line)}
+.tr-dots i.y{background:var(--ok);border-color:var(--ok)}
+.tr-dots i.n{background:var(--no);border-color:var(--no)}
+.tr-score{font-family:var(--f-mono);font-size:13px;font-variant-numeric:tabular-nums}
+.tr-reset{border:0;background:none;color:var(--muted);font-size:13px;cursor:pointer;text-decoration:underline;padding:4px}
+details.faq{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:0 16px}
+details.faq summary{cursor:pointer;list-style:none;padding:14px 0;font-weight:600;display:flex;justify-content:space-between;gap:12px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";font-family:var(--f-mono);color:var(--accent-ink);font-size:18px;line-height:1}
+details.faq[open] summary::after{content:"–"}
+details.faq .faq-body{padding-bottom:14px;display:grid;gap:8px;font-size:15px}
+
+/* basics */
+.principles{display:grid;gap:10px}
+.pr{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:4px}
+.pr h3{font-family:var(--f-display);font-weight:500;font-size:16px}
+.pr p{font-size:15px;color:var(--ink)}
+.three-d{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (max-width:540px){.three-d{grid-template-columns:1fr}.three-d div{grid-template-columns:120px 1fr;align-items:baseline;gap:8px}}
+.three-d div{background:var(--sunk);border-radius:12px;padding:10px;display:grid;gap:2px;min-width:0}
+.three-d b{font-family:var(--f-display);font-weight:500;font-size:14px}
+.three-d span{font-size:12px;color:var(--muted)}
+ol.howto{margin:0;padding:0;list-style:none;counter-reset:h;display:grid;gap:8px}
+ol.howto li{counter-increment:h;display:grid;grid-template-columns:28px 1fr;gap:10px;font-size:15px}
+ol.howto li::before{content:counter(h);width:26px;height:26px;border-radius:8px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--f-mono);font-size:13px}
+
+/* tab bar */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
+.tabbar-in{max-width:620px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.tab{border:0;background:none;padding:9px 2px 8px;display:grid;justify-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer}
+.tab svg{width:24px;height:24px}
+.tab.on{color:var(--accent-ink)}
+
+/* scene svg */
+.g-line{stroke:var(--stage-ground);stroke-width:2}
+.g-ticks{stroke:var(--stage-ground);stroke-width:2;stroke-dasharray:3 21;stroke-linecap:round}
+.mat{fill:var(--mat)}
+.p-torso{fill:var(--sleeve)}
+.p-leg{stroke:var(--pants);stroke-width:13;stroke-linecap:round;fill:none}
+.p-shoe{fill:var(--ink)}
+.p-arm{stroke:var(--sleeve);stroke-width:12;stroke-linecap:round;fill:none}
+.skin{fill:var(--skin)}
+.dog-far{stroke:var(--dog-dark);stroke-width:11;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.dog-s{stroke:var(--dog);stroke-linecap:round;stroke-linejoin:round;fill:none}
+.dog-f{fill:var(--dog)}
+.dog-ear{fill:var(--dog-dark)}
+.ink-f{fill:var(--ink)}
+.collar{stroke:var(--accent);stroke-width:5;stroke-linecap:round}
+.toy{fill:var(--toy)}
+.treat{fill:var(--treat)}
+.leash{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round}
+.leash.long{stroke:var(--toy);stroke-width:2.5}
+.arm{stroke:var(--sleeve);stroke-width:13;stroke-linecap:round;fill:none}
+.knuckle{stroke:var(--dog-dark);stroke-width:1.5;stroke-linecap:round;opacity:.5}
+.bub{fill:var(--surface);stroke:var(--line);stroke-width:1}
+.bub-t{fill:var(--ink);font-family:var(--f-body);font-weight:600;font-size:15px}
+.mark-b{fill:var(--ok)}
+.mark-t{fill:#fff;font-family:var(--f-body);font-weight:700;font-size:15px}
+.tiny-t{fill:var(--muted);font-family:var(--f-mono);font-size:10px}
+
+@media (prefers-reduced-motion: reduce){.sheet{animation:none}.bar i{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="app">
+  <div class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><ellipse cx="6" cy="9" rx="2.2" ry="2.8"/><ellipse cx="10.5" cy="5.5" rx="2.2" ry="2.8"/><ellipse cx="15.5" cy="5.5" rx="2.2" ry="2.8"/><ellipse cx="19" cy="9.5" rx="2.1" ry="2.7"/><path d="M12.6 11c3 0 6 4.2 6 6.6 0 2.1-1.8 2.6-3.2 2.2-1.2-.4-2-.7-2.8-.7s-1.6.3-2.8.7C8.4 20.2 6.6 19.7 6.6 17.6 6.6 15.2 9.6 11 12.6 11Z"/></svg>
+      Воспитание собаки
+    </div>
+    <button class="dogchip" id="dogchip" type="button"></button>
+  </div>
+
+  <section id="v-path" data-view="path"></section>
+  <section id="v-commands" data-view="commands" hidden></section>
+  <section id="v-offleash" data-view="offleash" hidden></section>
+  <section id="v-basics" data-view="basics" hidden></section>
+</div>
+
+<nav class="tabbar" aria-label="Разделы">
+  <div class="tabbar-in">
+    <button class="tab on" data-tab="path" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h7a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h7"/></svg>Путь</button>
+    <button class="tab" data-tab="commands" type="button">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><ellipse cx="6" cy="9" rx="2.2" ry="2.8"/><ellipse cx="10.5" cy="5.5" rx="2.2" ry="2.8"/><ellipse cx="15.5" cy="5.5" rx="2.2" ry="2.8"/><ellipse cx="19" cy="9.5" rx="2.1" ry="2.7"/><path d="M12.6 11c3 0 6 4.2 6 6.6 0 2.1-1.8 2.6-3.2 2.2-1.2-.4-2-.7-2.8-.7s-1.6.3-2.8.7C8.4 20.2 6.6 19.7 6.6 17.6 6.6 15.2 9.6 11 12.6 11Z"/></svg>Команды</button>
+    <button class="tab" data-tab="offleash" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 20c3-1 4-4 6-8s5-7 10-8"/><path d="M4 20c2 1 6 1 9-1" stroke-dasharray="2 3"/><circle cx="19" cy="4.5" r="1.8"/></svg>Без поводка</button>
+    <button class="tab" data-tab="basics" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5C6.5 4 9.5 4 12 6c2.5-2 5.5-2 8-.5V19c-2.5-1.5-5.5-1.5-8 .5-2.5-2-5.5-2-8-.5Z"/><path d="M12 6v13.5"/></svg>Основы</button>
+  </div>
+</nav>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <div class="sheet-bar">
+    <button class="icon-btn" id="sheet-back" type="button" aria-label="Назад к командам">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>Команды
+    </button>
+    <div class="sheet-title" id="sheet-title"></div>
+  </div>
+  <div class="sheet-scroll" id="sheet-scroll"><div class="wrap" id="sheet-body"></div></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- storage ---------- */
+var KEY = "vosp-sobaki-v1";
+var S = {name:"", birth:"", home:"", checks:{}, cmd:{}, rec:{}, pre:{}};
+try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); for (var k in o) S[k] = o[k]; } } catch(e) {}
+if (!S.name) S.name = "Полли";
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
+function dogName(){ return (S.name || "").trim() || "Полли"; }
+
+/* ---------- content: stages ---------- */
+var STAGES = [
+ { id:"s1", range:"День 1–3", title:"Первые дни дома", sub:"Безопасность, сон и распорядок",
+   lead:"Команды учить ещё рано. Главное сейчас — чтобы собака почувствовала себя в безопасности и поняла распорядок: где спать, где есть, куда ходить в туалет.",
+   do:["Выносите в туалет после сна, еды, игры и каждые 1–2 часа (щенка). Сразу после — похвала и лакомство.",
+       "Давайте спать: щенок спит 18–20 часов в сутки. Место для сна — в тихом углу, не в проходе.",
+       "Знакомьте с семьёй спокойно и по очереди, без толпы гостей в первые дни.",
+       "Называйте по кличке только в приятных ситуациях: еда, ласка, игра.",
+       "Кормите тем же кормом, что у заводчика или в приюте. Новый корм вводите постепенно, за 5–7 дней."],
+   dont:["Ругать за лужи и тыкать носом. Собака не связывает наказание с тем, что сделала раньше, и начинает прятаться, чтобы сходить в туалет.",
+         "Оставлять одну надолго в первый же день.",
+         "Подзывать, чтобы сделать неприятное: стричь когти, купать, закрыть."],
+   note:"Взрослой собаке из приюта нужно больше времени. Ориентир «3–3–3»: около 3 дней на стресс, 3 недели на привыкание к распорядку и 3 месяца, чтобы почувствовать себя дома.",
+   check:["Место для сна готово и стоит в тихом углу","Провода, обувь, бытовая химия и лекарства убраны","Есть шлейка, поводок и адресник с телефоном","Найден ветеринар, назначен первый визит","Составлен график туалета"],
+   cmds:[] },
+ { id:"s2", range:"8–12 недель", title:"Социализация и первые навыки", sub:"Самое важное окно в жизни собаки",
+   lead:"Период социализации закрывается примерно к 12–14 неделям. Всё, с чем щенок спокойно познакомится сейчас, станет для него нормой на всю жизнь.",
+   do:["Каждый день — что-то новое: люди в шапках и очках, дети, зонт, пылесос, звук машин, лифт, разные поверхности. Коротко и с лакомством.",
+       "Приучайте к рукам: трогайте лапы, уши, смотрите зубы и сразу награждайте.",
+       "Тренируйте одиночество: выходите из комнаты на минуту, потом на 5, 10. Возвращайтесь спокойно, без бурных приветствий.",
+       "Учите «мягкий рот»: если щенок прикусил сильно — короткое «Ай!», игра прекращается на 10–20 секунд, потом дайте жевательную игрушку.",
+       "Занятия по 3–5 минут, 3–4 раза в день. Заканчивайте на удачном повторе."],
+   dont:["Гулять по земле там, где много чужих собак, до окончания прививок. Сроки уточните у ветеринара; до этого выносите щенка на руках, чтобы он видел и слышал улицу.",
+         "Играть руками «в драку» — щенок учится, что руки можно кусать.",
+         "Заставлять подходить к страшному. Дайте щенку смотреть с безопасного расстояния."],
+   note:"Если собака взрослая, этот этап тоже нужен: маркер, имя и «Сидеть» — с них начинается любое обучение.",
+   check:["Маркер «Да!» заряжен","Отзывается на кличку дома","Познакомился с 10 новыми людьми","Видел и слышал 10 новых вещей: машины, лифт, пылесос…","Спокойно даёт трогать лапы и уши","Спокойно ходит в шлейке по дому"],
+   cmds:["marker","name","sit","recall"] },
+ { id:"s3", range:"3–4 месяца", title:"Первые прогулки", sub:"Улица, туалет, поводок",
+   lead:"После прививок и карантина начинается улица. Мир огромный и интересный, поэтому снижайте требования: то, что получается дома, на улице придётся учить заново.",
+   do:["Переносите туалет на улицу: выходите сразу после сна и еды, награждайте прямо на месте.",
+       "Начинайте «Рядом» как игру: провисший поводок — идём, натянутый — стоим.",
+       "Учите «Ко мне» на улице на длинном поводке (корде) 3–5 метров.",
+       "Играйте в прятки: пока щенок нюхает, спрячьтесь за дерево. Нашёл — праздник. Сейчас щенки ещё держатся рядом с хозяином — используйте это.",
+       "Учите «Оставь»: на улице много мусора.",
+       "Знакомьте со спокойными взрослыми собаками, а не со всеми подряд."],
+   dont:["Отпускать с поводка, даже если щенок «и так не отходит». Через пару месяцев начнётся подростковый возраст, и привычка убегать закрепится.",
+         "Таскать за поводок. Если щенок упирается, присядьте и подманите.",
+         "Гулять часами. Ориентир для щенка — около 5 минут прогулки на каждый месяц возраста за один выход, плюс свободное время для нюхания."],
+   note:"С 4 до 6 месяцев меняются зубы. Щенок грызёт всё подряд — давайте разрешённые жевательные игрушки и убирайте ценное.",
+   check:["Ходит в туалет на улице","«Сидеть» получается на улице","Прибегает на «Ко мне» на корде в тихом месте","«Лежать» получается дома","Привык к корде и шлейке","Сыграли в прятки на прогулке"],
+   cmds:["down","heel","leave","recall"] },
+ { id:"s4", range:"4–6 месяцев", title:"Выдержка и обобщение", sub:"Те же команды в разных местах",
+   lead:"Собака уже знает основные команды дома. Теперь задача — чтобы они работали везде: во дворе, в парке, в гостях, рядом с другими собаками.",
+   do:["Повторяйте каждую команду в 5 разных местах. В новом месте начинайте с самого лёгкого уровня.",
+       "Учите выдержку: «Ждать», «Место», «Свободно!».",
+       "Учите «Дай» через обмен и игру в перетяжку с правилами.",
+       "На прогулке на корде ловите моменты, когда собака сама оглянулась на вас, — «Да!» и лакомство.",
+       "Постепенно увеличивайте время одиночества."],
+   dont:["Ждать, что команда, выученная на кухне, сработает в парке.",
+         "Повторять команду много раз. Сказали один раз — помогите жестом или упростите задачу."],
+   note:"Правило трёх «Д»: длительность, дистанция и отвлечения. Усложняйте только одно за раз.",
+   check:["«Сидеть» и «Лежать» работают в 5 разных местах","Держит «Ждать» 30 секунд","Уходит на «Место» по слову","Отдаёт игрушку по «Дай»","Сама оглядывается на вас на прогулке"],
+   cmds:["wait","place","give"] },
+ { id:"s5", range:"6–12 месяцев", title:"Подростковый период", sub:"«Всё забыл» — это нормально",
+   lead:"Собака как будто забывает команды, проверяет границы, сильнее реагирует на запахи и на других собак. Это этап взросления, а не испорченное обучение. Он проходит, если сохранять спокойствие и последовательность.",
+   do:["Вернитесь к более лёгким условиям и повысьте ценность награды: сыр, мясо, игра.",
+       "Давайте больше нагрузки на нос и голову: поиск лакомств, нюхательный коврик, новые маршруты.",
+       "На прогулке — корда, пока подзыв не работает в 9 случаях из 10.",
+       "Отрабатывайте подзыв от других собак с помощником.",
+       "Держите стабильный режим дня."],
+   dont:["Отпускать с поводка «на авось». Каждый удачный побег закрепляет привычку убегать.",
+         "Звать, когда собака точно не придёт. Так вы учите её не слушать команду.",
+         "Наказывать за медленный подход. Собака запомнит: подошла — получила неприятность."],
+   note:"Кастрация и стерилизация влияют на поведение и здоровье. Оптимальный возраст зависит от размера породы — обсудите это с ветеринаром.",
+   check:["Подзыв на корде работает в 9 из 10 случаев","Проходит мимо собак на поводке без рывков","Ежедневно есть занятия на нюх или голову","Пройден уровень 3 программы «Без поводка»"],
+   cmds:["recall","heel","wait"] },
+ { id:"s6", range:"1–2 года", title:"Взрослая собака", sub:"Свобода и поддержание навыков",
+   lead:"Мелкие породы взрослеют к году, крупные — к двум. Навыки закреплены, теперь их нужно поддерживать, иначе они постепенно слабеют.",
+   do:["Отпускайте с поводка в разрешённых безопасных местах, когда пройдены уровни 5–6 программы «Без поводка».",
+       "Каждую прогулку делайте 3–5 подзывов «просто так»: позвали, наградили, отпустили.",
+       "Награждайте не каждый раз лакомством, но всегда хвалите. Иногда — «джекпот».",
+       "Пробуйте новое: нюхательная работа, аджилити, трюки, походы.",
+       "Раз в неделю проверяйте аварийный подзыв (свисток) с самой ценной наградой."],
+   dont:["Перестать награждать за подзыв: «она и так знает». Без награды команда постепенно ослабевает.",
+         "Отпускать рядом с дорогой, даже если собака идеально слушается."],
+   note:"Любой срыв — повод вернуться на один уровень назад, к корде, а не наказывать.",
+   check:["Свободно гуляет в безопасных местах","Подзыв от собак и запахов работает","Есть занятие, которое нравится вам обоим","Аварийный подзыв проверен в этом месяце"],
+   cmds:["recall"] }
+];
+
+/* ---------- content: commands (with animation keyframes) ---------- */
+var CMDS = [
+ { id:"marker", group:"Фундамент", name:"Маркер «Да!»", cue:"слово «Да!» или щелчок кликера", age:"с первого дня",
+   why:"Маркер — это «фотография» правильного момента. Он говорит собаке, за что именно она получает награду, и ускоряет обучение любой команде.",
+   steps:[
+    {t:"Зарядите маркер", d:"Скажите «Да!» коротко и бодро и в течение секунды дайте кусочек лакомства. Собаке пока ничего не нужно делать. 10–15 повторов за подход, 2–3 подхода в день.",
+     a:[{p:"stand",hand:null,d:300,h:500},{mark:1,d:150,h:450},{hand:[330,112],tr:1,d:250,h:50},{hand:[254,74],d:450,h:350},{tr:0,d:200,h:500},{hand:null,d:400,h:400}]},
+    {t:"Проверьте", d:"Подождите, пока собака отвлечётся и начнёт нюхать пол, и скажите «Да!». Если она сразу поднимает голову и ищет вас глазами — маркер заряжен.",
+     a:[{p:"sniff",hand:null,d:500,h:1000},{mark:1,d:150,h:150},{p:"alert",d:280,h:350},{hand:[252,58],tr:1,d:450,h:250},{tr:0,d:200,h:350},{hand:null,d:400,h:300}]},
+    {t:"Маркер в работе", d:"Теперь «Да!» звучит ровно в момент правильного действия, а лакомство приходит следом. Это обещание: после «Да!» награда есть всегда, даже если вы ошиблись с моментом.",
+     a:[{p:"stand",hand:null,h:600},{p:"sit",d:800,h:100},{mark:1,d:120,h:400},{hand:[228,70],tr:1,d:450,h:200},{tr:0,d:200,h:400},{hand:null,p:"stand",d:600,h:400}]}
+   ],
+   mistakes:["Сказать «Да!» и забыть наградить — слово обесценивается.","Маркер с опозданием: собака уже встала, а вы только говорите «Да!». Отмечайте точно в момент действия.","Тянуться за лакомством до маркера. Сначала слово, потом рука — иначе собака смотрит на руку, а не слушает."],
+   ready:"Собака поднимает голову на «Да!» в любой комнате дома." },
+
+ { id:"name", group:"Фундамент", name:"Имя и «Смотри»", cue:"кличка, «Смотри»", age:"с 8 недель",
+   why:"Внимание — начало любой команды. Если собака не посмотрела на вас, следующее слово она просто не услышит.",
+   steps:[
+    {t:"Кличка — значит «посмотри на меня»", d:"Произнесите кличку один раз. Собака повернула голову — «Да!» и лакомство. Никогда не используйте кличку, чтобы ругать.",
+     a:[{p:"sniff",hand:null,d:400,h:900},{say:"{name}!",d:100,h:350},{p:"alert",d:280,h:150},{mark:1,d:100,h:400},{hand:[252,58],tr:1,d:450,h:200},{tr:0,d:200,h:400},{hand:null,p:"stand",d:400,h:300}]},
+    {t:"Контакт глаз", d:"Отведите руку с лакомством в сторону и ждите молча. Собака сначала смотрит на руку, потом переводит взгляд на ваше лицо — в этот момент «Да!» и лакомство.",
+     a:[{p:"stand",hand:[320,128],tr:1,d:500,h:1100},{p:"up",d:400,h:300},{mark:1,d:100,h:400},{hand:[244,46],d:450,h:200},{tr:0,d:200,h:400},{hand:null,p:"stand",d:400,h:300}]},
+    {t:"Добавьте «Смотри»", d:"Когда собака уверенно переводит взгляд на лицо, говорите «Смотри» перед ожиданием. Постепенно увеличивайте время контакта до 3–5 секунд.",
+     a:[{p:"stand",hand:[320,128],tr:1,d:500,h:400},{say:"Смотри",d:100,h:600},{p:"up",d:400,h:1300},{mark:1,d:100,h:400},{hand:[244,46],d:450,h:200},{tr:0,d:200,h:400},{hand:null,p:"stand",d:400,h:300}]}
+   ],
+   mistakes:["Повторять кличку десять раз подряд — собака учится её не замечать.","Звать по имени перед неприятным: купание, уход с площадки.","Сразу требовать долгий взгляд. Начинайте с доли секунды."],
+   ready:"Оборачивается на кличку дома и в тихом месте на улице в 8 случаях из 10." },
+
+ { id:"sit", group:"Базовые", name:"Сидеть", cue:"«Сидеть»", age:"с 8 недель",
+   why:"Самая простая поза и «вежливое» поведение по умолчанию: сесть, чтобы поздороваться, получить миску, выйти из двери.",
+   steps:[
+    {t:"Наведение лакомством", d:"Поднесите лакомство к носу и медленно ведите вверх и чуть назад, над головой. Голова поднимается — зад опускается. В момент касания пола «Да!» и лакомство.",
+     a:[{p:"stand",hand:[254,74],tr:1,d:450,h:400},{p:"look",hand:[214,40],d:1100,h:150},{mark:1,d:100,h:400},{hand:[220,50],d:250,h:150},{tr:0,d:200,h:400},{hand:null,p:"stand",d:600,h:400}]},
+    {t:"Пустая рука", d:"После 5–6 удачных повторов делайте тот же жест пустой рукой, а лакомство давайте после «Да!» из другой руки или поясной сумки. Так жест становится сигналом, а не приманкой.",
+     a:[{p:"stand",hand:[254,74],tr:0,d:450,h:400},{p:"look",hand:[214,40],d:1100,h:150},{mark:1,d:100,h:250},{hand:[340,112],d:350,h:60},{tr:1,d:80,h:0},{hand:[220,50],d:400,h:100},{tr:0,d:200,h:400},{hand:null,p:"stand",d:600,h:400}]},
+    {t:"Добавьте слово", d:"Скажите «Сидеть» один раз, выдержите секундную паузу и только потом подайте жест. Скоро собака начнёт садиться на слово, не дожидаясь руки.",
+     a:[{p:"stand",hand:[300,112],tr:0,d:450,h:300},{say:"Сидеть",d:100,h:900},{hand:[214,40],p:"look",d:900,h:150},{mark:1,d:100,h:250},{hand:[340,112],d:300,h:60},{tr:1,d:80,h:0},{hand:[220,50],d:400,h:100},{tr:0,d:200,h:400},{hand:null,p:"stand",d:600,h:400}]},
+    {t:"Только слово", d:"Скажите «Сидеть» и подождите 2–3 секунды без жеста. Села — «джекпот»: 3–4 лакомства подряд. Не села — помогите жестом и вернитесь к шагу 3.",
+     a:[{p:"stand",hand:null,h:500},{say:"Сидеть",d:100,h:700},{p:"sit",d:800,h:100},{mark:1,d:100,h:400},{hand:[228,70],tr:1,d:450,h:200},{tr:0,d:200,h:400},{hand:null,p:"stand",d:600,h:400}]}
+   ],
+   mistakes:["Поднимать лакомство слишком высоко — собака подпрыгивает. Держите у самого носа.","Давить на круп рукой. Собака упирается и не понимает, чего от неё хотят.","Повторять «Сидеть, сидеть, СИДЕТЬ». Скажите один раз и помогите жестом."],
+   ready:"Садится по слову с первого раза в 5 разных местах, включая улицу." },
+
+ { id:"down", group:"Базовые", name:"Лежать", cue:"«Лежать»", age:"с 10–12 недель",
+   why:"Поза спокойствия. На ней строятся «Место», долгая выдержка и экстренная остановка собаки на расстоянии.",
+   steps:[
+    {t:"Лакомство к полу буквой «Г»", d:"Из положения сидя ведите лакомство от носа строго вниз, к полу между передними лапами, а затем медленно вперёд по полу. Локти коснулись пола — «Да!» и лакомство.",
+     a:[{p:"sit",hand:[228,70],tr:1,d:450,h:400},{p:"sitlow",hand:[232,160],d:900,h:200},{p:"down",hand:[262,160],d:1000,h:150},{mark:1,d:100,h:400},{hand:[246,128],d:300,h:100},{tr:0,d:200,h:400},{hand:null,p:"sit",d:600,h:400}]},
+    {t:"Награждайте полпути", d:"Если собака не ложится, наградите за то, что она опустила голову и плечи. В следующий раз ждите чуть больше. «Лежать» собирается из маленьких шагов.",
+     a:[{p:"sit",hand:[228,70],tr:1,d:450,h:300},{p:"sitlow",hand:[226,150],d:900,h:200},{mark:1,d:100,h:400},{tr:0,d:200,h:400},{p:"sit",hand:[228,70],tr:1,d:600,h:200},{p:"sitlow",hand:[232,162],d:800,h:150},{p:"down",hand:[262,160],d:900,h:100},{mark:1,d:100,h:400},{hand:[246,128],d:300,h:100},{tr:0,d:200,h:300},{hand:null,p:"sit",d:600,h:300}]},
+    {t:"Слово и жест", d:"Скажите «Лежать», выдержите паузу и опустите раскрытую ладонь к полу. Лакомство давайте после «Да!» из другой руки.",
+     a:[{p:"sit",hand:[300,96],tr:0,d:450,h:300},{say:"Лежать",d:100,h:700},{hand:[290,152],d:600,h:100},{p:"down",d:900,h:100},{mark:1,d:100,h:300},{hand:[340,120],d:300,h:50},{tr:1,d:80,h:0},{hand:[246,128],d:400,h:100},{tr:0,d:200,h:400},{hand:null,p:"sit",d:600,h:300}]},
+    {t:"Только слово", d:"Скажите «Лежать» без жеста и подождите. Легла — «джекпот». Учите и из положения стоя: сначала снова с жестом.",
+     a:[{p:"sit",hand:null,h:500},{say:"Лежать",d:100,h:700},{p:"down",d:900,h:100},{mark:1,d:100,h:400},{hand:[246,128],tr:1,d:450,h:200},{tr:0,d:200,h:400},{hand:null,p:"sit",d:600,h:400}]}
+   ],
+   mistakes:["Тянуть лакомство вперёд слишком быстро — собака встаёт и идёт за рукой.","Учить на холодном скользком полу. Начните на ковре или коврике.","Прижимать собаку к полу руками."],
+   ready:"Ложится по слову из положения сидя и стоя, дома и на улице." },
+
+ { id:"wait", group:"Базовые", name:"Ждать и «Свободно!»", cue:"«Ждать» … «Свободно!»", age:"с 4 месяцев",
+   why:"Умение сохранять позу, пока вы не разрешили. На ней держится безопасность у двери и у дороги и остановка на прогулке без поводка.",
+   steps:[
+    {t:"Длительность", d:"Посадите собаку, скажите «Ждать», выдержите 2–3 секунды, «Да!» и лакомство в той же позе. Затем «Свободно!» — разрешение встать. Награда приходит к собаке, а не собака к награде.",
+     a:[{p:"sit",hand:[300,100],tr:0,d:450,h:200},{say:"Ждать",hand:[270,82],d:300,h:1700},{mark:1,d:100,h:300},{hand:[340,120],d:300,h:50},{tr:1,d:80,h:0},{hand:[228,70],d:400,h:100},{tr:0,d:200,h:300},{say:"Свободно!",hand:null,d:300,h:300},{p:"stand",d:500,h:700}]},
+    {t:"Дистанция", d:"Шаг назад — сразу вернитесь и наградите. Потом 2 шага, 3, 5. Расстояние увеличивайте, только когда собака уверенно держит время.",
+     a:[{p:"sit",pp:255,pf:-1,hand:null,d:400,h:200},{say:"Ждать",d:100,h:500},{pp:335,pw:1,d:1100,h:0},{pw:0,d:100,h:800},{pp:255,pw:1,d:1100,h:0},{pw:0,d:100,h:100},{mark:1,d:100,h:300},{hand:[228,70],tr:1,d:400,h:150},{tr:0,d:200,h:300},{hand:null,say:"Свободно!",d:300,h:300},{p:"stand",d:500,h:700}]},
+    {t:"Отвлечения", d:"Добавляйте отвлечения понемногу: уроните лакомство на пол, присядьте, отойдите за угол. Награда — из руки, а не с пола.",
+     a:[{p:"sit",hand:[300,100],tr:1,d:450,h:200},{say:"Ждать",d:100,h:600},{hand:[286,150],d:600,h:100},{tr:0,ft:1,ftx:270,d:250,h:1000},{hand:[300,100],d:400,h:300},{mark:1,d:100,h:300},{hand:[228,70],tr:1,d:450,h:100},{tr:0,d:200,h:300},{say:"Свободно!",hand:null,d:300,h:200},{ft:0,p:"stand",d:500,h:700}]}
+   ],
+   mistakes:["Подзывать собаку из выдержки. Возвращайтесь к ней сами, иначе она начнёт срываться, предугадывая «Ко мне».","Усложнять всё сразу: и долго, и далеко, и с отвлечениями.","Забывать отпускать словом. Собака встала сама — значит, вы держали слишком долго."],
+   ready:"Сидит 30 секунд, пока вы отходите на 5 шагов, и встаёт только по «Свободно!»." },
+
+ { id:"place", group:"Базовые", name:"Место", cue:"«Место»", age:"с 4 месяцев", scene:{mat:200},
+   why:"Своя лежанка, на которую собака уходит и спокойно ждёт: во время еды, прихода гостей, уборки. Это «Ждать» с понятной точкой на полу.",
+   steps:[
+    {t:"Лежанка — это выгодно", d:"Положите лежанку и наградите, как только собака встала на неё хотя бы одной лапой. Бросьте лакомство в сторону, чтобы она сошла, и повторите.",
+     a:[{p:"stand",dx:-80,hand:null,d:400,h:500},{dx:55,walk:1,d:1500,h:0},{walk:0,mark:1,d:150,h:300},{hand:[305,74],tr:1,d:450,h:150},{tr:0,d:200,h:300},{hand:null,f:-1,dx:-80,walk:1,d:1500,h:0},{f:1,walk:0,d:100,h:300}]},
+    {t:"Лечь на лежанке", d:"Когда собака сама идёт на лежанку, наводите её в «Лежать» прямо там. Награда — только на лежанке.",
+     a:[{p:"stand",dx:-80,hand:null,h:400},{dx:55,walk:1,d:1500,h:0},{walk:0,hand:[300,74],tr:1,d:300,h:200},{p:"sitlow",hand:[286,160],d:800,h:100},{p:"down",hand:[312,160],d:800,h:100},{mark:1,d:100,h:300},{hand:[302,128],d:300,h:100},{tr:0,d:200,h:500},{hand:null,p:"stand",d:500,h:100},{f:-1,dx:-80,walk:1,d:1500,h:0},{f:1,walk:0,d:100,h:200}]},
+    {t:"Посыл «Место»", d:"Скажите «Место» и покажите рукой на лежанку. Сначала с одного шага, потом с 2–3 метров. Дошла и легла — «Да!» и лакомство на лежанке.",
+     a:[{p:"stand",dx:-80,hand:[330,96],tr:0,d:400,h:300},{say:"Место",hand:[292,124],d:400,h:400},{dx:55,walk:1,d:1500,h:0},{walk:0,p:"down",d:800,h:150},{mark:1,d:100,h:300},{hand:[340,110],d:250,h:50},{tr:1,d:80,h:0},{hand:[302,128],d:400,h:100},{tr:0,d:200,h:500},{hand:null,p:"stand",d:500,h:100},{f:-1,dx:-80,walk:1,d:1500,h:0},{f:1,walk:0,d:100,h:200}]},
+    {t:"Выдержка на месте", d:"Награждайте несколько раз подряд, пока собака лежит, постепенно увеличивая паузы. Закончите словом «Свободно!».",
+     a:[{p:"down",dx:55,hand:null,h:900},{hand:[302,128],tr:1,d:450,h:100},{tr:0,d:200,h:1200},{hand:[302,128],tr:1,d:300,h:100},{tr:0,d:200,h:1600},{say:"Свободно!",hand:null,d:300,h:300},{p:"stand",d:500,h:200},{f:-1,dx:-80,walk:1,d:1400,h:0},{f:1,walk:0,d:100,h:200},{dx:55,walk:1,d:1400,h:0},{walk:0,p:"down",d:700,h:300}]}
+   ],
+   mistakes:["Отправлять на место в наказание — лежанка станет неприятной.","Отпускать «по ситуации» без слова — собака решает сама, когда уходить.","Давать лакомство, когда собака уже сошла с лежанки."],
+   ready:"Уходит на лежанку с 3 метров по слову и лежит минуту, пока вы ходите по комнате." },
+
+ { id:"recall", group:"Для прогулок", name:"Ко мне", cue:"«Ко мне» или свисток", age:"с 8 недель", scene:{pp:325,pf:-1},
+   why:"Главная команда для безопасности и основа прогулок без поводка. Подзыв должен быть для собаки самым выгодным событием прогулки.",
+   steps:[
+    {t:"Игра-убегалка", d:"Позовите один раз весёлым голосом и сразу отбегите на пару шагов от собаки. Догоняющая собака бежит быстрее всего. Добежала — «Да!», лакомство и игра.",
+     a:[{p:"sniff",dx:-70,hand:null,d:400,h:900},{say:"{name}, ко мне!",d:100,h:300},{p:"alert",d:250,h:100},{p:"stand",dx:70,walk:2,pw:1,pp:345,d:1100,h:0},{walk:0,pw:0,mark:1,d:200,h:300},{hand:[318,72],tr:1,d:400,h:200},{tr:0,d:200,h:500},{hand:null,f:-1,dx:-70,walk:1,pp:325,d:1500,h:0},{f:1,walk:0,p:"sniff",d:300,h:200}]},
+    {t:"Касание шлейки", d:"Пока собака ест лакомство, возьмитесь за шлейку или ошейник и отпустите. Иначе она научится подбегать на расстояние вытянутой руки и уворачиваться. Для прогулок без поводка это критично.",
+     a:[{p:"sniff",dx:-70,hand:null,h:700},{say:"Ко мне!",d:100,h:300},{p:"stand",dx:70,walk:2,d:1100,h:0},{walk:0,p:"sit",d:500,h:100},{mark:1,d:100,h:300},{hand:[296,70],tr:1,d:400,h:150},{tr:0,d:200,h:200},{hand:[260,84],d:350,h:700},{hand:null,p:"stand",d:400,h:100},{f:-1,dx:-70,walk:1,d:1500,h:0},{f:1,walk:0,p:"sniff",d:300,h:200}]},
+    {t:"Наградили — отпустили", d:"Позвали, наградили, сказали «Гуляй!» и отпустили. Тогда подзыв не означает конец веселья, и собака не начинает тянуть время. Большинство подзывов на прогулке должны заканчиваться именно так.",
+     a:[{p:"sniff",dx:-70,hand:null,h:800},{say:"Ко мне!",d:100,h:300},{p:"stand",dx:70,walk:2,d:1100,h:0},{walk:0,mark:1,d:200,h:300},{hand:[318,72],tr:1,d:400,h:200},{tr:0,d:200,h:300},{hand:null,say:"Гуляй!",d:300,h:400},{f:-1,dx:-70,walk:2,d:1100,h:0},{f:1,walk:0,p:"sniff",d:300,h:200}]}
+   ],
+   mistakes:["Звать, когда собака точно не придёт (например, бежит к другой собаке). Так вы учите её игнорировать команду. Лучше подойдите сами.","Ругать за медленный подход. Собака запомнит: подошла — получила неприятность.","Звать, только чтобы пристегнуть поводок и увести домой.","Бегать за собакой. Это игра, в которой она всегда выигрывает."],
+   ready:"Прибегает с первого зова дома, во дворе и на корде в тихом парке в 9 случаях из 10." },
+
+ { id:"heel", group:"Для прогулок", name:"Рядом", cue:"«Рядом»", age:"с 3 месяцев", scene:{pp:210,pf:1,line:"leash",sag:22},
+   why:"Прогулка на провисшем поводке и умение идти у ноги, когда это нужно: у дороги, мимо людей, в толпе.",
+   steps:[
+    {t:"Награда у ноги", d:"Идите и каждые несколько шагов давайте лакомство у шва брюк, на уровне морды собаки. Собака понимает: у ноги — самое выгодное место.",
+     a:[{p:"stand",dx:-10,walk:1,pw:1,gs:1,hand:null,d:300,h:1200},{mark:1,d:100,h:200},{hand:[238,72],tr:1,d:400,h:150},{tr:0,d:200,h:300},{hand:null,d:350,h:700}]},
+    {t:"Натянул — стоп", d:"Поводок натянулся — остановитесь и стойте. Собака сделала шаг назад, поводок провис — «Да!», лакомство у ноги и идём дальше. Тянуть становится бессмысленно.",
+     a:[{p:"stand",dx:-10,walk:1,pw:1,gs:1,sag:22,hand:null,d:300,h:600},{dx:60,sag:0,d:900,h:200},{walk:0,pw:0,gs:0,d:300,h:1000},{p:"alert",d:300,h:300},{dx:-10,walk:1,sag:22,d:900,h:0},{walk:0,p:"up",d:300,h:100},{mark:1,d:100,h:300},{hand:[234,46],tr:1,d:400,h:150},{tr:0,d:200,h:300},{hand:null,p:"stand",walk:1,pw:1,gs:1,d:400,h:600}]},
+    {t:"Контакт на ходу", d:"Ловите моменты, когда собака сама поднимает на вас глаза во время ходьбы: «Да!» и награда у ноги. Чем чаще она проверяет, где вы, тем проще будет без поводка.",
+     a:[{p:"stand",dx:-10,walk:1,pw:1,gs:1,hand:null,d:300,h:1100},{p:"up",d:300,h:150},{mark:1,d:100,h:250},{hand:[234,46],tr:1,d:400,h:150},{tr:0,d:200,h:300},{hand:null,p:"stand",d:350,h:600}]},
+    {t:"Слово «Рядом»", d:"Когда собака уверенно держится у ноги, говорите «Рядом» в начале движения. Используйте его там, где нужно идти чётко. В остальное время разрешайте нюхать на провисшем поводке.",
+     a:[{p:"stand",dx:-10,walk:0,pw:0,gs:0,hand:null,d:300,h:500},{say:"Рядом",d:100,h:500},{walk:1,pw:1,gs:1,d:200,h:900},{mark:1,d:100,h:250},{hand:[238,72],tr:1,d:400,h:150},{tr:0,d:200,h:300},{hand:null,d:350,h:500},{walk:0,pw:0,gs:0,d:200,h:300}]}
+   ],
+   mistakes:["Тянуть собаку назад поводком — она тянет сильнее в ответ.","Идти дальше, когда поводок натянут: собака учится, что натяжение двигает вас вперёд.","Требовать идеального «Рядом» всю прогулку. Собаке нужно нюхать — так она узнаёт мир и устаёт."],
+   ready:"Идёт на провисшем поводке 5 минут в спокойном месте и проходит мимо людей у ноги." },
+
+ { id:"leave", group:"Для прогулок", name:"Оставь / Фу", cue:"«Оставь» (или «Фу»)", age:"с 10 недель",
+   why:"Защищает от мусора и отравы на земле. Учим не запретом, а сделкой: отказалась от этого — получила лучшее от меня.",
+   steps:[
+    {t:"Лакомство в кулаке", d:"Зажмите лакомство в кулаке и поднесите к собаке. Она будет нюхать, лизать, толкать — молчите и ждите. Отвела морду — «Да!» и лакомство из другой руки.",
+     a:[{p:"stand",hand:[252,140],fist:1,tr:0,d:450,h:200},{p:"sniff",d:500,h:1500},{p:"stand",d:450,h:250},{mark:1,d:100,h:300},{hand:[340,110],fist:0,d:300,h:60},{tr:1,d:80,h:0},{hand:[254,74],d:400,h:150},{tr:0,d:200,h:400},{hand:[252,140],fist:1,tr:0,d:500,h:200}]},
+    {t:"Открытая ладонь", d:"Покажите лакомство на открытой ладони. Собака тянется — сожмите кулак. Отвела морду — «Да!» и лакомство из другой руки. Постепенно держите ладонь открытой всё дольше.",
+     a:[{p:"stand",hand:[256,140],fist:0,tr:1,d:450,h:500},{p:"sniff",d:450,h:50},{fist:1,d:100,h:1200},{p:"stand",d:450,h:200},{fist:0,d:100,h:500},{mark:1,d:100,h:300},{hand:[254,74],d:450,h:150},{tr:0,d:200,h:400},{hand:[256,140],tr:1,d:500,h:200}]},
+    {t:"Еда на полу и слово", d:"Положите лакомство на пол и будьте готовы накрыть его ладонью или ногой. Скажите «Оставь» один раз. Собака перевела взгляд с еды на вас — «Да!» и награда получше из руки. С пола она не получает никогда.",
+     a:[{p:"stand",ft:1,ftx:266,hand:null,d:400,h:300},{say:"Оставь",d:100,h:400},{p:"sniff",d:500,h:600},{p:"up",d:400,h:150},{mark:1,d:100,h:300},{hand:[244,46],tr:1,d:450,h:150},{tr:0,d:200,h:400},{hand:null,p:"stand",d:400,h:400}]},
+    {t:"На прогулке", d:"Начните на поводке там, где вы сами разложили лакомства или игрушки. Заметили приманку раньше собаки — «Оставь», прошли мимо, «Да!» и награда.",
+     a:[{p:"stand",dx:-10,walk:1,pw:1,gs:1,ft:1,ftx:350,pp:210,pf:1,line:"leash",sag:22,hand:null,d:1,h:0},{ftx:250,d:1300,h:0},{say:"Оставь",ftx:200,d:600,h:0},{p:"up",ftx:120,d:900,h:0},{mark:1,ftx:80,d:400,h:0},{hand:[234,46],tr:1,ftx:30,d:500,h:0},{tr:0,ft:0,ftx:-10,d:300,h:100},{hand:null,p:"stand",d:300,h:500}]}
+   ],
+   mistakes:["Выхватывать из пасти с криком — собака учится глотать быстрее.","Отдавать после команды то же самое лакомство с пола. Награда всегда из руки.","Начинать сразу на улице. Начните дома с кулака."],
+   ready:"Проходит мимо лакомства на полу по слову дома, а на улице — на поводке мимо мусора." },
+
+ { id:"give", group:"Для прогулок", name:"Дай", cue:"«Дай» … «Бери!»", age:"с 10 недель",
+   why:"Собака отдаёт найденное без погони и драки. Это и безопасность, и честная игра: отдала — получила назад.",
+   steps:[
+    {t:"Обмен", d:"Когда собака держит игрушку, поднесите к носу лакомство. Пасть открылась, игрушка упала — «Да!», лакомство, и сразу верните игрушку словом «Бери!».",
+     a:[{p:"stand",toy:"mouth",hand:null,d:300,h:700},{hand:[256,76],tr:1,d:450,h:300},{toy:"ground",d:350,h:100},{mark:1,d:100,h:300},{tr:0,d:200,h:400},{hand:null,d:300,h:200},{say:"Бери!",p:"sniff",d:500,h:150},{toy:"mouth",d:200,h:100},{p:"stand",d:400,h:400}]},
+    {t:"Слово «Дай»", d:"Говорите «Дай» перед тем, как показать лакомство. Через несколько дней ждите пару секунд после слова — собака начнёт разжимать пасть сама. Тогда награждайте и иногда играйте дальше вместо лакомства.",
+     a:[{p:"stand",toy:"mouth",hand:null,d:300,h:600},{say:"Дай",d:100,h:900},{toy:"ground",d:350,h:100},{mark:1,d:100,h:300},{hand:[256,76],tr:1,d:450,h:200},{tr:0,d:200,h:400},{hand:null,d:300,h:200},{say:"Бери!",p:"sniff",d:500,h:150},{toy:"mouth",d:200,h:100},{p:"stand",d:400,h:400}]}
+   ],
+   mistakes:["Бегать за собакой с украденной вещью — для неё это лучшая игра.","Забирать и никогда не возвращать. Собака начинает убегать с находками и прятать их.","В перетяжке тянуть после «Дай». Скажите слово и замрите — игра продолжается только после того, как собака отпустила."],
+   ready:"Отдаёт игрушку по слову без лакомства в руке в 8 случаях из 10." }
+];
+var CMD = {}; CMDS.forEach(function(c){ CMD[c.id] = c; });
+var STATUS = ["Не начали","Учим","Знает дома","Знает везде"];
+
+/* ---------- content: off-leash ---------- */
+var PRE = ["Узнайте местные правила: во многих городах выгул без поводка разрешён только на площадках или в отдельных зонах",
+  "На собаке адресник с вашим телефоном, собака чипирована",
+  "Есть шлейка: корду пристёгивают к шлейке, не к ошейнику — рывок на ошейнике травмирует шею",
+  "Есть корда 5–10 м и перчатки. Корду не наматывают на руку",
+  "Выбраны безопасные места подальше от дорог"];
+var RULES = [
+  ["Подзыв — лучшее событие прогулки.","За подзыв — «джекпот»: несколько кусочков сыра или мяса подряд, любимая игра. Лакомство для подзыва — самое ценное."],
+  ["Зовите один раз.","Не уверены, что собака придёт, — подойдите сами и не называйте команду. Каждый проигнорированный подзыв ослабляет его."],
+  ["Никогда не наказывайте пришедшую собаку.","Даже если она шла пять минут. Ругают за последнее действие — а последнее было «пришла»."],
+  ["Позвали — наградили — отпустили.","Подзыв не должен означать конец прогулки. Говорите «Гуляй!» и отпускайте снова."],
+  ["Ловите добровольный контакт.","Собака сама оглянулась на вас — «Да!» и награда. Цель: она проверяет, где вы, каждые 20–30 секунд."],
+  ["Сделайте аварийный подзыв.","Отдельное слово или свисток, который звучит только с самой ценной наградой. Две недели «заряжайте» его дома: свисток — пять кусочков мяса подряд."]
+];
+var LEVELS = [
+  {t:"Дом и двор", w:"Без отвлечений, расстояние 2–5 метров", what:"Зовите, когда собака отвлеклась на что-то несложное. Играйте в «пинг-понг»: двое людей по очереди подзывают собаку. Каждый раз — касание шлейки и награда.", c:"9 из 10 подзывов, собака бежит сразу"},
+  {t:"Корда 5 м, тихое место", w:"Пустой парк утром, знакомый маршрут", what:"Игры в прятки и убегалку. Подзыв, когда собака не смотрит на вас, но и не увлечена сильно. Корду держите провисшей и не тяните собаку к себе.", c:"9 из 10 подзывов за 3 секунды"},
+  {t:"Корда 10 м, лёгкие отвлечения", w:"Люди вдалеке, интересные запахи", what:"Наградите каждый добровольный взгляд в вашу сторону. Учите «Стоп» или «Лежать» на расстоянии. Меняйте направление без предупреждения — собака учится следить за вами.", c:"9 из 10 подзывов и собака оглядывается сама"},
+  {t:"Корда волочится по земле", w:"Средние отвлечения: собаки в 20–30 м, бегуны", what:"Отпустите конец корды — она тянется по земле. Если собака не пришла, наступите на корду. С помощником отрабатывайте подзыв от игры с его спокойной собакой.", c:"9 из 10 подзывов, ни разу не пришлось наступить на корду"},
+  {t:"Без корды на огороженной территории", w:"Огороженное поле или площадка", what:"Сначала пустая площадка, потом с собаками. Подзывайте 5–10 раз за прогулку и почти всегда отпускайте снова. Проверьте аварийный подзыв.", c:"9 из 10 подзывов в течение двух недель"},
+  {t:"Свободный выгул", w:"Разрешённые зоны вдали от дорог", what:"Поддерживайте навык: 3–5 подзывов за прогулку с наградой. Раз в неделю — аварийный подзыв с «джекпотом». При любом сбое возвращайтесь на уровень 4.", c:"Подзыв работает от собак, людей и запахов"}
+];
+var FAQ = [
+  ["Собака убежала и не возвращается","Не бегите за ней — для собаки это игра в догонялки. Позовите один раз, присядьте или убегайте в противоположную сторону, пошуршите пакетом с лакомством. Когда вернулась — радуйтесь, даже если злы. Потом вернитесь на уровень назад, к корде."],
+  ["Подходит, но не даётся в руки","Это результат того, что подзыв часто заканчивался поводком. Отработайте «касание шлейки» дома: касание — лакомство, сотни раз. Не хватайте резко, тянитесь к груди, а не к холке."],
+  ["Подзыв работает везде, кроме собак","Работайте с помощником и его спокойной собакой. Начните с расстояния, на котором ваша собака ещё берёт лакомство, и сокращайте его по чуть-чуть. Если не берёт лакомство — вы слишком близко."],
+  ["Срывается за кошками и птицами","Это охотничий инстинкт, и он сильнее любых лакомств в момент погони. Учите «Стоп» и «Лежать» на расстоянии, а для погони дайте разрешённую замену — игру с игрушкой на верёвке. У борзых, гончих, хаски и других охотничьих пород свободный выгул вне ограждений часто остаётся риском даже при хорошем обучении — это особенность породы, а не ваша ошибка."],
+  ["На прогулке собака не обращает на меня внимания","Будьте интереснее: меняйте направление, прячьтесь, бросайте лакомство в траву «на поиск», не сидите в телефоне. И наградите каждый случайный взгляд на вас."]
+];
+
+/* ---------- content: basics ---------- */
+var PRINCIPLES = [
+  ["Маркер и награда","«Да!» отмечает правильный момент, лакомство приходит в течение секунды. Лакомство маленькое — с ноготь мизинца, мягкое, чтобы съесть сразу. Награда — не только еда: игра, похвала, разрешение «Иди нюхай»."],
+  ["Короткие занятия","Щенку — 3–5 минут, взрослой собаке — до 10–15. Несколько раз в день лучше одного длинного занятия. Заканчивайте на удачном повторе."],
+  ["Правило 80 %","Получается 8 раз из 10 — усложняйте. Меньше 5 из 10 — упростите задачу. Собака должна чаще выигрывать, чем ошибаться."],
+  ["Одна команда — один раз","Не «Сидеть-сидеть-сидеть». Сказали и подождали. Не вышло — помогите жестом или вернитесь на шаг назад."],
+  ["Новое место — шаг назад","Команда, которую собака знает на кухне, во дворе работает хуже. Это нормально. В каждом новом месте начинайте с самого лёгкого уровня."],
+  ["Управляйте средой, а не наказывайте","Крик и рывки поводком учат бояться и избегать вас, особенно сильно портят подзыв. Уберите соблазн, закройте дверь, наденьте корду — и наградите правильное поведение."]
+];
+var STRESS = ["Зевает или облизывается не к месту","Отворачивает голову, отводит взгляд","Поджимает хвост, прижимает уши","Отказывается от лакомства, которое обычно любит","Внезапно начинает нюхать землю или чесаться"];
+
+/* ---------- helpers ---------- */
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];}); }
+function nm(s){ return esc(String(s).replace(/\{name\}/g, dogName())); }
+function plural(n, f){ var a=Math.abs(n)%100, b=a%10; if(a>10&&a<20) return f[2]; if(b>1&&b<5) return f[1]; if(b===1) return f[0]; return f[2]; }
+function parseDate(s){ if(!s) return null; var d = new Date(s+"T12:00:00"); return isNaN(d) ? null : d; }
+function daysSince(s){ var d=parseDate(s); if(!d) return null; return Math.floor((Date.now()-d.getTime())/86400000); }
+function ageText(){
+  var days = daysSince(S.birth); if (days==null || days<0) return "";
+  var w = Math.floor(days/7);
+  if (w < 16) return w+" нед";
+  var m = Math.floor(days/30.44);
+  if (m < 24) return m+" мес";
+  var y = Math.floor(days/365.25); return y+" "+plural(y,["год","года","лет"]);
+}
+function currentStage(){
+  var h = daysSince(S.home); if (h!=null && h>=0 && h<=3) return "s1";
+  var d = daysSince(S.birth); if (d==null || d<0) return null;
+  var w = d/7;
+  if (w < 12) return "s2"; if (w < 16) return "s3"; if (w < 26) return "s4"; if (w < 52) return "s5"; return "s6";
+}
+function stageProgress(st){ var n=0; st.check.forEach(function(_,i){ if(S.checks[st.id+"-"+i]) n++; }); return n; }
+var ICON_CHEV = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>';
+var ICON_PAW = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><ellipse cx="6" cy="9" rx="2.2" ry="2.8"/><ellipse cx="10.5" cy="5.5" rx="2.2" ry="2.8"/><ellipse cx="15.5" cy="5.5" rx="2.2" ry="2.8"/><ellipse cx="19" cy="9.5" rx="2.1" ry="2.7"/><path d="M12.6 11c3 0 6 4.2 6 6.6 0 2.1-1.8 2.6-3.2 2.2-1.2-.4-2-.7-2.8-.7s-1.6.3-2.8.7C8.4 20.2 6.6 19.7 6.6 17.6 6.6 15.2 9.6 11 12.6 11Z"/></svg>';
+var ICON_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>';
+var ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1"/><rect x="13.5" y="5" width="4" height="14" rx="1"/></svg>';
+
+/* ---------- animation engine ---------- */
+var NS = "http://www.w3.org/2000/svg";
+var RM = false; try { RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e){}
+var DOGX = 110;
+var BASE = { H:[0,100], S:[70,98], Hd:[96,66], Fe:[72,136], Fp:[74,170], Bk:[-4,134], Bp:[2,170], Tc:[-20,86], T:[-34,70], ht:0 };
+function pose(over){ var p={}; for (var k in BASE) p[k]=Array.isArray(BASE[k])?BASE[k].slice():BASE[k]; for (var j in over) p[j]=over[j]; return p; }
+var SITB = { H:[10,150], S:[52,104], Hd:[74,70], Fe:[58,138], Fp:[60,170], Bk:[28,158], Bp:[44,170], Tc:[-8,166], T:[-26,170], ht:-8 };
+var POSES = {
+  stand: pose({}),
+  alert: pose({Hd:[98,60], ht:-14, T:[-30,62]}),
+  up:    pose({Hd:[94,56], ht:-34, T:[-30,62]}),
+  sniff: pose({S:[70,104], Hd:[104,118], ht:38, Fe:[74,138], Fp:[78,170], Tc:[-20,90], T:[-34,78]}),
+  sit:   pose(SITB),
+  look:  pose(Object.assign({}, SITB, {Hd:[70,62], ht:-36})),
+  sitlow:pose(Object.assign({}, SITB, {S:[54,110], Hd:[80,120], ht:40, Fe:[60,140]})),
+  down:  pose({H:[6,152], S:[68,150], Hd:[94,124], ht:-2, Fe:[84,164], Fp:[110,170], Bk:[24,164], Bp:[44,170], Tc:[-12,162], T:[-32,168]})
+};
+var PKEYS = ["H","S","Hd","Fe","Fp","Bk","Bp","Tc","T"];
+var DEF = { p:"stand", dx:0, f:1, walk:0, hx:330, hy:110, ho:0, tr:1, fist:0, ppx:330, po:0, pf:-1, pw:0, gs:0, line:null, sag:18, ft:0, ftx:270, tm:1, to:0, mat:null };
+
+function expand(list, scene){
+  var c = Object.assign({}, DEF);
+  if (scene){ if (scene.pp!=null){ c.ppx=scene.pp; c.po=1; } ["pf","line","sag","mat"].forEach(function(k){ if(scene[k]!=null) c[k]=scene[k]; }); }
+  return list.map(function(k){
+    var m = Object.assign({}, c);
+    ["p","dx","f","walk","tr","fist","pf","pw","gs","line","sag","ft","ftx","mat"].forEach(function(key){ if (key in k) m[key]=k[key]; });
+    if ("hand" in k){ if (k.hand){ m.hx=k.hand[0]; m.hy=k.hand[1]; if(!("tr" in k)) m.tr = c.ho ? c.tr : 1; m.ho=1; } else m.ho=0; }
+    if ("pp" in k){ if (k.pp==null) m.po=0; else { m.ppx=k.pp; m.po=1; } }
+    if ("toy" in k){ if (k.toy==null) m.to=0; else { m.to=1; m.tm = k.toy==="mouth"?1:0; } }
+    m.say = k.say ? String(k.say) : null; m.mark = !!k.mark;
+    m.d = ("d" in k) ? k.d : 450; m.h = ("h" in k) ? k.h : 350;
+    c = m; return m;
+  });
+}
+function target(m){
+  var P = POSES[m.p] || POSES.stand, pts = {};
+  PKEYS.forEach(function(k){ pts[k]=P[k].slice(); });
+  return { pts:pts, ht:P.ht, dx:m.dx, hx:m.hx, hy:m.hy, ho:m.ho, tr:m.tr, ppx:m.ppx, po:m.po, sag:m.sag, ft:m.ft, ftx:m.ftx, tm:m.tm, to:m.to };
+}
+function lerp(a,b,t){ return a+(b-a)*t; }
+function mix(A,B,t){
+  var o = { pts:{} };
+  PKEYS.forEach(function(k){ o.pts[k]=[lerp(A.pts[k][0],B.pts[k][0],t), lerp(A.pts[k][1],B.pts[k][1],t)]; });
+  ["ht","dx","hx","hy","ho","tr","ppx","po","sag","ft","ftx","tm","to"].forEach(function(k){ o[k]=lerp(A[k],B[k],t); });
+  return o;
+}
+function ease(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+function mk(tag, attrs, parent){ var e=document.createElementNS(NS,tag); if(attrs) for (var k in attrs) e.setAttribute(k, attrs[k]); if(parent) parent.appendChild(e); return e; }
+function rot(x,y,deg){ var r=deg*Math.PI/180, c=Math.cos(r), s=Math.sin(r); return [x*c - y*s, x*s + y*c]; }
+
+function Player(host, onStep){
+  var svg = mk("svg",{viewBox:"0 0 360 196", role:"img", "aria-label":"Анимация: как выполнять упражнение"});
+  host.appendChild(svg);
+  var E = {};
+  mk("line",{x1:0,y1:176,x2:360,y2:176,"class":"g-line"},svg);
+  E.ticks = mk("line",{x1:-30,y1:186,x2:390,y2:186,"class":"g-ticks"},svg);
+  E.mat = mk("rect",{y:168,width:124,height:9,rx:4.5,"class":"mat"},svg);
+  E.person = mk("g",{},svg);
+  E.torso = mk("rect",{y:-24,width:40,height:112,rx:16,"class":"p-torso"},E.person);
+  E.legL = mk("path",{"class":"p-leg"},E.person);
+  E.legR = mk("path",{"class":"p-leg"},E.person);
+  E.shoeL = mk("ellipse",{rx:11,ry:5,"class":"p-shoe"},E.person);
+  E.shoeR = mk("ellipse",{rx:11,ry:5,"class":"p-shoe"},E.person);
+  E.restArm = mk("path",{"class":"p-arm"},E.person);
+  E.restHand = mk("circle",{r:7.5,"class":"skin"},E.person);
+  E.farF = mk("path",{"class":"dog-far"},svg);
+  E.farB = mk("path",{"class":"dog-far"},svg);
+  E.tail = mk("path",{"class":"dog-s","stroke-width":8},svg);
+  E.body = mk("path",{"class":"dog-s","stroke-width":36},svg);
+  E.neck = mk("path",{"class":"dog-s","stroke-width":22},svg);
+  E.nearF = mk("path",{"class":"dog-s","stroke-width":12},svg);
+  E.nearB = mk("path",{"class":"dog-s","stroke-width":12},svg);
+  E.head = mk("g",{},svg);
+  mk("circle",{cx:0,cy:0,r:17,"class":"dog-f"},E.head);
+  mk("ellipse",{cx:15,cy:5,rx:13.5,ry:8.5,"class":"dog-f"},E.head);
+  mk("path",{d:"M-3 -14 Q-19 -8 -13 13 Q-5 8 -1 -6 Z","class":"dog-ear"},E.head);
+  mk("circle",{cx:27,cy:3,r:4,"class":"ink-f"},E.head);
+  mk("circle",{cx:5,cy:-4,r:2.6,"class":"ink-f"},E.head);
+  E.collar = mk("path",{"class":"collar"},svg);
+  E.toy = mk("circle",{r:8,"class":"toy"},svg);
+  E.ftreat = mk("circle",{r:4.5,"class":"treat"},svg);
+  E.leash = mk("path",{"class":"leash"},svg);
+  E.hand = mk("g",{},svg);
+  E.arm = mk("path",{"class":"arm"},E.hand);
+  E.open = mk("g",{},E.hand);
+  E.palm = mk("circle",{r:10,"class":"skin"},E.open);
+  E.fing = mk("rect",{width:16,height:8,rx:4,"class":"skin"},E.open);
+  E.thumb = mk("circle",{r:4,"class":"skin"},E.open);
+  E.fistG = mk("g",{},E.hand);
+  E.fistC = mk("circle",{r:12,"class":"skin"},E.fistG);
+  E.k1 = mk("path",{"class":"knuckle"},E.fistG);
+  E.treat = mk("circle",{r:4.5,"class":"treat"},E.hand);
+  E.say = mk("g",{},svg);
+  E.sayR = mk("rect",{y:10,height:30,rx:15,"class":"bub"},E.say);
+  E.sayT = mk("text",{y:30,"class":"bub-t","text-anchor":"end"},E.say);
+  E.mark = mk("g",{},svg);
+  mk("rect",{x:12,y:10,width:62,height:30,rx:15,"class":"mark-b"},E.mark);
+  mk("path",{d:"M24 25l4 4 8-9",fill:"none",stroke:"#fff","stroke-width":2.6,"stroke-linecap":"round","stroke-linejoin":"round"},E.mark);
+  var mt = mk("text",{x:41,y:30,"class":"mark-t"},E.mark); mt.textContent = "Да!";
+
+  this.E = E; this.svg = svg; this.raf = 0; this.onStep = onStep; this.tickOff = 0; this.lastTs = 0; this.lastSay = null;
+}
+Player.prototype.load = function(list, scene){
+  this.kfs = expand(list, scene || null); this.i = 0;
+  this.k = this.kfs[0]; this.to = target(this.k); this.from = this.to; this.state = this.to;
+  this.t0 = performance.now(); this.render(this.state, this.k, this.t0);
+};
+Player.prototype.play = function(){
+  if (this.raf) return; var self=this; this.t0 = performance.now() - (this.pausedAt || 0); this.pausedAt = 0;
+  var loop = function(ts){ self.tick(ts); self.raf = requestAnimationFrame(loop); };
+  this.raf = requestAnimationFrame(loop);
+};
+Player.prototype.stop = function(){ if (this.raf){ cancelAnimationFrame(this.raf); this.raf=0; this.pausedAt = performance.now() - this.t0; } };
+Player.prototype.tick = function(ts){
+  var k = this.k, d = RM ? 0 : k.d, e = ts - this.t0;
+  if (e >= d + k.h){
+    this.i = (this.i + 1) % this.kfs.length; this.from = this.state; this.k = this.kfs[this.i]; this.to = target(this.k); this.t0 = ts;
+    k = this.k; d = RM ? 0 : k.d; e = 0;
+  }
+  var p = d > 0 ? ease(Math.min(1, e/d)) : 1;
+  this.state = mix(this.from, this.to, p);
+  this.render(this.state, k, ts);
+};
+Player.prototype.render = function(s, k, ts){
+  var E = this.E, f = k.f || 1, o = DOGX + s.dx;
+  var X = function(x){ return f > 0 ? o + x : o + 70 - x; };
+  var P = {}; PKEYS.forEach(function(key){ P[key] = s.pts[key].slice(); });
+  var far = { Fe:P.Fe.slice(), Fp:P.Fp.slice(), Bk:P.Bk.slice(), Bp:P.Bp.slice() };
+  var A = RM ? 0 : (k.walk===2 ? 15 : k.walk ? 9 : 0);
+  if (A){
+    var ph = ts * (k.walk===2 ? 0.02 : 0.011), sn = Math.sin(ph), cs = Math.cos(ph);
+    var lift = function(v){ return Math.max(0, v) * 7; };
+    var b0 = { Fe:P.Fe.slice(), Fp:P.Fp.slice(), Bk:P.Bk.slice(), Bp:P.Bp.slice() };
+    P.Fp = [b0.Fp[0] + A*sn, b0.Fp[1] - lift(cs)];   P.Fe = [b0.Fe[0] + A*.5*sn, b0.Fe[1]];
+    P.Bp = [b0.Bp[0] - A*sn, b0.Bp[1] - lift(-cs)];  P.Bk = [b0.Bk[0] - A*.5*sn, b0.Bk[1]];
+    far.Fp = [b0.Fp[0] - A*sn, b0.Fp[1] - lift(-cs)]; far.Fe = [b0.Fe[0] - A*.5*sn, b0.Fe[1]];
+    far.Bp = [b0.Bp[0] + A*sn, b0.Bp[1] - lift(cs)];  far.Bk = [b0.Bk[0] + A*.5*sn, b0.Bk[1]];
+    var bob = (k.walk===2 ? 3 : 1.5) * Math.sin(2*ph);
+    ["H","S","Hd","Tc","T"].forEach(function(key){ P[key][1] += bob; });
+  }
+  if (!RM){ var wag = Math.sin(ts * (k.mark ? 0.03 : 0.008)) * (k.mark ? 7 : 3); P.T[1] += wag; P.T[0] += wag*.4; }
+  var pt = function(a){ return X(a[0]) + " " + a[1]; };
+  E.body.setAttribute("d", "M"+pt(P.H)+" L"+pt(P.S));
+  var nk = [P.S[0] + (P.Hd[0]-P.S[0])*.75, P.S[1] + (P.Hd[1]-P.S[1])*.75];
+  E.neck.setAttribute("d", "M"+pt(P.S)+" L"+pt(nk));
+  E.nearF.setAttribute("d", "M"+X(P.S[0])+" "+(P.S[1]+8)+" L"+pt(P.Fe)+" L"+pt(P.Fp));
+  E.nearB.setAttribute("d", "M"+pt(P.H)+" L"+pt(P.Bk)+" L"+pt(P.Bp));
+  var off = function(a){ return [a[0]+8, a[1]]; };
+  E.farF.setAttribute("d", "M"+X(P.S[0]+8)+" "+(P.S[1]+8)+" L"+pt(off(far.Fe))+" L"+pt(off(far.Fp)));
+  E.farB.setAttribute("d", "M"+pt(off(P.H))+" L"+pt(off(far.Bk))+" L"+pt(off(far.Bp)));
+  E.tail.setAttribute("d", "M"+pt(P.H)+" Q"+pt(P.Tc)+" "+pt(P.T));
+  var hx = X(P.Hd[0]), hy = P.Hd[1];
+  E.head.setAttribute("transform", "translate("+hx+" "+hy+") scale("+f+" 1) rotate("+s.ht+")");
+  /* collar */
+  var cx = P.S[0] + (P.Hd[0]-P.S[0])*.62, cy = P.S[1] + (P.Hd[1]-P.S[1])*.62;
+  var vx = P.Hd[0]-P.S[0], vy = P.Hd[1]-P.S[1], vl = Math.hypot(vx,vy)||1; var nx = -vy/vl*11, ny = vx/vl*11;
+  E.collar.setAttribute("d", "M"+X(cx+nx)+" "+(cy+ny)+" L"+X(cx-nx)+" "+(cy-ny));
+  var C = [X(cx), cy];
+  /* toy */
+  var mr = rot(24, 9, s.ht), mouth = [hx + f*mr[0], hy + mr[1]], gp = [X(130), 167];
+  E.toy.setAttribute("cx", lerp(gp[0], mouth[0], s.tm)); E.toy.setAttribute("cy", lerp(gp[1], mouth[1], s.tm));
+  E.toy.style.opacity = s.to;
+  /* floor treat */
+  E.ftreat.setAttribute("cx", s.ftx); E.ftreat.setAttribute("cy", 171); E.ftreat.style.opacity = s.ft;
+  /* mat */
+  if (k.mat != null){ E.mat.style.display = ""; E.mat.setAttribute("x", k.mat - 62); } else E.mat.style.display = "none";
+  /* ground ticks */
+  if (k.gs && !RM && this.lastTs){ this.tickOff = (this.tickOff + (ts - this.lastTs) * 0.06) % 24; }
+  this.lastTs = ts;
+  E.ticks.setAttribute("stroke-dashoffset", this.tickOff);
+  /* person */
+  var pp = s.ppx, pf = k.pf || -1;
+  E.person.style.opacity = s.po; E.person.style.display = s.po < 0.02 ? "none" : "";
+  if (s.po >= 0.02){
+    var sw = (k.pw && !RM) ? 14 * Math.sin(ts * 0.011) : 0;
+    E.torso.setAttribute("x", pp - 20);
+    E.legL.setAttribute("d", "M"+(pp-7)+" 84 L"+(pp-7+sw)+" 170");
+    E.legR.setAttribute("d", "M"+(pp+7)+" 84 L"+(pp+7-sw)+" 170");
+    E.shoeL.setAttribute("cx", pp-7+sw+pf*6); E.shoeL.setAttribute("cy", 172);
+    E.shoeR.setAttribute("cx", pp+7-sw+pf*6); E.shoeR.setAttribute("cy", 172);
+    var restShow = s.ho < 0.5;
+    E.restArm.style.display = restShow ? "" : "none"; E.restHand.style.display = restShow ? "" : "none";
+    E.restArm.setAttribute("d", "M"+(pp+pf*2)+" 10 L"+(pp+pf*8)+" 78");
+    E.restHand.setAttribute("cx", pp+pf*8); E.restHand.setAttribute("cy", 84);
+  }
+  /* hand */
+  E.hand.style.opacity = s.ho; E.hand.style.display = s.ho < 0.02 ? "none" : "";
+  var sx, sy; if (s.po > 0.5){ sx = pp + pf*2; sy = 12; } else { sx = 392; sy = s.hy + 70; }
+  E.arm.setAttribute("d", "M"+sx+" "+sy+" L"+(s.hx+9)+" "+(s.hy+2));
+  E.open.style.display = k.fist ? "none" : ""; E.fistG.style.display = k.fist ? "" : "none";
+  E.palm.setAttribute("cx", s.hx+3); E.palm.setAttribute("cy", s.hy);
+  E.fing.setAttribute("x", s.hx-14); E.fing.setAttribute("y", s.hy-4);
+  E.thumb.setAttribute("cx", s.hx-2); E.thumb.setAttribute("cy", s.hy-8);
+  E.fistC.setAttribute("cx", s.hx); E.fistC.setAttribute("cy", s.hy);
+  E.k1.setAttribute("d", "M"+(s.hx-9)+" "+(s.hy-3)+" h6 M"+(s.hx-9)+" "+(s.hy+3)+" h6");
+  E.treat.setAttribute("cx", s.hx-15); E.treat.setAttribute("cy", s.hy-1);
+  E.treat.style.opacity = k.fist ? 0 : s.tr;
+  /* leash */
+  var anchor = null;
+  if (k.line){ if (s.ho > 0.5) anchor = [s.hx+4, s.hy+4]; else if (s.po > 0.5) anchor = [pp+pf*8, 84]; }
+  if (anchor){
+    E.leash.style.display = ""; E.leash.setAttribute("class", "leash" + (k.line==="long" ? " long" : ""));
+    var mx = (C[0]+anchor[0])/2, my = Math.max(C[1],anchor[1]) + s.sag;
+    E.leash.setAttribute("d", "M"+C[0]+" "+C[1]+" Q"+mx+" "+my+" "+anchor[0]+" "+anchor[1]);
+  } else E.leash.style.display = "none";
+  /* bubbles */
+  if (k.say){
+    E.say.style.display = "";
+    if (this.lastSay !== k.say){
+      var txt = k.say.replace(/\{name\}/g, dogName());
+      E.sayT.textContent = "«" + txt + "»"; this.lastSay = k.say;
+      var w = 0; try { w = E.sayT.getComputedTextLength(); } catch(e){}
+      if (!w) w = txt.length * 8.6 + 14;
+      E.sayT.setAttribute("x", 334); E.sayR.setAttribute("x", 334 - w - 14); E.sayR.setAttribute("width", w + 28);
+    }
+  } else { E.say.style.display = "none"; this.lastSay = null; }
+  E.mark.style.display = k.mark ? "" : "none";
+  if (this.onStep && this.lastI !== this.i){ this.lastI = this.i; }
+};
+
+/* small static icon of a pose for list rows */
+function poseIcon(name, extra){
+  var P = POSES[name], o = 0;
+  var X = function(x){ return x; };
+  var s = function(a){ return a[0]+" "+a[1]; };
+  var nk = [P.S[0]+(P.Hd[0]-P.S[0])*.75, P.S[1]+(P.Hd[1]-P.S[1])*.75];
+  return '<svg viewBox="-50 30 190 160" aria-hidden="true">' +
+    (extra||"") +
+    '<path class="dog-far" d="M'+(P.S[0]+8)+' '+(P.S[1]+8)+' L'+s([P.Fe[0]+8,P.Fe[1]])+' L'+s([P.Fp[0]+8,P.Fp[1]])+'"/>' +
+    '<path class="dog-s" stroke-width="8" d="M'+s(P.H)+' Q'+s(P.Tc)+' '+s(P.T)+'"/>' +
+    '<path class="dog-s" stroke-width="36" d="M'+s(P.H)+' L'+s(P.S)+'"/>' +
+    '<path class="dog-s" stroke-width="22" d="M'+s(P.S)+' L'+s(nk)+'"/>' +
+    '<path class="dog-s" stroke-width="12" d="M'+P.S[0]+' '+(P.S[1]+8)+' L'+s(P.Fe)+' L'+s(P.Fp)+'"/>' +
+    '<path class="dog-s" stroke-width="12" d="M'+s(P.H)+' L'+s(P.Bk)+' L'+s(P.Bp)+'"/>' +
+    '<g transform="translate('+P.Hd[0]+' '+P.Hd[1]+') rotate('+P.ht+')"><circle r="17" class="dog-f"/><ellipse cx="15" cy="5" rx="13.5" ry="8.5" class="dog-f"/><path d="M-3 -14 Q-19 -8 -13 13 Q-5 8 -1 -6 Z" class="dog-ear"/><circle cx="27" cy="3" r="4" class="ink-f"/><circle cx="5" cy="-4" r="2.6" class="ink-f"/></g>' +
+    '</svg>';
+}
+var ROW_POSE = { marker:"alert", name:"up", sit:"look", down:"down", wait:"sit", place:"down", recall:"stand", heel:"stand", leave:"sniff", give:"stand" };
+
+/* ---------- views ---------- */
+var $ = function(id){ return document.getElementById(id); };
+var openStage = null;
+
+function renderChip(){
+  var chip = $("dogchip"), a = ageText(), st = currentStage(), stObj = STAGES.filter(function(x){return x.id===st;})[0];
+  if (S.name){
+    chip.innerHTML = '<span class="av">'+esc(S.name.trim().charAt(0).toUpperCase())+'</span><span class="t">'+esc(S.name)+(a?' · '+a:'')+'</span>';
+  } else {
+    chip.innerHTML = '<span class="av">+</span><span class="t">Ваша собака</span>';
+  }
+  chip.setAttribute("aria-label", "Профиль собаки" + (stObj ? ", этап: " + stObj.title : ""));
+}
+
+function profileForm(idp){
+  return '<div class="card profile">' +
+    '<div class="h2">Ваша собака</div>' +
+    '<p class="small muted">Укажите дату рождения '+esc(dogName())+' — подсвечу текущий этап.</p>' +
+    '<div class="fields">' +
+      '<div class="field"><label for="'+idp+'name">Кличка</label><input id="'+idp+'name" type="text" maxlength="24" autocomplete="off" placeholder="Например, Полли" value="'+esc(S.name)+'"></div>' +
+      '<div class="field"><label for="'+idp+'birth">Дата рождения</label><input id="'+idp+'birth" type="date" value="'+esc(S.birth)+'"></div>' +
+      '<div class="field"><label for="'+idp+'home">Дома с</label><input id="'+idp+'home" type="date" value="'+esc(S.home)+'"></div>' +
+    '</div>' +
+    '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><button class="btn" type="button" data-save="'+idp+'">Сохранить</button><span class="saved" id="'+idp+'ok" hidden>Сохранено</span></div>' +
+  '</div>';
+}
+function bindProfile(root){
+  root.querySelectorAll("[data-save]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var p = b.getAttribute("data-save");
+      S.name = $(p+"name").value.trim(); S.birth = $(p+"birth").value; S.home = $(p+"home").value;
+      save(); openStage = null; renderAll();
+      var okEl = $(p+"ok"); if (okEl){ okEl.hidden = false; setTimeout(function(){ okEl.hidden = true; }, 1600); }
+    });
+  });
+}
+
+function renderPath(){
+  var cur = currentStage();
+  if (openStage === null) openStage = cur || "s1";
+  var curIdx = STAGES.findIndex(function(s){ return s.id===cur; });
+  var html = '<div class="view-head"><div class="eyebrow">Путь</div><h1 class="h1">От первого дня дома до взрослой собаки</h1>' +
+    '<p class="lead">Шесть этапов. В каждом — что делать, чего избегать, какие команды учить и чек-лист, чтобы понять, что можно двигаться дальше.</p></div>';
+  if (!S.birth) html += profileForm("pa-");
+  html += '<div class="sec"><div class="timeline">';
+  STAGES.forEach(function(st, idx){
+    var n = stageProgress(st), tot = st.check.length, isNow = st.id===cur, isOpen = openStage===st.id;
+    var done = n===tot || (curIdx>idx && cur && idx>0 && n===tot);
+    html += '<div class="tl-item'+(isNow?' now':'')+(n===tot?' done':'')+'"><div class="tl-rail"><span class="tl-dot"></span></div><div class="tl-body"><article class="stage">' +
+      '<button class="stage-head" type="button" data-stage="'+st.id+'" aria-expanded="'+isOpen+'">' +
+        '<span class="stage-meta"><span class="range">'+st.range+'</span>'+(isNow?'<span class="badge">Сейчас</span>':'')+(n===tot?'<span class="badge ok">Готово</span>':'')+'</span>' +
+        '<span class="stage-title">'+st.title+'</span><span class="stage-sub">'+st.sub+'</span>' +
+        '<span class="progress"><span class="bar"><i style="width:'+Math.round(n/tot*100)+'%"></i></span><span>'+n+'/'+tot+'</span></span>' +
+      '</button>';
+    if (isOpen){
+      html += '<div class="stage-body"><p class="lead-box">'+st.lead+'</p>' +
+        '<div class="list-block"><div class="list-title do">Делать</div><ul class="clean do">'+st.do.map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul></div>' +
+        '<div class="list-block"><div class="list-title dont">Не делать</div><ul class="clean dont">'+st.dont.map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul></div>';
+      if (st.cmds.length) html += '<div class="list-block"><div class="list-title neutral">Команды этапа</div><div class="chips">'+st.cmds.map(function(c){ return '<button class="chip" type="button" data-cmd="'+c+'">'+ICON_PAW+CMD[c].name+'</button>'; }).join("")+'</div></div>';
+      if (st.id==="s3" || st.id==="s5" || st.id==="s6") html += '<div class="chips"><button class="chip" type="button" data-goto="offleash">Программа «Без поводка» →</button></div>';
+      html += '<p class="note">'+st.note+'</p>' +
+        '<div class="list-block"><div class="list-title neutral">Чек-лист этапа</div><div class="checks">' +
+        st.check.map(function(c,i){ var id=st.id+"-"+i, on=!!S.checks[id]; return '<label class="check'+(on?' on':'')+'"><input type="checkbox" id="ck-'+id+'" data-check="'+id+'"'+(on?' checked':'')+'><span>'+c+'</span></label>'; }).join("") +
+        '</div></div></div>';
+    }
+    html += '</article></div></div>';
+  });
+  html += '</div></div>';
+  var v = $("v-path"); v.innerHTML = html;
+  bindProfile(v);
+  v.querySelectorAll("[data-stage]").forEach(function(b){ b.addEventListener("click", function(){ var id=b.getAttribute("data-stage"); openStage = openStage===id ? "" : id; renderPath(); }); });
+  v.querySelectorAll("[data-check]").forEach(function(c){ c.addEventListener("change", function(){ var id=c.getAttribute("data-check"); if (c.checked) S.checks[id]=1; else delete S.checks[id]; save(); renderPath(); }); });
+  bindCommon(v);
+}
+
+function statusDots(id){ var st = S.cmd[id]||0, h='<span class="status-dots" aria-hidden="true">'; for (var i=1;i<=3;i++) h += '<i class="'+(i<=st?'on':'')+'"></i>'; return h+'</span>'; }
+
+function renderCommands(){
+  var groups = ["Фундамент","Базовые","Для прогулок"];
+  var learned = CMDS.filter(function(c){ return (S.cmd[c.id]||0)>=2; }).length;
+  var html = '<div class="view-head"><div class="eyebrow">Команды</div><h1 class="h1">Как учить и что учить</h1>' +
+    '<p class="lead">Каждая команда — по шагам, с анимацией. Занимайтесь по 3–5 минут, 5–10 повторов, и заканчивайте на удачной попытке.</p>' +
+    '<p class="small muted">Освоено дома или везде: <b>'+learned+' из '+CMDS.length+'</b></p></div>';
+  groups.forEach(function(g){
+    html += '<div class="sec group"><div class="sec-label">'+g+'</div><div class="rows">';
+    CMDS.filter(function(c){ return c.group===g; }).forEach(function(c){
+      html += '<button class="row" type="button" data-cmd="'+c.id+'"><span class="row-ico">'+poseIcon(ROW_POSE[c.id])+'</span>' +
+        '<span class="row-main"><span class="row-name">'+c.name+'</span><span class="row-cue">'+nm(c.cue)+' · '+c.age+'</span>'+statusDots(c.id)+'</span>'+ICON_CHEV+'</button>';
+    });
+    html += '</div></div>';
+  });
+  var v = $("v-commands"); v.innerHTML = html; bindCommon(v);
+}
+
+var offPlayer = null;
+function recallStats(i){ var a = S.rec[i] || [], y = a.filter(function(x){return x===1;}).length; return {a:a, y:y, passed: a.length>=10 && y>=9}; }
+function renderOff(){
+  var curLv = 0; for (var i=0;i<LEVELS.length;i++){ if (!recallStats(i).passed){ curLv=i; break; } curLv = i; }
+  var html = '<div class="view-head"><div class="eyebrow">Без поводка</div><h1 class="h1">Свободная прогулка шаг за шагом</h1>' +
+    '<p class="lead">Свободный выгул — это не одна команда, а система: надёжный подзыв, привычка самой проверять, где вы, и умение остановиться по слову. Её строят на длинном поводке — корде — за 3–6 месяцев.</p></div>' +
+    '<div class="player"><div class="scene" id="off-scene"></div><div class="step-text"><h3>Как выглядит работа на корде</h3><p>Собака сама оглянулась на вас — «Да!». Подбежала — лакомство, касание шлейки и снова «Гуляй!». Корда страхует, пока вы не уверены в подзыве.</p></div>' +
+    '<div class="legend"><span><i style="background:var(--toy)"></i>корда</span><span><i style="background:var(--ok)"></i>маркер «Да!»</span><span><i style="background:var(--treat)"></i>лакомство</span></div></div>';
+  html += '<div class="sec"><div class="sec-label">Перед стартом</div><div class="checks">' +
+    PRE.map(function(t,i){ var on=!!S.pre[i]; return '<label class="check'+(on?' on':'')+'"><input type="checkbox" id="pre-'+i+'" data-pre="'+i+'"'+(on?' checked':'')+'><span>'+t+'</span></label>'; }).join("") + '</div></div>';
+  html += '<div class="sec"><div class="sec-label">Шесть правил подзыва</div><div class="rules">' +
+    RULES.map(function(r){ return '<div class="rule"><b>'+r[0]+'</b><span class="small">'+r[1]+'</span></div>'; }).join("") + '</div></div>';
+  html += '<div class="sec"><div class="sec-label">Программа: шесть уровней</div><p class="small muted">Отмечайте каждый подзыв на прогулке. Когда из последних 10 удачных 9 и больше — переходите на следующий уровень.</p><div class="levels">';
+  LEVELS.forEach(function(L, i){
+    var st = recallStats(i), dots = '';
+    for (var j=0;j<10;j++){ var v = st.a[j]; dots += '<i class="'+(v===1?'y':v===0?'n':'')+'"></i>'; }
+    html += '<div class="level'+(i===curLv && !st.passed?' now':'')+(st.passed?' passed':'')+'">' +
+      '<div class="level-top"><span class="lv-num">'+(i+1)+'</span><div><div class="lv-title">'+L.t+'</div><div class="lv-where">'+L.w+'</div></div></div>' +
+      '<p class="small">'+L.what+'</p><div class="crit"><b>Дальше, когда:</b> '+L.c+'</div>' +
+      '<div class="tracker"><div class="tr-row"><button class="tr-btn yes" type="button" data-rec="'+i+'" data-v="1">Пришла</button><button class="tr-btn no" type="button" data-rec="'+i+'" data-v="0">Не пришла</button>' +
+      '<span class="tr-score">'+st.y+'/'+st.a.length+'</span></div>' +
+      '<div class="tr-row"><span class="tr-dots" aria-label="Последние подзывы">'+dots+'</span>'+(st.a.length?'<button class="tr-reset" type="button" data-reset="'+i+'">Очистить</button>':'')+'</div>' +
+      (st.passed?'<span class="badge ok" style="justify-self:start">Уровень пройден</span>':'') + '</div></div>';
+  });
+  html += '</div></div>';
+  html += '<div class="sec"><div class="sec-label">Если что-то пошло не так</div>' +
+    FAQ.map(function(q){ return '<details class="faq"><summary>'+q[0]+'</summary><div class="faq-body"><p>'+q[1]+'</p></div></details>'; }).join("") + '</div>';
+  html += '<div class="sec"><div class="sec-label">Навыки, которые нужны для свободы</div><div class="chips">' +
+    ["recall","wait","leave","heel"].map(function(c){ return '<button class="chip" type="button" data-cmd="'+c+'">'+ICON_PAW+CMD[c].name+'</button>'; }).join("") + '</div></div>';
+  var v = $("v-offleash"); var wasPlaying = offPlayer && offPlayer.raf;
+  if (offPlayer) offPlayer.stop();
+  v.innerHTML = html;
+  offPlayer = new Player($("off-scene"));
+  offPlayer.load([{p:"sniff",dx:-70,hand:null,d:1,h:1200},{p:"alert",d:300,h:350},{mark:1,d:100,h:300},{p:"stand",dx:70,walk:2,sag:12,d:1100,h:0},{walk:0,p:"sit",d:400,h:100},{hand:[296,70],tr:1,d:400,h:150},{tr:0,d:200,h:250},{hand:[260,84],d:350,h:500},{hand:null,say:"Гуляй!",d:300,h:300},{p:"stand",f:-1,dx:-70,walk:1,sag:30,d:1600,h:0},{f:1,walk:0,p:"sniff",d:300,h:300}], {pp:325,pf:-1,line:"long",sag:30});
+  if (currentTab==="offleash" && !sheetOpen) offPlayer.play();
+  v.querySelectorAll("[data-pre]").forEach(function(c){ c.addEventListener("change", function(){ var i=c.getAttribute("data-pre"); if(c.checked) S.pre[i]=1; else delete S.pre[i]; save(); c.closest(".check").classList.toggle("on", c.checked); }); });
+  v.querySelectorAll("[data-rec]").forEach(function(b){ b.addEventListener("click", function(){ var i=b.getAttribute("data-rec"); var a=S.rec[i]||[]; a.push(+b.getAttribute("data-v")); if(a.length>10) a=a.slice(-10); S.rec[i]=a; save(); var y=window.scrollY; renderOff(); window.scrollTo(0,y); }); });
+  v.querySelectorAll("[data-reset]").forEach(function(b){ b.addEventListener("click", function(){
+    if (b.getAttribute("data-armed")){ delete S.rec[b.getAttribute("data-reset")]; save(); var y=window.scrollY; renderOff(); window.scrollTo(0,y); }
+    else { b.setAttribute("data-armed","1"); b.textContent="Точно очистить?"; setTimeout(function(){ if(b.isConnected){ b.removeAttribute("data-armed"); b.textContent="Очистить"; } }, 3000); }
+  }); });
+  bindCommon(v);
+}
+
+function renderBasics(){
+  var html = '<div class="view-head"><div class="eyebrow">Основы</div><h1 class="h1">Как собака учится</h1>' +
+    '<p class="lead">Шесть принципов, на которых держится всё остальное. Они важнее любой отдельной команды.</p></div>';
+  html += profileForm("ba-");
+  html += '<div class="sec"><div class="sec-label">Принципы</div><div class="principles">' +
+    PRINCIPLES.map(function(p){ return '<div class="pr"><h3>'+p[0]+'</h3><p>'+p[1]+'</p></div>'; }).join("") + '</div></div>';
+  html += '<div class="sec"><div class="sec-label">Правило трёх «Д»</div><div class="card" style="display:grid;gap:12px"><p class="small">Любую команду усложняют по трём направлениям. Меняйте только одно за раз, а остальные два на это время сделайте полегче.</p>' +
+    '<div class="three-d"><div><b>Длительность</b><span>2 сек → 10 → 30 → минута</span></div><div><b>Дистанция</b><span>1 шаг → 3 → 5 м → корда</span></div><div><b>Отвлечения</b><span>дом → двор → парк → собаки</span></div></div></div></div>';
+  html += '<div class="sec"><div class="sec-label">Сигналы стресса — пора сделать паузу</div><div class="card"><ul class="clean">'+STRESS.map(function(s){return '<li>'+s+'</li>';}).join("")+'</ul>' +
+    '<p class="small muted" style="margin-top:10px">Увидели 2–3 таких сигнала — отойдите подальше от раздражителя, дайте собаке понюхать землю, закончите занятие простой командой.</p></div></div>';
+  html += '<div class="sec"><div class="sec-label">Установить на iPhone</div><div class="card" style="display:grid;gap:12px"><ol class="howto">' +
+    '<li>Откройте ссылку на это приложение в Safari.</li><li>Нажмите кнопку «Поделиться» — квадрат со стрелкой вверх.</li><li>Выберите «На экран “Домой”».</li><li>Нажмите «Добавить». Иконка появится рядом с другими приложениями.</li></ol>' +
+    '<p class="small muted">Отметки и прогресс сохраняются в браузере на этом телефоне.</p></div></div>';
+  html += '<div class="sec"><p class="small muted">Это справочник для обычного воспитания. Если собака проявляет агрессию, сильный страх или не может оставаться одна, обратитесь к кинологу, который работает методами положительного подкрепления, или к ветеринарному поведенческому специалисту.</p></div>';
+  var v = $("v-basics"); v.innerHTML = html; bindProfile(v); bindCommon(v);
+}
+
+function bindCommon(root){
+  root.querySelectorAll("[data-cmd]").forEach(function(b){ b.addEventListener("click", function(){ openCmd(b.getAttribute("data-cmd")); }); });
+  root.querySelectorAll("[data-goto]").forEach(function(b){ b.addEventListener("click", function(){ setTab(b.getAttribute("data-goto")); }); });
+}
+
+/* ---------- command sheet ---------- */
+var sheetOpen = false, cmdPlayer = null, cmdId = null, cmdStep = 0, playing = true;
+function openCmd(id){
+  var c = CMD[id]; if (!c) return;
+  cmdId = id; cmdStep = 0; playing = true; sheetOpen = true;
+  if (offPlayer) offPlayer.stop();
+  $("sheet-title").textContent = c.name;
+  var st = S.cmd[id]||0;
+  var html = '<div class="cmd-head"><div class="eyebrow">'+c.group+'</div><h2 class="h1">'+c.name+'</h2>' +
+    '<div class="meta-row"><span class="pill">Сигнал: <b>'+nm(c.cue)+'</b></span><span class="pill">Возраст: <b>'+c.age+'</b></span></div>' +
+    '<p class="lead">'+c.why+'</p></div>' +
+    '<div class="player"><div class="scene" id="cmd-scene"></div>' +
+      '<div class="player-ctl"><div class="steps-nav" role="tablist" aria-label="Шаги">'+c.steps.map(function(s,i){ return '<button class="step-chip'+(i===0?' on':'')+'" type="button" role="tab" data-step="'+i+'" aria-label="Шаг '+(i+1)+'">'+(i+1)+'</button>'; }).join("")+'</div>' +
+      '<button class="play" id="play" type="button" aria-label="Пауза">'+ICON_PAUSE+'</button></div>' +
+      '<div class="step-text" id="step-text"></div>' +
+      '<div class="legend"><span><i style="background:var(--ok)"></i>маркер «Да!»</span><span><i style="background:var(--treat)"></i>лакомство</span><span><i style="background:var(--accent)"></i>ошейник и поводок</span></div>' +
+    '</div>' +
+    '<div class="sec"><div class="sec-label">Все шаги</div><ol class="steplist" id="steplist">'+c.steps.map(function(s,i){ return '<li class="'+(i===0?'on':'')+'"><button type="button" data-step="'+i+'"><span><b>'+s.t+'</b><span>'+nm(s.d)+'</span></span></button></li>'; }).join("")+'</ol></div>' +
+    '<div class="sec"><div class="sec-label">Частые ошибки</div><div class="card"><ul class="clean dont">'+c.mistakes.map(function(m){return '<li>'+m+'</li>';}).join("")+'</ul></div></div>' +
+    '<div class="sec"><div class="ready"><b>Команда готова, когда</b><span>'+c.ready+'</span></div></div>' +
+    '<div class="sec"><div class="sec-label">Ваш прогресс</div><div class="seg" role="radiogroup" aria-label="Статус команды">'+STATUS.map(function(s,i){ return '<button type="button" role="radio" aria-checked="'+(i===st)+'" class="'+(i===st?'on':'')+'" data-status="'+i+'">'+s+'</button>'; }).join("")+'</div></div>';
+  $("sheet-body").innerHTML = html;
+  var sh = $("sheet"); sh.hidden = false; $("sheet-scroll").scrollTop = 0;
+  document.body.style.overflow = "hidden";
+  cmdPlayer = new Player($("cmd-scene"));
+  setStep(0);
+  $("sheet-body").querySelectorAll("[data-step]").forEach(function(b){ b.addEventListener("click", function(){ setStep(+b.getAttribute("data-step")); if (b.closest("#steplist")) $("cmd-scene").scrollIntoView({behavior: RM?"auto":"smooth", block:"start"}); }); });
+  $("play").addEventListener("click", function(){ playing = !playing; if (playing) cmdPlayer.play(); else cmdPlayer.stop(); updPlay(); });
+  $("sheet-body").querySelectorAll("[data-status]").forEach(function(b){ b.addEventListener("click", function(){
+    S.cmd[cmdId] = +b.getAttribute("data-status"); save();
+    $("sheet-body").querySelectorAll("[data-status]").forEach(function(x){ var on = x===b; x.classList.toggle("on", on); x.setAttribute("aria-checked", on); });
+    renderCommands();
+  }); });
+  $("sheet-back").focus({preventScroll:true});
+}
+function setStep(i){
+  var c = CMD[cmdId]; cmdStep = i;
+  cmdPlayer.stop(); cmdPlayer.pausedAt = 0; cmdPlayer.load(c.steps[i].a, c.scene);
+  if (playing) cmdPlayer.play();
+  $("step-text").innerHTML = '<h3>Шаг '+(i+1)+'. '+c.steps[i].t+'</h3><p>'+nm(c.steps[i].d)+'</p>';
+  $("sheet-body").querySelectorAll(".step-chip").forEach(function(b,j){ b.classList.toggle("on", j===i); b.setAttribute("aria-selected", j===i); });
+  $("sheet-body").querySelectorAll("#steplist li").forEach(function(li,j){ li.classList.toggle("on", j===i); });
+  updPlay();
+}
+function updPlay(){ var b=$("play"); if(!b) return; b.innerHTML = playing ? ICON_PAUSE : ICON_PLAY; b.setAttribute("aria-label", playing ? "Пауза" : "Смотреть анимацию"); }
+function closeCmd(){
+  if (cmdPlayer){ cmdPlayer.stop(); cmdPlayer = null; }
+  sheetOpen = false; $("sheet").hidden = true; document.body.style.overflow = "";
+  if (currentTab==="offleash" && offPlayer) offPlayer.play();
+}
+$("sheet-back").addEventListener("click", closeCmd);
+document.addEventListener("keydown", function(e){ if (e.key==="Escape" && sheetOpen) closeCmd(); });
+
+/* ---------- tabs ---------- */
+var currentTab = "path";
+function setTab(t){
+  currentTab = t;
+  document.querySelectorAll("[data-view]").forEach(function(s){ s.hidden = s.getAttribute("data-view")!==t; });
+  document.querySelectorAll(".tab").forEach(function(b){ var on=b.getAttribute("data-tab")===t; b.classList.toggle("on", on); if(on) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
+  if (offPlayer){ if (t==="offleash" && !sheetOpen) offPlayer.play(); else offPlayer.stop(); }
+  window.scrollTo(0,0);
+}
+document.querySelectorAll(".tab").forEach(function(b){ b.addEventListener("click", function(){ if (sheetOpen) closeCmd(); setTab(b.getAttribute("data-tab")); }); });
+$("dogchip").addEventListener("click", function(){ setTab("basics"); setTimeout(function(){ var i=$("ba-name"); if(i) i.focus({preventScroll:false}); }, 50); });
+document.addEventListener("visibilitychange", function(){
+  if (document.hidden){ if (cmdPlayer) cmdPlayer.stop(); if (offPlayer) offPlayer.stop(); }
+  else { if (sheetOpen && cmdPlayer && playing) cmdPlayer.play(); else if (currentTab==="offleash" && offPlayer) offPlayer.play(); }
+});
+
+function renderAll(){ renderChip(); renderPath(); renderCommands(); renderOff(); renderBasics(); }
+renderAll();
+var h = (location.hash||"").replace("#","");
+if (["path","commands","offleash","basics"].indexOf(h) >= 0) setTab(h);
+else if (CMD[h]) openCmd(h);
+})();
+</script>
+
+</body>
+</html>
