@@ -149,6 +149,33 @@ p{margin:0}
 .cal-all{display:grid;gap:6px;margin-top:4px}
 .due-row.late .due-when .small{color:var(--no);font-weight:600}
 .emergency{display:grid;gap:8px}
+.wcard{display:grid;gap:12px;margin-bottom:8px}
+.wnow{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center}
+.wbig{font-family:var(--f-display);font-weight:700;font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums}
+.wstat{display:grid;gap:4px;justify-items:start}
+.wpill{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px}
+.wpill.ok{background:var(--ok-soft);color:var(--ok)}.wpill.low,.wpill.high{background:var(--accent-soft);color:var(--accent-ink)}
+.wfig{margin:0;display:grid;gap:6px}
+.wchart{width:100%;height:auto;display:block}
+.wc-grid{stroke:var(--line);stroke-width:1}
+.wc-t{fill:var(--muted);font-family:var(--f-mono);font-size:10px}
+.wc-band{fill:var(--ok-soft);stroke:var(--ok);stroke-width:1;stroke-opacity:.5}
+.wc-now{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
+.wc-line{fill:none;stroke:var(--accent);stroke-width:2}
+.wc-pt{fill:var(--accent)}.wc-pt.last{stroke:var(--surface);stroke-width:2}
+.wfig figcaption{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--muted)}
+.wfig figcaption span{display:inline-flex;align-items:center;gap:6px}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px}
+.sw.band{background:var(--ok-soft);border:1px solid var(--ok)}.sw.pt{background:var(--accent);border-radius:50%}.sw.now{border-left:2px dashed var(--muted);border-radius:0;width:2px}
+.wdet{background:var(--bg)}
+.wtable{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.wtable th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:4px 8px;border-bottom:1px solid var(--line)}
+.wtable td{padding:6px 8px;border-bottom:1px solid var(--line)}
+.wtable tr.cur td{background:var(--accent-soft);font-weight:700}
+.feed{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.feed > div{background:var(--bg);border-radius:12px;padding:10px;display:grid;gap:2px;min-width:0}
+.feed b{font-family:var(--f-display);font-weight:500;font-size:17px;font-variant-numeric:tabular-nums}
+@media (max-width:420px){.feed{grid-template-columns:1fr}.feed > div{grid-template-columns:96px 1fr;align-items:baseline}.feed .small{grid-column:2}}
 .em{background:var(--no-soft);border-radius:12px;padding:10px 14px;display:grid;gap:2px;font-size:14px}
 .em b{color:var(--no);font-size:15px}
 .dots2{display:flex;gap:10px;flex-wrap:wrap}
@@ -442,10 +469,10 @@ ol.howto li::before{content:counter(h);width:26px;height:26px;border-radius:8px;
 
 /* ---------- storage ---------- */
 var KEY = "vosp-sobaki-v1";
-var S = {name:"", sex:"", fixed:false, breed:"", size:"", birth:"", home:"", cmd2:{}, log:[], health:[], done:{}, d2:{has:false, name:"", sex:"", birth:"", fixed:false}, onboarded:false, checks:{}, cmd:{}, rec:{}, pre:{}, heat:[]};
+var S = {name:"", sex:"", fixed:false, breed:"", size:"", birth:"", home:"", cmd2:{}, log:[], health:[], done:{}, weights:[], wTarget:{}, kcal100:{}, d2:{has:false, name:"", sex:"", birth:"", fixed:false}, onboarded:false, checks:{}, cmd:{}, rec:{}, pre:{}, heat:[]};
 try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); for (var k in o) S[k] = o[k]; } } catch(e) {}
-["cmd2","done"].forEach(function(k){ if (!S[k] || typeof S[k] !== "object") S[k] = {}; });
-["log","health","heat"].forEach(function(k){ if (!Array.isArray(S[k])) S[k] = []; });
+["cmd2","done","wTarget","kcal100"].forEach(function(k){ if (!S[k] || typeof S[k] !== "object") S[k] = {}; });
+["log","health","heat","weights"].forEach(function(k){ if (!Array.isArray(S[k])) S[k] = []; });
 if (!S.d2 || typeof S.d2 !== "object") S.d2 = {has:false, name:"", sex:"", birth:"", fixed:false};
 if (!Array.isArray(S.heat)) S.heat = [];
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
@@ -734,7 +761,8 @@ var TWO = {
         "У {n1.g} — манеж или клетка-домик, чтобы вы могли дать {n2.d} передышку.",
         "Пока вас нет дома, разделяйте собак барьером или дверью. Оставлять вместе — только когда несколько недель всё спокойно.",
         "Сохраните {n2.d} привычные ритуалы: прогулки, игры, место рядом с вами. Пусть появление {n1.g} ничего у {f2:неё|него} не забирает.",
-        "Награждайте спокойствие: лежат рядом и не напряжены — тихое «Да!» и лакомство каждой собаке, на расстоянии друг от друга."],
+        "Награждайте спокойствие: лежат рядом и не напряжены — тихое «Да!» и лакомство каждой собаке, на расстоянии друг от друга.",
+        ["Разница в размере: крупный щенок к 4–5 месяцам будет тяжелее {n2.g}, а играет он без тормозов. Прерывайте игру, если {name} прыгает на {n2.a} сверху, валит {f2:её|его} или наступает на спину, — у корги позвоночник уязвим. Хорошая игра — на полу, на равных и с паузами.","bigsmall"]],
   ok:["Игровой поклон: передние лапы на земле, зад вверх — приглашение к игре.",
       "Роли меняются: то одна собака сверху, то другая; то догоняет {name}, то {name2}.",
       "Сами делают паузы: остановились, отряхнулись, продолжили.",
@@ -892,7 +920,8 @@ var TOPICS = [
       "У {n2.g} должно остаться место, куда {name} не может добраться, — чтобы можно было уйти и отдохнуть.",
       "Тренируйте одиночество {n1.g} и без {n2.g}. Если {name} {f1:спокойна|спокоен} только рядом с {n2.i}, первый же визит {n2.g} к ветеринару обернётся паникой.",
       "Посмотрите первые разы на видео. Если одна собака преследует другую, они ссорятся у двери или одна не даёт другой лечь — разделяйте.",
-      ["Если у одной из собак течка — оставляйте их только в разных комнатах.","mix"]]},
+      ["Если у одной из собак течка — оставляйте их только в разных комнатах.","mix"],
+      ["Пока вас нет, не оставляйте крупного щенка свободно бегать вместе с корги: в возне он может прыгнуть на {n2.a} сверху или сбить с лестницы.","bigsmall"]]},
     {k:"dont", t:"Не делать", items:[
       "Ругать за лужи и погрызенное, когда вернулись. Собака не свяжет это с тем, что было час назад, зато начнёт бояться вашего возвращения — и тревожиться сильнее.",
       "Сразу оставлять на целый день — например, в первый рабочий день после отпуска. Начните тренировки за 1–2 недели.",
@@ -1083,7 +1112,8 @@ TOPICS.push(
     {k:"neutral", t:"Шерсть", items:[
       "Вычёсывайте 2–3 раза в неделю, во время линьки — каждый день.",
       ["У ретривера густой подшёрсток: нужны пуходёрка и гребень с длинными зубьями. За ушами и на «штанах» быстро образуются колтуны. Сильнее всего линяют весной и осенью.","retr"],
-      "Начинайте с 1–2 минут и лакомства — расчёска должна стать игрой."]},
+      "Начинайте с 1–2 минут и лакомства — расчёска должна стать игрой.",
+      ["У корги густой двойной подшёрсток, и линяют они почти круглый год, особенно весной и осенью. Вычёсывайте 2–3 раза в неделю, в линьку — каждый день. Не стригите корги коротко: шерсть защищает и от холода, и от перегрева.","corgi"]]},
     {k:"neutral", t:"Уши", items:[
       "Осматривайте раз в неделю: внутри светло-розово, без запаха и налёта.",
       "Чистите только видимую часть специальным лосьоном. Ватные палочки вглубь не вводите.",
@@ -1125,7 +1155,9 @@ TOPICS.push(
       "Новый корм вводите постепенно, за 5–7 дней.",
       "Не кормите за час до и в течение часа после активной нагрузки — особенно крупных собак.",
       "Ест слишком быстро — миска-лабиринт или кормление из игрушек.",
-      ["Ретриверы склонны к лишнему весу и мастерски выпрашивают еду. Лишние килограммы — нагрузка на суставы и сердце, поэтому держите собаку скорее стройной.","retr"]]}
+      ["Ретриверы склонны к лишнему весу и мастерски выпрашивают еду. Лишние килограммы — нагрузка на суставы и сердце, поэтому держите собаку скорее стройной.","retr"],
+      ["Корги — одна из самых склонных к полноте пород: аппетит пастушьей собаки на коротких лапах. Для них лишний вес особенно опасен — он нагружает длинную спину. Талия у корги должна быть видна сверху.","corgi"],
+      "Точную норму по текущему весу посчитает блок «Вес и корм» выше."]}
    ],
    note:["Список опасных продуктов — в теме «Ласка и лакомства» на вкладке «Путь». Пропал аппетит, рвота или понос больше суток у щенка — позвоните ветеринару."] },
 
@@ -1136,7 +1168,8 @@ TOPICS.push(
     {k:"neutral", t:"Сколько гулять", items:[
       "Ориентир для щенка — около 5 минут спокойной прогулки на поводке на каждый месяц возраста за один выход, 2–3 раза в день. Свободная игра и нюхание — сверх этого.",
       "Взрослой собаке активной породы нужно 1,5–2 часа активности в день: прогулки, игры, работа носом.",
-      ["Ретриверы — рабочая порода. Без нагрузки они скучают, а скука превращается в погрызенные вещи и шалости дома.","retr"]]},
+      ["Ретриверы — рабочая порода. Без нагрузки они скучают, а скука превращается в погрызенные вещи и шалости дома.","retr"],
+      ["Корги — пастушья порода: взрослому нужно 1–1,5 часа активности в день и работа для головы — поиск, команды, игры на смекалку.","corgi"]]},
     {k:"do", t:"Полезно", items:[
       "Свободная игра на мягкой земле, траве, песке.",
       "Прогулки по разной поверхности: лес, пригорки, корни.",
@@ -1153,6 +1186,7 @@ TOPICS.push(
       "Собака ложится и не хочет идти дальше.",
       "Долго тяжело дышит после прогулки.",
       "Хромает или после отдыха встаёт скованно.",
+      ["У корги длинная спина и короткие лапы. Прыжки с дивана и кровати и крутые лестницы нагружают позвоночник в любом возрасте: поставьте пандус или ступеньки, по лестнице носите, поддерживая одновременно под грудь и под зад.","corgi"],
       ["Ретриверы предрасположены к дисплазии тазобедренных и локтевых суставов. Если щенок хромает, бегает «зайчиком», отталкиваясь обеими задними лапами, или неохотно встаёт — покажите ортопеду.","retr"]]}
    ],
    note:["Если планируете спорт с собакой, обсудите с ветеринаром рентген суставов после окончания роста."] }
@@ -1172,6 +1206,7 @@ var EMERGENCY = [
   ["Перегрев","Сильная одышка, ярко-красный язык, слабость, рвота, шатается. Уведите в тень, смочите прохладной (не ледяной) водой, дайте попить и сразу к врачу."],
   ["Съела опасное","Шоколад, виноград, ксилит, лекарства, яд от грызунов — сразу звоните ветеринару, даже если собака выглядит нормально. Не вызывайте рвоту без указания врача."],
   ["Рвота или понос у щенка","Больше суток, с кровью или вместе с вялостью — к врачу в тот же день. Щенки быстро теряют воду."],
+  ["Боль в спине","Собака горбится, вскрикивает, когда её берут на руки, не может запрыгнуть, шатается или волочит задние лапы — срочно к ветеринару. Особенно у пород с длинной спиной, например корги и таксы."],
   ["Всегда срочно","Тяжело дышит в покое, судороги, сильное кровотечение, травма, не может встать, бледные или синюшные дёсны, обморок."]
 ];
 var PLACES = ["Дом","Двор","Улица","Новое место"];
@@ -1183,6 +1218,9 @@ function condOk(c){
   if (!c) return true;
   if (c === "d2") return has2;
   if (c === "retr") return retr();
+  if (c === "corgi") return anyCorgi();
+  if (c === "d2corgi") return has2 && corgi(2);
+  if (c === "bigsmall") return has2 && largeDog() && (corgi(2) || (targetW(2)||99) < 15);
   if (c === "large") return largeDog();
   if (c === "mix") return has2 && !!S.sex && !!S.d2.sex && (S.sex !== S.d2.sex || S.sex === "f") && !(S.fixed && S.d2.fixed);
   return true;
@@ -1616,7 +1654,7 @@ function twoCard(){
   if (!S.d2 || !S.d2.has) return "";
   var T = TWO, n = 0; T.check.forEach(function(_,i){ if (S.checks["two-"+i]) n++; }); var tot = T.check.length;
   var paw = ICON_PAW;
-  var li = function(a){ return a.map(function(x){ return '<li>'+nm(x)+'</li>'; }).join(""); };
+  var li = function(a){ return a.filter(function(x){ return !Array.isArray(x) || condOk(x[1]); }).map(function(x){ return '<li>'+nm(Array.isArray(x)?x[0]:x)+'</li>'; }).join(""); };
   var h = '<article class="stage" id="two-card"><button class="stage-head" type="button" data-two aria-expanded="'+openTwo+'">' +
     '<span class="stage-meta"><span class="two-ico">'+paw+paw+'</span><span class="range">Особая ситуация</span>'+(n===tot?'<span class="badge ok">Готово</span>':'')+'</span>' +
     '<span class="stage-title">'+nm(T.title)+'</span><span class="stage-sub">'+nm((S.d2.birth && ageOf(S.d2.birth) ? '{name2}: {age2}. ' : '')+'Знакомство, быт, игра, обучение')+'</span>' +
@@ -1688,6 +1726,7 @@ function profileForm(idp, ob){
     '<div class="fields" id="'+idp+'d2"'+(d.has?'':' hidden')+'>' +
       '<div class="field full"><label for="'+idp+'name2">Кличка</label><input id="'+idp+'name2" type="text" maxlength="24" autocomplete="off" placeholder="Например, Рекс" value="'+esc(d.name||"")+'"></div>' +
       '<div class="field full"><span class="flabel">Пол</span>'+sexSeg(idp+'sex2', d.sex)+'</div>' +
+      '<div class="field full"><label for="'+idp+'breed2">Порода</label><input id="'+idp+'breed2" type="text" maxlength="40" autocomplete="off" placeholder="Например, вельш-корги пемброк" value="'+esc(d.breed||"")+'"></div>' +
       '<div class="field full"><label for="'+idp+'birth2">Дата рождения (можно примерно)</label><input id="'+idp+'birth2" type="date" value="'+esc(d.birth||"")+'"></div>' +
       '<label class="check full'+(d.fixed?' on':'')+'"><input type="checkbox" id="'+idp+'fixed2"'+(d.fixed?' checked':'')+'><span id="'+idp+'fixed2l">'+fixedLabel(d.sex)+'</span></label>' +
     '</div>' +
@@ -1717,7 +1756,7 @@ function bindProfile(root){
       err.hidden = true;
       S.breed = $(p+"breed").value.trim(); S.size = radioVal(p+"size");
       S.name = name; S.sex = sex; S.birth = $(p+"birth").value; S.home = $(p+"home").value; S.fixed = $(p+"fixed").checked;
-      S.d2 = {has: has, name: name2, sex: sex2, birth: $(p+"birth2").value, fixed: $(p+"fixed2").checked};
+      S.d2 = {has: has, name: name2, sex: sex2, breed: $(p+"breed2").value.trim(), birth: $(p+"birth2").value, fixed: $(p+"fixed2").checked};
       var first = !S.onboarded; S.onboarded = true;
       save(); openStage = null; renderAll();
       if (p === "ob-"){ closeOnboard(); if (first) setTab("today"); }
@@ -1955,6 +1994,7 @@ function renderToday(){
     '<div class="meta-row"><span class="pill">Сделано: <b>'+cnt+' из '+items.length+'</b></span>'+(sk ? '<span class="pill">Серия: <b>'+sk+' '+plural(sk,["день","дня","дней"])+'</b></span>' : '')+'</div></div>';
   var alerts = [];
   var hs = heatApplies() && heatState(); if (hs && hs.active) alerts.push('<b>Течка, день '+hs.day+'.</b> Только на поводке, программа «Без поводка» на паузе.');
+  (function(){ var m1 = monthsAt(S.birth), lw = weightsOf(1).slice(-1)[0]; if (m1 != null && m1 < 15 && (!lw || daysSince(lw.d) > 14)) alerts.push('<b>'+(lw ? 'Пора взвесить '+esc(decl(dogName(),S.sex||"f","a")) : 'Взвесьте '+esc(decl(dogName(),S.sex||"f","a")))+'</b> — щенок растёт быстро, норма корма считается по весу (вкладка «Здоровье»).'); })();
   healthDue().filter(function(x){ return x.state !== "ok"; }).forEach(function(x){ alerts.push('<b>'+esc(dogLabel(x.r.dog))+': '+esc(hTitle(x.r))+'</b> — '+dueLabel(x)+'.'); });
   if (alerts.length) html += '<div class="alerts">'+alerts.map(function(a){ return '<div class="alert">'+a+'</div>'; }).join("")+'</div>';
   html += '<div class="sec"><div class="plan">' + items.map(function(x){
@@ -2009,12 +2049,163 @@ function renderToday(){
   v.querySelectorAll("[data-logdel]").forEach(function(b){ b.addEventListener("click", function(){ var id = b.getAttribute("data-logdel"); S.log = S.log.filter(function(e){ return e.id !== id; }); save(); keepScroll(renderToday); }); });
 }
 
+/* ---------- weight & feeding ---------- */
+/* golden retriever reference ranges, kg: [month, min, max] */
+var GOLDEN_W = {
+  f: [[2,4,7],[3,7,11],[4,11,15],[5,14,19],[6,18,23],[7,20,25],[8,22,26],[9,23,27],[10,24,28],[11,24,28],[12,25,29],[18,25,29.5],[24,25,29.5]],
+  m: [[2,5,8],[3,9,12],[4,13,17],[5,17,22],[6,21,26],[7,24,29],[8,26,31],[9,27,32],[10,28,33],[11,29,34],[12,29,34],[18,29.5,34],[24,29.5,34]]
+};
+/* Pembroke corgi reference ranges, kg */
+var CORGI_W = {
+  f: [[2,3.2,4.1],[3,4.1,5],[4,5.2,6.5],[5,6.4,8],[6,7.5,9.3],[8,8.3,10.3],[10,8.8,11],[12,9.1,11.8],[18,10,12.7],[24,10,12.7]],
+  m: [[2,3.6,4.5],[3,4.5,5.9],[4,5.8,7.6],[5,6.8,9.2],[6,7.7,10.9],[8,8.6,11.5],[10,9,12.5],[12,9.1,13.6],[18,10,14.1],[24,10,14.1]]
+};
+var CARDIGAN_ADULT = { f:[11,15.4], m:[13.5,17.2] };
+/* share of adult weight by month, by size class (estimate for other breeds) */
+var GROW_FRAC = {
+  s: [[2,.3],[3,.45],[4,.6],[5,.72],[6,.82],[8,.93],[10,.98],[12,1],[24,1]],
+  m: [[2,.22],[3,.35],[4,.48],[5,.6],[6,.7],[7,.78],[8,.85],[10,.94],[12,.98],[15,1],[24,1]],
+  l: [[2,.2],[3,.33],[4,.47],[5,.6],[6,.72],[7,.8],[8,.86],[9,.9],[10,.93],[12,.97],[15,.99],[18,1],[24,1]]
+};
+var wf = {dog:1};
+function breedOf(n){ return n === 2 ? ((S.d2 && S.d2.breed) || "") : (S.breed || ""); }
+function golden(n){ return /золотист|golden|голден/i.test(breedOf(n || 1)); }
+function corgi(n){ return /корги|corgi/i.test(breedOf(n || 1)); }
+function cardigan(n){ return /кардиган|cardigan/i.test(breedOf(n || 1)); }
+function anyCorgi(){ return corgi(1) || (S.d2 && S.d2.has && corgi(2)); }
+function breedName(n){ return golden(n) ? "золотистого ретривера" : cardigan(n) ? "корги-кардигана" : corgi(n) ? "корги" : ""; }
+function sizeOf(n){
+  if (golden(n)) return "l"; if (corgi(n)) return "m";
+  if (n === 1 && S.size) return S.size;
+  var t = targetW(n); return t ? (t < 10 ? "s" : t < 25 ? "m" : "l") : (n === 1 ? "m" : "m");
+}
+function dogBirth(n){ return n === 2 ? (S.d2 && S.d2.birth) : S.birth; }
+function dogSex(n){ return n === 2 ? ((S.d2 && S.d2.sex) || "m") : (S.sex || "f"); }
+function dogFixed(n){ return n === 2 ? !!(S.d2 && S.d2.fixed) : !!S.fixed; }
+function monthsAt(birth, dateStr){ var b = parseDate(birth), d = parseDate(dateStr || isoDay()); if (!b || !d) return null; return (d - b) / 86400000 / 30.44; }
+function targetW(n){ var t = (S.wTarget||{})[n]; if (t) return +t; var sx = dogSex(n);
+  if (golden(n)) return sx === "m" ? 31.5 : 27;
+  if (cardigan(n)) return sx === "m" ? 15.5 : 13;
+  if (corgi(n)) return sx === "m" ? 12 : 11.3;
+  return null; }
+function weightRanges(n){
+  var sx = dogSex(n) === "m" ? "m" : "f";
+  if (golden(n)) return GOLDEN_W[sx];
+  if (corgi(n) && !cardigan(n)) return CORGI_W[sx];
+  var a = targetW(n); if (!a) return null;
+  var size = sizeOf(n);
+  return GROW_FRAC[size].map(function(q){ return [q[0], +(a*q[1]*0.9).toFixed(1), +(a*q[1]*1.1).toFixed(1)]; });
+}
+function rangeAt(rs, m){
+  if (!rs || m == null || m < rs[0][0]) return null;
+  for (var i = 0; i < rs.length-1; i++){
+    var a = rs[i], b = rs[i+1];
+    if (m <= b[0]){ var t = (m - a[0]) / (b[0] - a[0]); return [a[1] + (b[1]-a[1])*t, a[2] + (b[2]-a[2])*t]; }
+  }
+  var L = rs[rs.length-1]; return [L[1], L[2]];
+}
+function weightsOf(n){ return (S.weights||[]).filter(function(w){ return w.dog === n; }).sort(function(a,b){ return a.d < b.d ? -1 : 1; }); }
+function fmtKg(x){ return (Math.round(x*10)/10).toString().replace(".", ","); }
+function feedPlan(n, w){
+  var m = monthsAt(dogBirth(n)); if (m == null || !w) return null;
+  var size = sizeOf(n), growEnd = {s:10, m:12, l:15}[size] || 12;
+  var f, why;
+  if (m < 4){ f = 3; why = "щенок до 4 месяцев"; }
+  else if (m < growEnd){ f = 2; why = "растущий щенок"; }
+  else if (m >= 84){ f = 1.4; why = "собака старше 7 лет"; }
+  else if (dogFixed(n)){ f = 1.6; why = "взрослая, стерилизована"; }
+  else { f = 1.8; why = "взрослая, не стерилизована"; }
+  var rer = 70 * Math.pow(w, 0.75), kcal = rer * f, food = kcal * 0.9, k100 = +((S.kcal100||{})[n] || 370);
+  var meals = m < 4 ? 4 : m < 6 ? 3 : 2, grams = food / (k100 / 100);
+  return {kcal:kcal, treats:kcal*0.1, grams:grams, meals:meals, per:grams/meals, why:why, k100:k100, months:m};
+}
+function weightChart(n){
+  var rs = weightRanges(n), ws = weightsOf(n).filter(function(w){ return monthsAt(dogBirth(n), w.d) != null; });
+  if (!rs || !dogBirth(n)) return "";
+  var now = monthsAt(dogBirth(n)); if (now == null || now > 26) return "";
+  var x1 = Math.max(12, Math.min(24, Math.ceil(Math.max(now, ws.length ? monthsAt(dogBirth(n), ws[ws.length-1].d) : 0) + 1))), x0 = 2;
+  var ymax = Math.ceil(Math.max(rangeAt(rs, x1)[1], ws.reduce(function(a,w){ return Math.max(a, w.kg); }, 0)) * 1.1 / 5) * 5;
+  var W = 340, H = 200, l = 34, r = 10, t = 12, b = 26;
+  var X = function(m){ return l + (m - x0) / (x1 - x0) * (W - l - r); }, Y = function(kg){ return H - b - kg / ymax * (H - t - b); };
+  var band = [], m;
+  for (m = x0; m <= x1 + 0.001; m += 0.5){ var q = rangeAt(rs, m); band.push([X(m), Y(q[1])]); }
+  for (m = x1; m >= x0 - 0.001; m -= 0.5){ var q2 = rangeAt(rs, m); band.push([X(m), Y(q2[0])]); }
+  var g = '<svg class="wchart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Ориентир веса по месяцам и записанный вес">';
+  var step = ymax > 30 ? 10 : 5;
+  for (var kg = 0; kg <= ymax; kg += step) g += '<line x1="'+l+'" x2="'+(W-r)+'" y1="'+Y(kg).toFixed(1)+'" y2="'+Y(kg).toFixed(1)+'" class="wc-grid"/><text x="'+(l-6)+'" y="'+(Y(kg)+4).toFixed(1)+'" class="wc-t" text-anchor="end">'+kg+'</text>';
+  for (m = x0; m <= x1; m += 2) g += '<text x="'+X(m).toFixed(1)+'" y="'+(H-8)+'" class="wc-t" text-anchor="middle">'+m+'</text>';
+  g += '<polygon class="wc-band" points="'+band.map(function(p){ return p[0].toFixed(1)+","+p[1].toFixed(1); }).join(" ")+'"/>';
+  g += '<line class="wc-now" x1="'+X(now).toFixed(1)+'" x2="'+X(now).toFixed(1)+'" y1="'+t+'" y2="'+(H-b)+'"/>';
+  var pts = ws.map(function(w){ return [X(monthsAt(dogBirth(n), w.d)), Y(w.kg)]; }).filter(function(p){ return p[0] >= l - 1; });
+  if (pts.length > 1) g += '<polyline class="wc-line" points="'+pts.map(function(p){ return p[0].toFixed(1)+","+p[1].toFixed(1); }).join(" ")+'"/>';
+  pts.forEach(function(p, i){ g += '<circle class="wc-pt'+(i===pts.length-1?' last':'')+'" cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(i===pts.length-1?5:3.5)+'"/>'; });
+  g += '<text x="'+(W-r)+'" y="'+(H-8)+'" class="wc-t" text-anchor="end">мес</text><text x="'+(l-6)+'" y="'+(t-2)+'" class="wc-t" text-anchor="end">кг</text></svg>';
+  return '<figure class="wfig">'+g+'<figcaption><span><i class="sw band"></i>ориентир для '+(breedName(n) && !cardigan(n) ? (dogSex(n)==="m"?"мальчика ":"девочки ")+breedName(n) : "ожидаемого веса")+'</span><span><i class="sw pt"></i>взвешивания</span><span><i class="sw now"></i>сейчас</span></figcaption></figure>';
+}
+function weightTable(n){
+  var rs = weightRanges(n); if (!rs) return "";
+  var m = monthsAt(dogBirth(n)), rows = rs.filter(function(q){ return q[0] <= 18; });
+  var label = function(mm){ return mm < 12 ? mm+" мес" : mm === 12 ? "1 год" : mm === 18 ? "1,5 года" : mm+" мес"; };
+  var cur = m == null ? -1 : rs.reduce(function(best, q, i){ return Math.abs(q[0]-m) < Math.abs(rs[best][0]-m) ? i : best; }, 0);
+  var tb = '<table class="wtable"><thead><tr><th>Возраст</th><th>Вес, кг</th></tr></thead><tbody>' + rows.map(function(q){ var i = rs.indexOf(q); return '<tr'+(i===cur?' class="cur"':'')+'><td>'+label(q[0])+'</td><td>'+fmtKg(q[1])+'–'+fmtKg(q[2])+'</td></tr>'; }).join("") +
+    '<tr><td>2 года — взрослая</td><td>'+fmtKg(rs[rs.length-1][1])+'–'+fmtKg(rs[rs.length-1][2])+'</td></tr><tr><td>7 лет и старше</td><td>тот же вес</td></tr></tbody></table>';
+  return tb;
+}
+function weightSection(){
+  var has2 = !!(S.d2 && S.d2.has), n = has2 ? wf.dog : 1, ws = weightsOf(n), last = ws[ws.length-1];
+  var m = monthsAt(dogBirth(n)), rs = weightRanges(n), status = "", h = "";
+  if (last){
+    var lm = monthsAt(dogBirth(n), last.d), rg = rangeAt(rs, lm);
+    if (rg){
+      var st = last.kg < rg[0]*0.97 ? ["low","Ниже ориентира"] : last.kg > rg[1]*1.03 ? ["high","Выше ориентира"] : ["ok","В пределах ориентира"];
+      status = '<span class="wpill '+st[0]+'">'+st[1]+'</span><span class="small muted">Ориентир на этот возраст: '+fmtKg(rg[0])+'–'+fmtKg(rg[1])+' кг</span>';
+    } else if (!dogBirth(n)) status = '<span class="small muted">Укажите дату рождения в профиле, чтобы сравнить с нормой.</span>';
+    else status = '<span class="small muted">Укажите ожидаемый вес взрослой собаки ниже, чтобы сравнить с нормой.</span>';
+  }
+  var stale = last && m != null && m < 15 && daysSince(last.d) > 14;
+  h += '<div class="card wcard">' + (has2 ? '<div class="field full"><span class="flabel">Собака</span>'+dogSeg("wf-dog", n)+'</div>' : '') +
+    '<div class="wnow"><div><span class="flabel">Текущий вес</span><div class="wbig">'+(last ? fmtKg(last.kg)+' кг' : '—')+'</div><span class="small muted">'+(last ? 'взвешена '+fmtD(parseDate(last.d), true) : 'взвесьте собаку и запишите вес')+'</span></div><div class="wstat">'+status+'</div></div>' +
+    (stale ? '<div class="alert">Щенок растёт быстро — взвесьте снова, последнему взвешиванию больше двух недель.</div>' : '') +
+    '<div class="fields"><div class="field"><label for="wf-kg">Вес, кг</label><input id="wf-kg" type="number" inputmode="decimal" step="0.1" min="0.3" max="120" placeholder="Например, 12,4"></div>' +
+    '<div class="field"><label for="wf-date">Дата</label><input id="wf-date" type="date" value="'+isoDay()+'" max="'+isoDay()+'"></div></div>' +
+    '<div><button class="btn" type="button" id="wf-add">Записать вес</button></div>' +
+    weightChart(n) +
+    ((golden(n) || (corgi(n) && !cardigan(n))) ? '' : '<div class="field"><label for="wf-target">Ожидаемый вес взрослой собаки, кг</label><input id="wf-target" type="number" inputmode="decimal" step="0.5" min="1" max="100" value="'+(targetW(n)||"")+'" placeholder="Спросите заводчика или ветеринара"></div>') +
+    (rs ? '<details class="faq wdet"><summary>Сколько должна весить по месяцам</summary><div class="faq-body">'+weightTable(n)+'<p class="small muted">'+(breedName(n) && !cardigan(n) ? 'Ориентир для '+(golden(n)?'золотистых ретриверов':'пемброк-корги')+'. Разброс внутри породы большой и зависит от линии: важнее, чтобы собака росла плавно, без скачков, и была в хорошей форме.' : 'Примерный расчёт от ожидаемого взрослого веса. Важнее плавный рост и хорошая форма, чем точное попадание в цифры.')+'</p></div></details>' : '') +
+    '</div>';
+  /* feeding */
+  var fp = last ? feedPlan(n, last.kg) : null;
+  h += '<div class="card wcard"><div class="h2">Сколько кормить</div>';
+  if (!last) h += '<p class="small muted">Запишите текущий вес — посчитаю суточную норму корма и сколько раз кормить.</p>';
+  else if (!fp) h += '<p class="small muted">Укажите дату рождения в профиле — норма зависит от возраста.</p>';
+  else h += '<div class="feed"><div><span class="flabel">В день</span><b>≈ '+Math.round(fp.grams/5)*5+' г</b><span class="small muted">сухого корма</span></div><div><span class="flabel">Кормлений</span><b>'+fp.meals+' × '+Math.round(fp.per)+' г</b><span class="small muted">'+(fp.meals===4?'до 4 месяцев':fp.meals===3?'с 4 до 6 месяцев':'с 6 месяцев')+'</span></div><div><span class="flabel">Энергия</span><b>≈ '+Math.round(fp.kcal/10)*10+' ккал</b><span class="small muted">из них лакомства до '+Math.round(fp.treats/5)*5+' ккал</span></div></div>' +
+    '<div class="field"><label for="wf-k100">Калорийность вашего корма, ккал на 100 г (есть на упаковке)</label><input id="wf-k100" type="number" inputmode="numeric" min="200" max="600" value="'+fp.k100+'"></div>' +
+    '<p class="small muted">Расчёт: '+fp.why+', вес '+fmtKg(last.kg)+' кг. Это стартовая точка: сверьте с таблицей на упаковке и каждые 2 недели корректируйте на 10 % по фигуре — рёбра должны прощупываться, а сверху видна талия.'+(fp.months < 15 ? ' Растущему щенку пересчитывайте норму после каждого взвешивания.' : '')+'</p>';
+  h += '</div>';
+  /* history */
+  if (ws.length) h += '<div class="log">' + ws.slice().reverse().slice(0, 8).map(function(w){ return '<div class="log-row"><div><span><b>'+fmtKg(w.kg)+' кг</b></span><span class="small muted">'+fmtD(parseDate(w.d), true)+'</span></div><span></span><button class="tr-reset" type="button" data-wdel="'+w.id+'" aria-label="Удалить взвешивание">✕</button></div>'; }).join("") + '</div>';
+  return h;
+}
+function bindWeight(v){
+  var has2 = !!(S.d2 && S.d2.has);
+  v.querySelectorAll('input[name="wf-dog"]').forEach(function(r){ r.addEventListener("change", function(){ wf.dog = +r.value; keepScroll(renderHealth); }); });
+  var add = $("wf-add"); if (add) add.addEventListener("click", function(){
+    var kg = parseFloat(String($("wf-kg").value).replace(",", ".")), d = $("wf-date").value;
+    if (!kg || kg <= 0 || !d) { $("wf-kg").focus(); return; }
+    S.weights = S.weights || []; S.weights.push({id: Date.now().toString(36), dog: has2 ? wf.dog : 1, d: d, kg: Math.round(kg*10)/10});
+    save(); keepScroll(function(){ renderHealth(); renderToday(); });
+  });
+  var tg = $("wf-target"); if (tg) tg.addEventListener("change", function(){ S.wTarget = S.wTarget || {}; var x = parseFloat(String(tg.value).replace(",", ".")); if (x > 0) S.wTarget[has2 ? wf.dog : 1] = x; else delete S.wTarget[has2 ? wf.dog : 1]; save(); keepScroll(renderHealth); });
+  var k = $("wf-k100"); if (k) k.addEventListener("change", function(){ S.kcal100 = S.kcal100 || {}; var x = parseFloat(k.value); if (x >= 200 && x <= 600) S.kcal100[has2 ? wf.dog : 1] = x; save(); keepScroll(renderHealth); });
+  v.querySelectorAll("[data-wdel]").forEach(function(b){ b.addEventListener("click", function(){ var id = b.getAttribute("data-wdel"); S.weights = S.weights.filter(function(w){ return w.id !== id; }); save(); keepScroll(function(){ renderHealth(); renderToday(); }); }); });
+}
+
 /* ---------- health view ---------- */
 var hf = {dog:1, type:"vac"};
 function renderHealth(){
   var has2 = !!(S.d2 && S.d2.has), due = healthDue();
-  var html = '<div class="view-head"><div class="eyebrow">Здоровье</div><h1 class="h1">Прививки, обработки и уход</h1>' +
-    '<p class="lead">Отмечайте прививки и обработки — приложение посчитает, когда следующие, покажет их на экране «Сегодня» за неделю и добавит напоминание в календарь iPhone.</p></div>';
+  var html = '<div class="view-head"><div class="eyebrow">Здоровье</div><h1 class="h1">Вес, корм, прививки и уход</h1>' +
+    '<p class="lead">Вес и норма корма, прививки и обработки. Отмечайте записи — приложение посчитает, когда следующие, покажет их на экране «Сегодня» за неделю и добавит напоминание в календарь iPhone.</p></div>';
   html += '<div class="sec"><div class="sec-label">Ближайшие даты</div>';
   if (!due.length) html += '<div class="card"><p class="small muted">Пока пусто. Добавьте последнюю прививку и обработку от клещей и глистов ниже.</p></div>';
   else {
@@ -2025,6 +2216,7 @@ function renderHealth(){
               : '<div class="cal-all"><button class="btn ghost" type="button" id="ics-all">Все даты в календарь</button><span class="small muted">Календарь iPhone напомнит за день в 10:00 и в сам день в 9:00 — даже если приложение закрыто.</span></div>';
   }
   html += '</div>';
+  html += '<div class="sec"><div class="sec-label">Вес и корм</div>' + weightSection() + '</div>';
   html += '<div class="sec"><div class="sec-label">Добавить запись</div><div class="card jform">' +
     (has2 ? '<div class="field full"><span class="flabel">Собака</span>'+dogSeg("hf-dog", hf.dog)+'</div>' : '') +
     '<div class="fields"><div class="field"><label for="hf-type">Что сделали</label><select id="hf-type">'+HTYPES.map(function(x){ return '<option value="'+x.id+'"'+(x.id===hf.type?' selected':'')+'>'+x.t+'</option>'; }).join("")+'</select></div>' +
@@ -2041,7 +2233,7 @@ function renderHealth(){
     '<p class="small muted">Норма: температура 37,5–39,0 °C, дёсны розовые и влажные; если нажать на десну, цвет возвращается за 1–2 секунды. Запишите телефон своей клиники и ближайшей круглосуточной.</p></div></div>';
   var tp = TOPICS.filter(function(t){ return t.area === "health"; }).map(topicCard).join("");
   html += '<div class="sec"><div class="sec-label">Уход, кормление, нагрузка</div>' + tp + '</div>';
-  var v = $("v-health"); v.innerHTML = html; bindSeg(v); bindCommon(v); bindTopics(v);
+  var v = $("v-health"); v.innerHTML = html; bindSeg(v); bindCommon(v); bindTopics(v); bindWeight(v);
   v.querySelectorAll("[data-ics]").forEach(function(b){ b.addEventListener("click", function(){ var x = due[+b.getAttribute("data-ics")]; downloadIcs([x], "napominanie-"+icsDate(x.next)+".ics"); }); });
   var ia = $("ics-all"); if (ia) ia.addEventListener("click", function(){ downloadIcs(due.filter(function(x){ return x.left >= 0; }).length ? due.filter(function(x){ return x.left >= 0; }) : due, "zdorovie-sobak.ics"); });
   $("hf-type").addEventListener("change", function(){ hf.type = this.value; $("hf-every").value = HTYPE[hf.type].every; });
