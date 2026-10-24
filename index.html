@@ -29,7 +29,7 @@ img{max-width:100%}
   --accent:#EE5A0A; --accent-ink:#B4400A; --accent-soft:#FFE6D6;
   --ok:#1B7F52; --ok-soft:#D8F0E3; --no:#B0331D; --no-soft:#FBE2DC;
   --stage:#D7E8F0; --stage-ground:#93B1C0;
-  --dog:#C8864A; --dog-dark:#8C5828; --treat:#6E3413; --skin:#EBBB93; --sleeve:#33627D; --pants:#2C4654; --mat:#86B49A; --toy:#2C7DA6;
+  --dog:#C8864A; --dog-dark:#8C5828; --treat:#6E3413; --skin:#EBBB93; --sleeve:#33627D; --pants:#2C4654; --mat:#86B49A; --toy:#2C7DA6; --dog2:#7A8790; --dog2-dark:#4F5B63;
   --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
   --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
@@ -39,7 +39,7 @@ img{max-width:100%}
   --accent:#FF7A2E; --accent-ink:#FF9C61; --accent-soft:#3A2113;
   --ok:#4CC78E; --ok-soft:#133428; --no:#FF8B74; --no-soft:#3A1C17;
   --stage:#192B36; --stage-ground:#3D5A69;
-  --dog:#D59A5E; --dog-dark:#9F6838; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC;
+  --dog:#D59A5E; --dog-dark:#9F6838; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC; --dog2:#9DAAB3; --dog2-dark:#6B7881;
   color-scheme:dark;
 }}
 :root[data-theme="dark"]{
@@ -47,7 +47,7 @@ img{max-width:100%}
   --accent:#FF7A2E; --accent-ink:#FF9C61; --accent-soft:#3A2113;
   --ok:#4CC78E; --ok-soft:#133428; --no:#FF8B74; --no-soft:#3A1C17;
   --stage:#192B36; --stage-ground:#3D5A69;
-  --dog:#D59A5E; --dog-dark:#9F6838; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC;
+  --dog:#D59A5E; --dog-dark:#9F6838; --treat:#E3A271; --skin:#D6A27C; --sleeve:#4A84A6; --pants:#58798B; --mat:#3E7A5D; --toy:#5DB1DC; --dog2:#9DAAB3; --dog2-dark:#6B7881;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -141,6 +141,15 @@ ul.dont li::before{background:var(--no);border-radius:1px;transform:rotate(45deg
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .chip svg{width:14px;height:14px;color:var(--accent)}
+.dog2 .dog-s{stroke:var(--dog2)}.dog2 .dog-f{fill:var(--dog2)}.dog2 .dog-far{stroke:var(--dog2-dark)}.dog2 .dog-ear{fill:var(--dog2-dark)}
+.two-art{background:var(--stage);border-radius:14px;overflow:hidden}
+.two-art svg{display:block;width:100%;height:auto}
+.two-art figcaption{font-size:13px;color:var(--muted);padding:0 14px 12px}
+.signals{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.signals>div{background:var(--bg);border-radius:14px;padding:12px 14px;display:grid;gap:8px;align-content:start;min-width:0}
+.two-ico{display:inline-flex;gap:2px;color:var(--accent)}
+.two-ico svg{width:16px;height:16px}
+.two-ico svg+svg{color:var(--dog2)}
 .note{font-size:14px;color:var(--muted);border-left:3px solid var(--stage-ground);padding-left:12px}
 
 /* commands list */
@@ -585,7 +594,54 @@ var LEVELS = [
   {t:"Без корды на огороженной территории", w:"Огороженное поле или площадка", what:"Сначала пустая площадка, потом с собаками. Подзывайте 5–10 раз за прогулку и почти всегда отпускайте снова. Проверьте аварийный подзыв.", c:"9 из 10 подзывов в течение двух недель"},
   {t:"Свободный выгул", w:"Разрешённые зоны вдали от дорог", what:"Поддерживайте навык: 3–5 подзывов за прогулку с наградой. Раз в неделю — аварийный подзыв с «джекпотом». При любом сбое возвращайтесь на уровень 4.", c:"Подзыв работает от собак, людей и запахов"}
 ];
+var TWO = {
+  title:"Полли и старшая собака",
+  sub:"Второй собаке 7 лет: знакомство, общий быт, обучение",
+  lead:"Старшая собака не обязана радоваться новичку. В 7 лет собака уже ценит покой и привычный распорядок, а щенок — это шум, приставания и конкуренция за внимание. Ваша задача — чтобы ни одна из собак не теряла то, что ей важно: еду, место, отдых и время с вами.",
+  meet:["Знакомьте на нейтральной территории, а не дома: тихий парк или пустой двор. Каждая собака на своём поводке, с каждой — свой человек.",
+        "Начните с параллельной прогулки: идите в одну сторону на расстоянии 5–10 метров и постепенно сближайтесь.",
+        "Обнюхивание — 3–5 секунд, затем отзовите обеих, наградите и снова погуляйте рядом. Поводки держите провисшими: натяжение передаёт напряжение.",
+        "Домой заходите вместе, после прогулки. Заранее уберите миски, игрушки, кости и лакомства.",
+        "Если Полли ещё нельзя на улицу до прививок, знакомьте в просторной комнате: старшая на поводке, щенок свободен и может отойти."],
+  home:["Кормите раздельно: в разных комнатах или с барьером. Миски убирайте сразу после еды.",
+        "Кости и жевательные игрушки давайте только порознь.",
+        "У старшей должно быть своё место, куда Полли не допускается: лежанка за детским барьером, отдельная комната. В 7 лет ей нужен полноценный сон без приставаний.",
+        "У Полли — манеж или клетка-домик, чтобы вы могли дать старшей передышку.",
+        "Пока вас нет дома, разделяйте собак барьером или дверью. Оставлять вместе — только когда несколько недель всё спокойно.",
+        "Сохраните старшей её ритуалы: её прогулки, игры, место рядом с вами. Пусть появление Полли не забирает у неё ничего привычного.",
+        "Награждайте спокойствие: собаки лежат рядом и не напряжены — тихое «Да!» и лакомство каждой, на расстоянии друг от друга."],
+  ok:["Игровой поклон: передние лапы на земле, зад вверх — приглашение к игре.",
+      "Роли меняются: то одна сверху, то другая; то догоняет одна, то другая.",
+      "Сами делают паузы: остановились, отряхнулись, продолжили.",
+      "Тело мягкое, движения пружинистые, пасть приоткрыта.",
+      "Старшая коротко рыкнула или щёлкнула зубами в воздух, Полли отступила — и всё закончилось. Это нормальное воспитание, не вмешивайтесь."],
+  bad:["Полли продолжает приставать, хотя старшая рычит, отворачивается или уходит.",
+       "Старшая прячется, стала меньше есть, не играет, избегает вас.",
+       "Замирание, жёсткий взгляд в упор, вздыбленная шерсть на загривке.",
+       "Рычание у миски, игрушки, лежанки или рядом с вами — охрана ресурсов.",
+       "Одна всё время сверху или всё время убегает, игра без пауз.",
+       "Укус с повреждением или драка, которая не прекращается сама."],
+  train:["Учите каждую собаку отдельно: вторая в это время в другой комнате или занята жевалкой. Вместе — только то, что обе уже умеют.",
+         "Зовите по имени, а не «Ко мне» сразу обеим. Позже можно добавить общий сигнал, например «Девочки, ко мне!».",
+         "Часть прогулок с Полли — без старшей. Щенок, который всегда гуляет со старшей, привязывается к ней, а не к вам.",
+         "Старшая учит и хорошему, и плохому. Лай на звонок или тягу на поводке Полли переймёт быстро — исправьте это у старшей заранее.",
+         "Ожидание у миски и у двери учите по очереди: «Полли» — ешь, вторая ждёт своего имени.",
+         "Без поводка Полли будет бегать за старшей: куда та, туда и щенок. Отпускайте старшую, а Полли держите на корде, пока у неё самой подзыв не 9 из 10."],
+  age:["Покажите старшую ветеринару, если давно не были. Боль в суставах или зубах делает собаку раздражительной, а щенок чаще всего задевает именно больные места.",
+       "Ограничивайте время игр: 5–10 минут, затем Полли уходит отдыхать в манеж. Щенок не умеет вовремя остановиться, а старшая может устать раньше, чем покажет это.",
+       "Не устраивайте долгие прогулки «под щенка» или «под старшую» — разные собаки, разная нагрузка.",
+       "Примерно до 4–5 месяцев взрослые собаки многое прощают щенку. Когда Полли подрастёт, старшая может стать строже — это нормально, но следите, чтобы конфликты не учащались."],
+  dont:["Ждать, что «сами разберутся».",
+        "Наказывать старшую за рычание. Рычание — предупреждение. Если его запретить, собака начнёт кусать без предупреждения.",
+        "Позволять Полли висеть на старшей, кусать её за уши и лапы, прыгать на спящую.",
+        "Разнимать драку руками у головы. Используйте громкий звук, плед или доску между собаками, а если вас двое — растаскивайте одновременно за шлейки или задние лапы."],
+  pro:"Если за 2–3 недели напряжение не уменьшается, есть драки с травмами или одна из собак постоянно в стрессе, обратитесь к кинологу, который работает методами положительного подкрепления, или к ветеринарному поведенческому специалисту.",
+  check:["Познакомили на нейтральной территории","Кормление и жевательное — раздельно","У старшей есть место, куда Полли нельзя","Старшая была у ветеринара в последние полгода","Учу каждую собаку отдельно","Есть прогулки только с Полли","Знаю, как выглядит нормальная игра, а когда пора разделять"]
+};
+var openTwo = false;
+
 var FAQ = [
+  ["С нами гуляет вторая собака","Полли будет бегать туда же, куда старшая. Поэтому сначала свободна только старшая, а Полли — на корде. Отрабатывайте подзыв Полли по имени, пока старшая рядом, и награждайте обеих. Отпускать вместе — когда у каждой подзыв работает в 9 случаях из 10 по отдельности."],
   ["Собака убежала и не возвращается","Не бегите за ней — для собаки это игра в догонялки. Позовите один раз, присядьте или убегайте в противоположную сторону, пошуршите пакетом с лакомством. Когда вернулась — радуйтесь, даже если злы. Потом вернитесь на уровень назад, к корде."],
   ["Подходит, но не даётся в руки","Это результат того, что подзыв часто заканчивался поводком. Отработайте «касание шлейки» дома: касание — лакомство, сотни раз. Не хватайте резко, тянитесь к груди, а не к холке."],
   ["Подзыв работает везде, кроме собак","Работайте с помощником и его спокойной собакой. Начните с расстояния, на котором ваша собака ещё берёт лакомство, и сокращайте его по чуть-чуть. Если не берёт лакомство — вы слишком близко."],
@@ -645,6 +701,7 @@ var POSES = {
   sit:   pose(SITB),
   look:  pose(Object.assign({}, SITB, {Hd:[70,62], ht:-36})),
   sitlow:pose(Object.assign({}, SITB, {S:[54,110], Hd:[80,120], ht:40, Fe:[60,140]})),
+  bow:   pose({H:[0,100], S:[66,140], Hd:[92,120], ht:-18, Fe:[84,164], Fp:[112,170], Bk:[-4,134], Bp:[2,170], Tc:[-18,78], T:[-28,56]}),
   down:  pose({H:[6,152], S:[68,150], Hd:[94,124], ht:-2, Fe:[84,164], Fp:[110,170], Bk:[24,164], Bp:[44,170], Tc:[-12,162], T:[-32,168]})
 };
 var PKEYS = ["H","S","Hd","Fe","Fp","Bk","Bp","Tc","T"];
@@ -851,6 +908,38 @@ Player.prototype.render = function(s, k, ts){
 };
 
 /* small static icon of a pose for list rows */
+function twoArt(){
+  var inner = function(n){ return poseIcon(n).replace(/^<svg[^>]*>/,"").replace(/<\/svg>$/,""); };
+  return '<figure class="two-art" style="margin:0"><svg viewBox="0 0 360 190" role="img" aria-label="Щенок приглашает старшую собаку поиграть игровым поклоном">' +
+    '<line x1="0" y1="176" x2="360" y2="176" class="g-line"/>' +
+    '<g transform="translate(46 44) scale(.75)">'+inner("bow")+'</g>' +
+    '<g class="dog2" transform="translate(322 0) scale(-1 1)">'+inner("alert")+'</g>' +
+    '</svg><figcaption>Игровой поклон — приглашение поиграть. Если старшая отвечает так же или отворачивается и уходит, это её право.</figcaption></figure>';
+}
+function twoCard(){
+  var T = TWO, n = 0; T.check.forEach(function(_,i){ if (S.checks["two-"+i]) n++; }); var tot = T.check.length;
+  var paw = ICON_PAW;
+  var li = function(a){ return a.map(function(x){ return '<li>'+nm(x)+'</li>'; }).join(""); };
+  var h = '<article class="stage" id="two-card"><button class="stage-head" type="button" data-two aria-expanded="'+openTwo+'">' +
+    '<span class="stage-meta"><span class="two-ico">'+paw+paw+'</span><span class="range">Особая ситуация</span>'+(n===tot?'<span class="badge ok">Готово</span>':'')+'</span>' +
+    '<span class="stage-title">'+nm(T.title)+'</span><span class="stage-sub">'+T.sub+'</span>' +
+    '<span class="progress"><span class="bar"><i style="width:'+Math.round(n/tot*100)+'%"></i></span><span>'+n+'/'+tot+'</span></span></button>';
+  if (openTwo){
+    h += '<div class="stage-body"><p class="lead-box">'+nm(T.lead)+'</p>' + twoArt() +
+      '<div class="list-block"><div class="list-title neutral">Знакомство по шагам</div><ol class="howto">'+li(T.meet)+'</ol></div>' +
+      '<div class="list-block"><div class="list-title do">Первые недели дома</div><ul class="clean do">'+li(T.home)+'</ul></div>' +
+      '<div class="signals"><div><div class="list-title do">Нормальная игра</div><ul class="clean do">'+li(T.ok)+'</ul></div>' +
+      '<div><div class="list-title dont">Пора разделить и дать паузу</div><ul class="clean dont">'+li(T.bad)+'</ul></div></div>' +
+      '<div class="list-block"><div class="list-title neutral">Старшей 7 лет — что учесть</div><ul class="clean">'+li(T.age)+'</ul></div>' +
+      '<div class="list-block"><div class="list-title do">Обучение двух собак</div><ul class="clean do">'+li(T.train)+'</ul></div>' +
+      '<div class="list-block"><div class="list-title dont">Не делать</div><ul class="clean dont">'+li(T.dont)+'</ul></div>' +
+      '<p class="note">'+T.pro+'</p>' +
+      '<div class="list-block"><div class="list-title neutral">Чек-лист</div><div class="checks">' +
+      T.check.map(function(c,i){ var id="two-"+i, on=!!S.checks[id]; return '<label class="check'+(on?' on':'')+'"><input type="checkbox" id="ck-'+id+'" data-check="'+id+'"'+(on?' checked':'')+'><span>'+nm(c)+'</span></label>'; }).join("") +
+      '</div></div></div>';
+  }
+  return h + '</article>';
+}
 function poseIcon(name, extra){
   var P = POSES[name], o = 0;
   var X = function(x){ return x; };
@@ -913,6 +1002,7 @@ function renderPath(){
   var html = '<div class="view-head"><div class="eyebrow">Путь</div><h1 class="h1">От первого дня дома до взрослой собаки</h1>' +
     '<p class="lead">Шесть этапов. В каждом — что делать, чего избегать, какие команды учить и чек-лист, чтобы понять, что можно двигаться дальше.</p></div>';
   if (!S.birth) html += profileForm("pa-");
+  html += '<div class="sec">' + twoCard() + '</div>';
   html += '<div class="sec"><div class="timeline">';
   STAGES.forEach(function(st, idx){
     var n = stageProgress(st), tot = st.check.length, isNow = st.id===cur, isOpen = openStage===st.id;
@@ -928,6 +1018,7 @@ function renderPath(){
         '<div class="list-block"><div class="list-title do">Делать</div><ul class="clean do">'+st.do.map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul></div>' +
         '<div class="list-block"><div class="list-title dont">Не делать</div><ul class="clean dont">'+st.dont.map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul></div>';
       if (st.cmds.length) html += '<div class="list-block"><div class="list-title neutral">Команды этапа</div><div class="chips">'+st.cmds.map(function(c){ return '<button class="chip" type="button" data-cmd="'+c+'">'+ICON_PAW+CMD[c].name+'</button>'; }).join("")+'</div></div>';
+      if (st.id==="s1") html += '<div class="chips"><button class="chip" type="button" data-opentwo>'+ICON_PAW+'Дома есть старшая собака</button></div>';
       if (st.id==="s3" || st.id==="s5" || st.id==="s6") html += '<div class="chips"><button class="chip" type="button" data-goto="offleash">Программа «Без поводка» →</button></div>';
       html += '<p class="note">'+st.note+'</p>' +
         '<div class="list-block"><div class="list-title neutral">Чек-лист этапа</div><div class="checks">' +
@@ -940,7 +1031,9 @@ function renderPath(){
   var v = $("v-path"); v.innerHTML = html;
   bindProfile(v);
   v.querySelectorAll("[data-stage]").forEach(function(b){ b.addEventListener("click", function(){ var id=b.getAttribute("data-stage"); openStage = openStage===id ? "" : id; renderPath(); }); });
-  v.querySelectorAll("[data-check]").forEach(function(c){ c.addEventListener("change", function(){ var id=c.getAttribute("data-check"); if (c.checked) S.checks[id]=1; else delete S.checks[id]; save(); renderPath(); }); });
+  v.querySelectorAll("[data-check]").forEach(function(c){ c.addEventListener("change", function(){ var id=c.getAttribute("data-check"); if (c.checked) S.checks[id]=1; else delete S.checks[id]; save(); var y=window.scrollY; renderPath(); window.scrollTo(0,y); }); });
+  var tb = v.querySelector("[data-two]"); if (tb) tb.addEventListener("click", function(){ openTwo = !openTwo; renderPath(); });
+  v.querySelectorAll("[data-opentwo]").forEach(function(b){ b.addEventListener("click", function(){ openTwo = true; renderPath(); var c=$("two-card"); if(c) c.scrollIntoView({behavior: RM?"auto":"smooth", block:"start"}); }); });
   bindCommon(v);
 }
 
@@ -1102,6 +1195,7 @@ function renderAll(){ renderChip(); renderPath(); renderCommands(); renderOff();
 renderAll();
 var h = (location.hash||"").replace("#","");
 if (["path","commands","offleash","basics"].indexOf(h) >= 0) setTab(h);
+else if (h==="two"){ openTwo = true; renderPath(); var tc=$("two-card"); if(tc) tc.scrollIntoView(); }
 else if (CMD[h]) openCmd(h);
 })();
 </script>
