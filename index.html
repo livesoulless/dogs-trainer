@@ -102,6 +102,56 @@ p{margin:0}
 .seg2 input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer}
 .seg2 label:focus-within{outline:2px solid var(--accent);outline-offset:1px}
 .sketch-grid{display:grid;grid-template-columns:1fr;gap:6px}.sketch-grid .scene{border-radius:12px;overflow:hidden}.sketch-icons{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.sketch-icons .row-ico{width:96px;height:96px}.sketch-icons svg{width:96px;height:96px}
+.seg2.three{grid-template-columns:repeat(3,1fr)}.seg2.three label{font-size:13px;padding:10px 2px}
+.ob-bar{padding-block:8px 0}
+.alerts{display:grid;gap:8px;margin-bottom:4px}
+.alert{background:var(--accent-soft);border-radius:12px;padding:10px 14px;font-size:14px}
+.plan{display:grid;gap:8px}
+.plan-item{display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 10px 12px 12px}
+.plan-item.on{opacity:.7}
+.plan-item.on b{text-decoration:line-through;text-decoration-color:var(--line)}
+.plan-check input{appearance:none;-webkit-appearance:none;width:28px;height:28px;border-radius:9px;border:2px solid var(--stage-ground);margin:0;display:grid;place-items:center;cursor:pointer;background:var(--surface)}
+.plan-check input:checked{background:var(--ok);border-color:var(--ok)}
+.plan-check input:checked::after{content:"";width:7px;height:13px;border:solid #fff;border-width:0 3px 3px 0;transform:translateY(-1px) rotate(45deg)}
+.plan-check input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.plan-main{display:grid;gap:2px;min-width:0}
+.plan-main b{font-weight:600}
+.plan-main span{font-size:14px;color:var(--muted)}
+.plan-go{border:0;background:var(--sunk);border-radius:10px;width:36px;height:36px;display:grid;place-items:center;cursor:pointer}
+.jform{display:grid;gap:12px}
+.jform .fields .field:first-child{grid-column:auto}
+.field select{-webkit-appearance:none;appearance:none;display:block;width:100%;min-height:46px;font:inherit;font-size:16px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.steppers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stepper{display:grid;gap:4px}
+.stepper div{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stepper button{border:0;background:none;height:44px;font-size:20px;cursor:pointer;color:var(--accent-ink)}
+.stepper output{text-align:center;font-family:var(--f-mono);font-size:17px;font-variant-numeric:tabular-nums}
+.stats{display:grid;gap:10px}
+.stat-row{display:grid;grid-template-columns:minmax(0,1.2fr) 2fr 44px;gap:10px;align-items:center;font-size:14px}
+.stat-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat-bar{height:10px;border-radius:5px;background:var(--sunk);overflow:hidden}
+.stat-bar i{display:block;height:100%;border-radius:5px}
+.stat-bar i.good{background:var(--ok)}.stat-bar i.mid{background:var(--accent)}.stat-bar i.low{background:var(--no)}
+.stat-num{font-family:var(--f-mono);font-size:13px;text-align:right;font-variant-numeric:tabular-nums}
+.who{font-style:normal;display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--sunk);font-size:11px;font-weight:700;margin-right:6px}
+.log{display:grid;gap:6px}
+.log-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 6px 8px 12px;font-size:14px}
+.log-row > div{display:grid;gap:1px;min-width:0}
+.log-score{font-family:var(--f-mono);font-size:13px}
+.due{display:grid;gap:8px}
+.due-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-left-width:5px;border-radius:12px;padding:10px 12px}
+.due-row > div{display:grid;gap:1px;min-width:0}
+.due-row.ok{border-left-color:var(--ok)}.due-row.soon{border-left-color:var(--accent)}.due-row.late{border-left-color:var(--no)}
+.due-when{text-align:right;font-size:14px}
+.due-row.late .due-when .small{color:var(--no);font-weight:600}
+.emergency{display:grid;gap:8px}
+.em{background:var(--no-soft);border-radius:12px;padding:10px 14px;display:grid;gap:2px;font-size:14px}
+.em b{color:var(--no);font-size:15px}
+.dots2{display:flex;gap:10px;flex-wrap:wrap}
+.status-dots b{font-size:10px;font-weight:700;color:var(--muted);margin-right:3px;line-height:4px}
+.status-dots{align-items:center}
+.flabel + .seg{margin-top:4px}
+.seg + .flabel{margin-top:10px;display:block}
 .err{color:var(--no);font-weight:600;font-size:14px}
 .onboard{position:fixed;inset:0;z-index:60;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 .onboard .wrap{padding-bottom:48px}
@@ -198,7 +248,7 @@ ul.dont li::before{background:var(--no);border-radius:1px;transform:rotate(45deg
 .row-name{font-family:var(--f-display);font-weight:500;font-size:16px}
 .row-cue{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .status-dots{display:flex;gap:3px;margin-top:4px}
-.status-dots i{width:16px;height:4px;border-radius:2px;background:var(--sunk)}
+.status-dots i{width:16px;height:4px;border-radius:2px;background:var(--line)}
 .status-dots i.on{background:var(--ok)}
 .status-label{font-size:12px;color:var(--muted)}
 .chev{width:18px;height:18px;color:var(--muted)}
@@ -297,8 +347,8 @@ ol.howto li::before{content:counter(h);width:26px;height:26px;border-radius:8px;
 
 /* tab bar */
 .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
-.tabbar-in{max-width:620px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
-.tab{border:0;background:none;padding:9px 2px 8px;display:grid;justify-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer}
+.tabbar-in{max-width:620px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+.tab{border:0;background:none;padding:9px 0 8px;display:grid;justify-items:center;gap:3px;font-size:10.5px;white-space:nowrap;font-weight:600;color:var(--muted);cursor:pointer}
 .tab svg{width:24px;height:24px}
 .tab.on{color:var(--accent-ink)}
 
@@ -348,22 +398,25 @@ ol.howto li::before{content:counter(h);width:26px;height:26px;border-radius:8px;
     <button class="dogchip" id="dogchip" type="button"></button>
   </div>
 
-  <section id="v-path" data-view="path"></section>
+  <section id="v-today" data-view="today"></section>
+  <section id="v-path" data-view="path" hidden></section>
   <section id="v-commands" data-view="commands" hidden></section>
   <section id="v-offleash" data-view="offleash" hidden></section>
-  <section id="v-basics" data-view="basics" hidden></section>
+  <section id="v-health" data-view="health" hidden></section>
 </div>
 
 <nav class="tabbar" aria-label="Разделы">
   <div class="tabbar-in">
-    <button class="tab on" data-tab="path" type="button">
+    <button class="tab on" data-tab="today" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="m9 15 2 2 4-4"/></svg>Сегодня</button>
+    <button class="tab" data-tab="path" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h7a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h7"/></svg>Путь</button>
     <button class="tab" data-tab="commands" type="button">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><ellipse cx="6" cy="9" rx="2.2" ry="2.8"/><ellipse cx="10.5" cy="5.5" rx="2.2" ry="2.8"/><ellipse cx="15.5" cy="5.5" rx="2.2" ry="2.8"/><ellipse cx="19" cy="9.5" rx="2.1" ry="2.7"/><path d="M12.6 11c3 0 6 4.2 6 6.6 0 2.1-1.8 2.6-3.2 2.2-1.2-.4-2-.7-2.8-.7s-1.6.3-2.8.7C8.4 20.2 6.6 19.7 6.6 17.6 6.6 15.2 9.6 11 12.6 11Z"/></svg>Команды</button>
     <button class="tab" data-tab="offleash" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 20c3-1 4-4 6-8s5-7 10-8"/><path d="M4 20c2 1 6 1 9-1" stroke-dasharray="2 3"/><circle cx="19" cy="4.5" r="1.8"/></svg>Без поводка</button>
-    <button class="tab" data-tab="basics" type="button">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5C6.5 4 9.5 4 12 6c2.5-2 5.5-2 8-.5V19c-2.5-1.5-5.5-1.5-8 .5-2.5-2-5.5-2-8-.5Z"/><path d="M12 6v13.5"/></svg>Основы</button>
+    <button class="tab" data-tab="health" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.6 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10Z"/><path d="M8 12.5h2.2l1.2-2.2 1.6 4 1.1-1.8H16"/></svg>Здоровье</button>
   </div>
 </nav>
 
@@ -385,8 +438,10 @@ ol.howto li::before{content:counter(h);width:26px;height:26px;border-radius:8px;
 
 /* ---------- storage ---------- */
 var KEY = "vosp-sobaki-v1";
-var S = {name:"", sex:"", fixed:false, birth:"", home:"", d2:{has:false, name:"", sex:"", birth:"", fixed:false}, onboarded:false, checks:{}, cmd:{}, rec:{}, pre:{}, heat:[]};
+var S = {name:"", sex:"", fixed:false, breed:"", size:"", birth:"", home:"", cmd2:{}, log:[], health:[], done:{}, d2:{has:false, name:"", sex:"", birth:"", fixed:false}, onboarded:false, checks:{}, cmd:{}, rec:{}, pre:{}, heat:[]};
 try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); for (var k in o) S[k] = o[k]; } } catch(e) {}
+["cmd2","done"].forEach(function(k){ if (!S[k] || typeof S[k] !== "object") S[k] = {}; });
+["log","health","heat"].forEach(function(k){ if (!Array.isArray(S[k])) S[k] = []; });
 if (!S.d2 || typeof S.d2 !== "object") S.d2 = {has:false, name:"", sex:"", birth:"", fixed:false};
 if (!Array.isArray(S.heat)) S.heat = [];
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
@@ -909,12 +964,175 @@ var TOPICS = [
    ],
    note:["Если собака портит вещи только в одиночестве, скулит или лает, пока вас нет, и встречает в сильном возбуждении — это похоже на тревогу разлуки. Снимите её на видео и покажите кинологу или ветеринарному поведенческому специалисту."] }
 ];
+/* ---------- content: more topics ---------- */
+TOPICS.push(
+ { id:"problems", title:"Частые проблемы",
+   sub:["Прыгает, кусает руки, лает, тащит в рот, боится, укачивает"],
+   lead:["Почти любое «плохое» поведение собаки — это нормальное поведение не в том месте или способ что-то получить. Работает одна схема: понять причину, не давать награды за нежелательное и показать, что делать вместо него."],
+   blocks:[
+    {k:"neutral", t:"Прыгает на людей", items:[
+      "Внимание — только когда все четыре лапы на полу. Прыгнула — отвернитесь и замрите, без слов.",
+      "Научите «Сидеть» для приветствия и попросите гостей делать так же.",
+      "Пока навык не закрепился, при гостях держите собаку на поводке и наступите на него, чтобы прыжок не получался."]},
+    {k:"neutral", t:"Кусает руки и одежду", items:[
+      "Для щенка это нормально. Сильный укус — короткое «Ай!» и пауза в игре на 10–20 секунд.",
+      "Сразу дайте игрушку вместо рук: кусать можно её.",
+      "Чаще всего кусается уставший щенок. Проверьте, хватает ли ему сна, и уложите отдохнуть в манеж с жевалкой."]},
+    {k:"neutral", t:"Лает", items:[
+      "Сначала поймите причину: требует внимания, скучает, тревожится или охраняет.",
+      "Не кричите в ответ — для собаки это совместный лай.",
+      "Награждайте тишину: замолчала на 2–3 секунды — «Да!» и лакомство.",
+      "На звонок в дверь учите идти на «Место» и получать там лакомство."]},
+    {k:"neutral", t:"Подбирает всё на улице", items:[
+      "Учите «Оставь» и обмен — пошагово в разделе «Команды».",
+      "Пока навык ненадёжный, там, где много мусора, держите собаку на коротком поводке.",
+      "Если в районе разбрасывают отраву, приучите к наморднику-корзинке: сначала просто сунуть морду за лакомство, потом по секундам."]},
+    {k:"neutral", t:"Боится салюта и громких звуков", items:[
+      "Сделайте укрытие: лежанка в тихой комнате, закрытые окна и шторы, фоновая музыка.",
+      "Утешать можно — страх от этого не усиливается.",
+      "В праздники гуляйте только на поводке и в надёжно застёгнутой шлейке: испуганные собаки часто вырываются и убегают.",
+      "Заранее, в спокойные дни, включайте записи салюта очень тихо во время еды и игры, постепенно громче.",
+      "Если страх сильный, обсудите с ветеринаром средства на праздничные дни."]},
+    {k:"neutral", t:"Укачивает в машине", items:[
+      "Приучайте постепенно: посидеть в стоящей машине с лакомством, потом поездки на 2–5 минут до приятного места.",
+      "Не кормите за 2–3 часа до поездки, приоткройте окно.",
+      "Перевозите в переноске или с собачьим ремнём безопасности — так меньше качает и безопаснее.",
+      "Если укачивает сильно, ветеринар может назначить средство от укачивания."]}
+   ],
+   note:["Если проблема не уменьшается за 2–3 недели постоянной работы или появилась агрессия — обратитесь к кинологу, который работает методами положительного подкрепления."] },
+
+ { id:"games", title:"Игры и занятия",
+   sub:["Апорт, поиск, плавание и игры на самоконтроль"],
+   lead:["Игра — это и нагрузка, и обучение. Ретриверы и другие подружейные собаки особенно любят приносить, искать и плавать. Используйте это, и подзыв станет самой интересной частью прогулки."],
+   blocks:[
+    {k:"neutral", t:"Апорт", items:[
+      "Начните с броска на 1–2 метра в коридоре, где некуда убежать с игрушкой.",
+      "Принесла — «Дай» и обмен на лакомство или сразу новый бросок. С двумя одинаковыми игрушками проще: показали вторую — первая сама выпадает из пасти.",
+      "Мягкие игрушки и мячи по размеру пасти. Палки опасны: занозы и травмы пасти и горла.",
+      "Щенку — 5–10 бросков за раз, по земле, без прыжков и резких разворотов."]},
+    {k:"neutral", t:"Поиск", items:[
+      "«Ищи!» — положите лакомство на виду, потом за угол, потом спрячьте в комнате.",
+      "Прячьте любимую игрушку и учите находить её по запаху.",
+      "Нюхательный коврик и кормление из игрушек: 10 минут поиска утомляют не хуже прогулки."]},
+    {k:"neutral", t:"Плавание", items:[
+      "Если собаке нравится — отличная нагрузка без ударов по суставам.",
+      "Начинайте в тёплую погоду у пологого берега без течения. Не бросайте в воду и не заставляйте.",
+      "После купания смойте грязную воду и просушите уши."]},
+    {k:"neutral", t:"Игры на самоконтроль", items:[
+      "«Ждать» перед броском: мяч летит, только когда собака сидит.",
+      "Перетяжка с правилами: «Дай» — игра замирает, отпустила — продолжаем.",
+      "Прятки на прогулке: спрятались за дерево — нашла — праздник. Это тренирует внимание к вам."]}
+   ],
+   note:["Заканчивайте игру, пока собака ещё хочет играть, — так интерес не угасает."] },
+
+ { id:"groom", area:"health", title:"Уход",
+   sub:["Шерсть, уши, когти, зубы, купание"],
+   lead:["Приучайте к уходу с первых дней: короткие сеансы и лакомство за каждое касание. Тогда стрижка когтей и осмотр ушей не станут борьбой."],
+   blocks:[
+    {k:"neutral", t:"Шерсть", items:[
+      "Вычёсывайте 2–3 раза в неделю, во время линьки — каждый день.",
+      ["У ретривера густой подшёрсток: нужны пуходёрка и гребень с длинными зубьями. За ушами и на «штанах» быстро образуются колтуны. Сильнее всего линяют весной и осенью.","retr"],
+      "Начинайте с 1–2 минут и лакомства — расчёска должна стать игрой."]},
+    {k:"neutral", t:"Уши", items:[
+      "Осматривайте раз в неделю: внутри светло-розово, без запаха и налёта.",
+      "Чистите только видимую часть специальным лосьоном. Ватные палочки вглубь не вводите.",
+      ["У собак с висячими ушами, как у ретриверов, отиты бывают чаще. Трясёт головой, чешет ухо, неприятный запах, покраснение — к ветеринару. После плавания и купания просушите уши.","retr"]]},
+    {k:"neutral", t:"Когти", items:[
+      "Стригите раз в 2–4 недели, если когти стучат по полу.",
+      "Срезайте по чуть-чуть, не задевая живую розовую часть. На тёмных когтях — по 1–2 мм.",
+      "Первые разы — один коготь за сеанс и много лакомства."]},
+    {k:"neutral", t:"Зубы", items:[
+      "Чистите несколько раз в неделю собачьей пастой. Человеческая не подходит: её нельзя глотать, а в некоторых есть опасный для собак ксилит.",
+      "Жевательные игрушки помогают, но не заменяют чистку.",
+      "Зубы меняются примерно с 3–4 до 6–7 месяцев. Если молочный клык не выпал, а постоянный уже растёт рядом — покажите ветеринару."]},
+    {k:"neutral", t:"Купание", items:[
+      "Обычно раз в 1–3 месяца или по загрязнению, собачьим шампунем. Частое мытьё сушит кожу.",
+      "После прогулки хватит помыть лапы и живот водой.",
+      "Сушите тщательно, особенно подшёрсток и уши."]}
+   ],
+   note:["Нашли на теле что-то новое — шишку, рану, клеща, проплешину — покажите ветеринару."] },
+
+ { id:"feed", area:"health", title:"Кормление",
+   sub:["Сколько, как часто и как понять, что вес в норме"],
+   lead:["Щенок растёт быстро, и ошибки в кормлении сказываются на суставах и весе всю жизнь. Начните с нормы на упаковке и корректируйте по фигуре собаки."],
+   blocks:[
+    {k:"neutral", t:"Как часто", items:[
+      "До 3–4 месяцев — 3–4 раза в день.",
+      "С 4 до 6 месяцев — 3 раза.",
+      "После 6 месяцев и взрослой собаке — 2 раза в день. Кормить крупную собаку раз в сутки не стоит: большая порция повышает риск вздутия желудка."]},
+    {k:"neutral", t:"Сколько", items:[
+      "Ориентируйтесь на таблицу на упаковке по возрасту и ожидаемому взрослому весу, затем корректируйте по фигуре.",
+      ["Щенку крупной породы нужен корм для крупных пород: в нём выверены кальций и калорийность. Слишком быстрый рост вреден для суставов.","large"],
+      "Лакомства — не больше 10 % калорий. В дни активных занятий уменьшайте порцию в миске.",
+      "Свежая вода — всегда."]},
+    {k:"do", t:"Вес в норме, если", items:[
+      "Рёбра легко прощупываются под тонким слоем жира, но не торчат.",
+      "Сверху видна талия за рёбрами.",
+      "Сбоку живот подтянут.",
+      "Щенка взвешивайте раз в 2 недели, взрослую собаку — раз в месяц."]},
+    {k:"neutral", t:"Правила", items:[
+      "Новый корм вводите постепенно, за 5–7 дней.",
+      "Не кормите за час до и в течение часа после активной нагрузки — особенно крупных собак.",
+      "Ест слишком быстро — миска-лабиринт или кормление из игрушек.",
+      ["Ретриверы склонны к лишнему весу и мастерски выпрашивают еду. Лишние килограммы — нагрузка на суставы и сердце, поэтому держите собаку скорее стройной.","retr"]]}
+   ],
+   note:["Список опасных продуктов — в теме «Ласка и лакомства» на вкладке «Путь». Пропал аппетит, рвота или понос больше суток у щенка — позвоните ветеринару."] },
+
+ { id:"move", area:"health", title:"Нагрузка и суставы",
+   sub:["Сколько гулять щенку и что отложить до взрослого возраста"],
+   lead:["Пока кости растут, особенно у крупных пород, однообразная и ударная нагрузка вредит суставам. Свободная игра и прогулки по разной поверхности, наоборот, полезны."],
+   blocks:[
+    {k:"neutral", t:"Сколько гулять", items:[
+      "Ориентир для щенка — около 5 минут спокойной прогулки на поводке на каждый месяц возраста за один выход, 2–3 раза в день. Свободная игра и нюхание — сверх этого.",
+      "Взрослой собаке активной породы нужно 1,5–2 часа активности в день: прогулки, игры, работа носом.",
+      ["Ретриверы — рабочая порода. Без нагрузки они скучают, а скука превращается в погрызенные вещи и шалости дома.","retr"]]},
+    {k:"do", t:"Полезно", items:[
+      "Свободная игра на мягкой земле, траве, песке.",
+      "Прогулки по разной поверхности: лес, пригорки, корни.",
+      "Плавание.",
+      "Поиск и нюхательные игры.",
+      "Упражнения на баланс: перешагивать через палки на земле, стоять передними лапами на подушке."]},
+    {k:"dont", t:"Отложить до окончания роста", items:[
+      "Долгий бег рядом с велосипедом и совместные пробежки — у крупных пород до 12–18 месяцев.",
+      "Прыжки с высоты: из машины, с дивана, с кровати.",
+      "Много лестниц каждый день. Небольшого щенка носите на руках.",
+      "Многократные резкие броски мяча с прыжками и разворотами.",
+      "Прыжки через барьеры."]},
+    {k:"neutral", t:"Нагрузки много, если", items:[
+      "Собака ложится и не хочет идти дальше.",
+      "Долго тяжело дышит после прогулки.",
+      "Хромает или после отдыха встаёт скованно.",
+      ["Ретриверы предрасположены к дисплазии тазобедренных и локтевых суставов. Если щенок хромает, бегает «зайчиком», отталкиваясь обеими задними лапами, или неохотно встаёт — покажите ортопеду.","retr"]]}
+   ],
+   note:["Если планируете спорт с собакой, обсудите с ветеринаром рентген суставов после окончания роста."] }
+);
+
+var HTYPES = [
+  {id:"vac", t:"Прививка", every:365},
+  {id:"tick", t:"Клещи и блохи", every:30},
+  {id:"worm", t:"Глисты", every:90},
+  {id:"vet", t:"Осмотр у ветеринара", every:365},
+  {id:"other", t:"Другое", every:0}
+];
+var HTYPE = {}; HTYPES.forEach(function(x){ HTYPE[x.id] = x; });
+var EMERGENCY = [
+  ["Вздутие и заворот желудка","Живот вздут и твёрдый, собака пытается вырвать, но ничего не выходит, течёт слюна, беспокоится. Чаще у крупных собак после еды и бега. Счёт идёт на часы — сразу в клинику."],
+  ["После укуса клеща","Вялость, температура, отказ от еды, тёмная или бурая моча через несколько дней после укуса — так проявляется пироплазмоз (бабезиоз). Срочно к ветеринару. Клеща удаляйте целиком специальным крючком и наблюдайте за собакой 2–3 недели."],
+  ["Перегрев","Сильная одышка, ярко-красный язык, слабость, рвота, шатается. Уведите в тень, смочите прохладной (не ледяной) водой, дайте попить и сразу к врачу."],
+  ["Съела опасное","Шоколад, виноград, ксилит, лекарства, яд от грызунов — сразу звоните ветеринару, даже если собака выглядит нормально. Не вызывайте рвоту без указания врача."],
+  ["Рвота или понос у щенка","Больше суток, с кровью или вместе с вялостью — к врачу в тот же день. Щенки быстро теряют воду."],
+  ["Всегда срочно","Тяжело дышит в покое, судороги, сильное кровотечение, травма, не может встать, бледные или синюшные дёсны, обморок."]
+];
+var PLACES = ["Дом","Двор","Улица","Новое место"];
+
 var openTopic = {};
 function pickV(arr){ return S.d2 && S.d2.has && arr.length > 1 ? arr[1] : arr[0]; }
 function condOk(c){
   var has2 = !!(S.d2 && S.d2.has);
   if (!c) return true;
   if (c === "d2") return has2;
+  if (c === "retr") return retr();
+  if (c === "large") return largeDog();
   if (c === "mix") return has2 && !!S.sex && !!S.d2.sex && (S.sex !== S.d2.sex || S.sex === "f") && !(S.fixed && S.d2.fixed);
   return true;
 }
@@ -1406,6 +1624,8 @@ function profileForm(idp, ob){
     '<div class="fields">' +
       '<div class="field full"><label for="'+idp+'name">Кличка</label><input id="'+idp+'name" type="text" maxlength="24" autocomplete="off" placeholder="Например, Луна" value="'+esc(S.name)+'"></div>' +
       '<div class="field full"><span class="flabel">Пол</span>'+sexSeg(idp+'sex', S.sex)+'</div>' +
+      '<div class="field"><label for="'+idp+'breed">Порода</label><input id="'+idp+'breed" type="text" maxlength="40" autocomplete="off" placeholder="Например, золотистый ретривер" value="'+esc(S.breed||"")+'"></div>' +
+      '<div class="field"><span class="flabel">Размер взрослой собаки</span><div class="seg2 three" role="radiogroup" aria-label="Размер">'+[["s","до 10 кг"],["m","10–25 кг"],["l","больше 25"]].map(function(o){ return '<label class="'+(S.size===o[0]?"on":"")+'"><input type="radio" name="'+idp+'size" id="'+idp+'size-'+o[0]+'" value="'+o[0]+'"'+(S.size===o[0]?" checked":"")+'>'+o[1]+'</label>'; }).join("")+'</div></div>' +
       '<div class="field"><label for="'+idp+'birth">Дата рождения</label><input id="'+idp+'birth" type="date" value="'+esc(S.birth)+'"></div>' +
       '<div class="field"><label for="'+idp+'home">Дома с</label><input id="'+idp+'home" type="date" value="'+esc(S.home)+'"></div>' +
       '<label class="check full'+(S.fixed?' on':'')+'"><input type="checkbox" id="'+idp+'fixed"'+(S.fixed?' checked':'')+'><span id="'+idp+'fixedl">'+fixedLabel(S.sex)+'</span></label>' +
@@ -1444,20 +1664,24 @@ function bindProfile(root){
       else if (has && !sex2) msg = "Выберите пол второй собаки.";
       if (msg){ err.textContent = msg; err.hidden = false; return; }
       err.hidden = true;
+      S.breed = $(p+"breed").value.trim(); S.size = radioVal(p+"size");
       S.name = name; S.sex = sex; S.birth = $(p+"birth").value; S.home = $(p+"home").value; S.fixed = $(p+"fixed").checked;
       S.d2 = {has: has, name: name2, sex: sex2, birth: $(p+"birth2").value, fixed: $(p+"fixed2").checked};
       var first = !S.onboarded; S.onboarded = true;
       save(); openStage = null; renderAll();
-      if (p === "ob-"){ closeOnboard(); if (first) setTab("path"); }
+      if (p === "ob-"){ closeOnboard(); if (first) setTab("today"); }
       var okEl = $(p+"ok"); if (okEl){ okEl.hidden = false; setTimeout(function(){ okEl.hidden = true; }, 1600); }
     });
   });
 }
-function openOnboard(){
-  var ob = $("onboard");
-  $("onboard-body").innerHTML = '<div class="view-head"><div class="eyebrow">Воспитание собаки</div><h1 class="h1" id="ob-title">Давайте познакомимся</h1>' +
-    '<p class="lead">Советы подстроятся под ваших собак: имена, возраст и пол. Поменять всё это можно в любой момент во вкладке «Основы».</p></div>' + profileForm("ob-", true);
-  ob.hidden = false; document.body.style.overflow = "hidden"; bindProfile(ob);
+function openOnboard(mode){
+  var ob = $("onboard"), prof = mode === "profile";
+  $("onboard-body").innerHTML = (prof ? '<div class="ob-bar"><button class="icon-btn" type="button" id="ob-close" aria-label="Закрыть профиль"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>Назад</button></div>' : '') +
+    '<div class="view-head"><div class="eyebrow">Воспитание собаки</div><h1 class="h1" id="ob-title">'+(prof ? 'Профиль' : 'Давайте познакомимся')+'</h1>' +
+    '<p class="lead">'+(prof ? 'Советы, планы и тексты подстраиваются под эти данные.' : 'Советы подстроятся под ваших собак: имена, возраст, пол и размер. Поменять всё это можно в любой момент — нажмите на кличку вверху экрана.')+'</p></div>' + profileForm("ob-", !prof) +
+    (prof ? '<div class="sec"><div class="sec-label">Установить на iPhone</div><div class="card" style="display:grid;gap:12px"><ol class="howto"><li>Откройте ссылку на приложение в Safari.</li><li>Нажмите «Поделиться» — квадрат со стрелкой вверх.</li><li>Выберите «На экран “Домой”» и нажмите «Добавить».</li></ol><p class="small muted">Отметки и журнал хранятся в браузере на этом телефоне.</p></div></div>' : '');
+  ob.hidden = false; ob.scrollTop = 0; document.body.style.overflow = "hidden"; bindProfile(ob);
+  var c = $("ob-close"); if (c) c.addEventListener("click", closeOnboard);
 }
 function closeOnboard(){ $("onboard").hidden = true; if (!sheetOpen) document.body.style.overflow = ""; }
 
@@ -1484,7 +1708,7 @@ function renderPath(){
       if (st.cmds.length) html += '<div class="list-block"><div class="list-title neutral">Команды этапа</div><div class="chips">'+st.cmds.map(function(c){ return '<button class="chip" type="button" data-cmd="'+c+'">'+ICON_PAW+CMD[c].name+'</button>'; }).join("")+'</div></div>';
       if ((st.id==="s4" || st.id==="s5") && heatApplies()) html += '<div class="chips"><button class="chip" type="button" data-openheat>'+ICON_PAW+'Течка и стерилизация</button></div>';
       if (st.id==="s1" && S.d2 && S.d2.has) html += '<div class="chips"><button class="chip" type="button" data-opentwo>'+ICON_PAW+nm('{name} и {name2}')+'</button></div>';
-      var tc = {s1:["sleep","alone","treats"], s2:["alone","chew","treats"], s3:["chew"], s4:["alone"]}[st.id];
+      var tc = {s1:["sleep","alone","treats"], s2:["alone","chew","treats","problems"], s3:["chew","problems","games"], s4:["alone","games"], s5:["problems"]}[st.id];
       if (tc) html += '<div class="chips">'+tc.map(function(id){ var t = TOPICS.filter(function(x){return x.id===id;})[0]; return '<button class="chip" type="button" data-opentopic="'+id+'">'+ICON_PAW+t.title+'</button>'; }).join("")+'</div>';
       if (st.id==="s3" || st.id==="s5" || st.id==="s6") html += '<div class="chips"><button class="chip" type="button" data-goto="offleash">Программа «Без поводка» →</button></div>';
       html += '<p class="note">'+st.note+'</p>' +
@@ -1496,8 +1720,9 @@ function renderPath(){
   });
   html += '</div></div>';
   var tp = {}; TOPICS.forEach(function(t){ tp[t.id] = topicCard(t); });
-  var special = twoCard() + tp.sleep + tp.alone + tp.treats + tp.chew + heatCard();
+  var special = twoCard() + tp.sleep + tp.alone + tp.treats + tp.chew + tp.problems + tp.games + heatCard();
   if (special) html += '<div class="sec"><div class="sec-label">Особые темы</div>' + special + '</div>';
+  html += '<div class="sec"><div class="sec-label">Основы</div>' + basicsCard() + '</div>';
   var v = $("v-path"); v.innerHTML = html;
   bindProfile(v);
   v.querySelectorAll("[data-stage]").forEach(function(b){ b.addEventListener("click", function(){ var id=b.getAttribute("data-stage"); openStage = openStage===id ? "" : id; renderPath(); }); });
@@ -1506,14 +1731,19 @@ function renderPath(){
   v.querySelectorAll("[data-openheat]").forEach(function(b){ b.addEventListener("click", function(){ openHeat = true; renderPath(); var c=$("heat-card"); if(c) c.scrollIntoView({behavior: RM?"auto":"smooth", block:"start"}); }); });
   var ha = $("heat-add"); if (ha) ha.addEventListener("click", function(){ var d = $("heat-date").value; if (!d) return; S.heat = (S.heat||[]).filter(function(x){ return x!==d; }); S.heat.push(d); S.heat.sort(); save(); var y=window.scrollY; renderPath(); renderOff(); window.scrollTo(0,y); });
   v.querySelectorAll("[data-heat-del]").forEach(function(b){ b.addEventListener("click", function(){ var d=b.getAttribute("data-heat-del"); S.heat = (S.heat||[]).filter(function(x){ return x!==d; }); save(); var y=window.scrollY; renderPath(); renderOff(); window.scrollTo(0,y); }); });
-  v.querySelectorAll("[data-topic]").forEach(function(b){ b.addEventListener("click", function(){ var id=b.getAttribute("data-topic"); openTopic[id] = !openTopic[id]; renderPath(); }); });
+  bindTopics(v);
+  var bb = v.querySelector("[data-basics]"); if (bb) bb.addEventListener("click", function(){ openBasics = !openBasics; keepScroll(renderPath); });
   v.querySelectorAll("[data-opentopic]").forEach(function(b){ b.addEventListener("click", function(){ var id=b.getAttribute("data-opentopic"); openTopic[id] = true; renderPath(); var c=$("topic-"+id); if(c) c.scrollIntoView({behavior: RM?"auto":"smooth", block:"start"}); }); });
   var tb = v.querySelector("[data-two]"); if (tb) tb.addEventListener("click", function(){ openTwo = !openTwo; renderPath(); });
   v.querySelectorAll("[data-opentwo]").forEach(function(b){ b.addEventListener("click", function(){ openTwo = true; renderPath(); var c=$("two-card"); if(c) c.scrollIntoView({behavior: RM?"auto":"smooth", block:"start"}); }); });
   bindCommon(v);
 }
 
-function statusDots(id){ var st = S.cmd[id]||0, h='<span class="status-dots" aria-hidden="true">'; for (var i=1;i<=3;i++) h += '<i class="'+(i<=st?'on':'')+'"></i>'; return h+'</span>'; }
+function statusDots(id){
+  var one = function(st, label){ var h = '<span class="status-dots" aria-hidden="true">'+(label?'<b>'+esc(label)+'</b>':''); for (var i=1;i<=3;i++) h += '<i class="'+(i<=st?'on':'')+'"></i>'; return h+'</span>'; };
+  if (!(S.d2 && S.d2.has)) return one(S.cmd[id]||0);
+  return '<span class="dots2">'+one(S.cmd[id]||0, dogLabel(1).charAt(0))+one((S.cmd2||{})[id]||0, dogLabel(2).charAt(0))+'</span>';
+}
 
 function renderCommands(){
   var groups = ["Фундамент","Базовые","Для прогулок"];
@@ -1577,26 +1807,184 @@ function renderOff(){
   bindCommon(v);
 }
 
-function renderBasics(){
-  var html = '<div class="view-head"><div class="eyebrow">Основы</div><h1 class="h1">Как собака учится</h1>' +
-    '<p class="lead">Шесть принципов, на которых держится всё остальное. Они важнее любой отдельной команды.</p></div>';
-  html += '<div class="sec"><div class="sec-label">Ваши собаки</div>' + profileForm("ba-") + '</div>';
-  html += '<div class="sec"><div class="sec-label">Принципы</div><div class="principles">' +
-    PRINCIPLES.map(function(p){ return '<div class="pr"><h3>'+p[0]+'</h3><p>'+p[1]+'</p></div>'; }).join("") + '</div></div>';
-  html += '<div class="sec"><div class="sec-label">Правило трёх «Д»</div><div class="card" style="display:grid;gap:12px"><p class="small">Любую команду усложняют по трём направлениям. Меняйте только одно за раз, а остальные два на это время сделайте полегче.</p>' +
-    '<div class="three-d"><div><b>Длительность</b><span>2 сек → 10 → 30 → минута</span></div><div><b>Дистанция</b><span>1 шаг → 3 → 5 м → корда</span></div><div><b>Отвлечения</b><span>дом → двор → парк → собаки</span></div></div></div></div>';
-  html += '<div class="sec"><div class="sec-label">Сигналы стресса — пора сделать паузу</div><div class="card"><ul class="clean">'+STRESS.map(function(s){return '<li>'+s+'</li>';}).join("")+'</ul>' +
-    '<p class="small muted" style="margin-top:10px">Увидели 2–3 таких сигнала — отойдите подальше от раздражителя, дайте собаке понюхать землю, закончите занятие простой командой.</p></div></div>';
-  html += '<div class="sec"><div class="sec-label">Установить на iPhone</div><div class="card" style="display:grid;gap:12px"><ol class="howto">' +
-    '<li>Откройте ссылку на это приложение в Safari.</li><li>Нажмите кнопку «Поделиться» — квадрат со стрелкой вверх.</li><li>Выберите «На экран “Домой”».</li><li>Нажмите «Добавить». Иконка появится рядом с другими приложениями.</li></ol>' +
-    '<p class="small muted">Отметки и прогресс сохраняются в браузере на этом телефоне.</p></div></div>';
-  html += '<div class="sec"><p class="small muted">Это справочник для обычного воспитания. Если собака проявляет агрессию, сильный страх или не может оставаться одна, обратитесь к кинологу, который работает методами положительного подкрепления, или к ветеринарному поведенческому специалисту.</p></div>';
-  var v = $("v-basics"); v.innerHTML = html; bindProfile(v); bindCommon(v);
-}
-
 function bindCommon(root){
   root.querySelectorAll("[data-cmd]").forEach(function(b){ b.addEventListener("click", function(){ openCmd(b.getAttribute("data-cmd")); }); });
   root.querySelectorAll("[data-goto]").forEach(function(b){ b.addEventListener("click", function(){ setTab(b.getAttribute("data-goto")); }); });
+}
+
+/* ---------- shared helpers for new views ---------- */
+function isoDay(d){ d = d || new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function dayIndex(){ var d = new Date(); return Math.floor(new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime()/86400000); }
+function retr(){ return /ретрив|retriev|голден|golden|лабрадор|labrador/i.test(S.breed || ""); }
+function largeDog(){ return S.size === "l" || retr(); }
+function dogLabel(n){ return n === 2 ? dogObj(2).name : dogObj(1).name; }
+function dogSeg(name, val){
+  return '<div class="seg2" role="radiogroup" aria-label="Собака">' + [1,2].map(function(n){
+    return '<label class="'+(val===n?"on":"")+'"><input type="radio" name="'+name+'" id="'+name+'-'+n+'" value="'+n+'"'+(val===n?" checked":"")+'>'+esc(dogLabel(n))+'</label>'; }).join("") + '</div>';
+}
+function bindSeg(root){
+  root.querySelectorAll(".seg2 input").forEach(function(r){ if (r.dataset.b) return; r.dataset.b = 1; r.addEventListener("change", function(){
+    r.closest(".seg2").querySelectorAll("label").forEach(function(l){ l.classList.toggle("on", l.contains(r)); }); }); });
+}
+function keepScroll(fn){ var y = window.scrollY; fn(); window.scrollTo(0, y); }
+
+/* ---------- health records ---------- */
+function healthDue(){
+  var latest = {};
+  (S.health||[]).forEach(function(r){ if (!r.every) return; var k = r.dog+"|"+r.type+"|"+(r.type==="other"?r.note:""); if (!latest[k] || latest[k].date < r.date) latest[k] = r; });
+  return Object.keys(latest).map(function(k){
+    var r = latest[k], next = addDays(parseDate(r.date), +r.every), left = Math.round((next - parseDate(isoDay()))/86400000);
+    return {r:r, next:next, left:left, state: left < 0 ? "late" : left <= 7 ? "soon" : "ok"};
+  }).sort(function(a,b){ return a.left - b.left; });
+}
+function dueLabel(x){ return x.left < 0 ? "просрочено на "+(-x.left)+" "+plural(-x.left,["день","дня","дней"]) : x.left === 0 ? "сегодня" : "через "+x.left+" "+plural(x.left,["день","дня","дней"]); }
+function hTitle(r){ return r.type === "other" && r.note ? r.note : HTYPE[r.type].t; }
+
+/* ---------- today ---------- */
+function planItems(){
+  var it = [], seed = dayIndex(), st = currentStage() || "s3", si = STAGES.findIndex(function(x){ return x.id===st; });
+  if (si < 0) si = 2;
+  var cmds = []; STAGES.slice(0, si+1).forEach(function(s){ s.cmds.forEach(function(c){ if (cmds.indexOf(c) < 0) cmds.push(c); }); });
+  if (st === "s1") cmds = [];
+  var lvl = function(c){ return S.cmd[c] || 0; };
+  var learning = cmds.filter(function(c){ return lvl(c)===1; }), fresh = cmds.filter(function(c){ return lvl(c)===0; }), known = cmds.filter(function(c){ return lvl(c)===2; });
+  if (learning.length){ var c1 = learning[seed % learning.length]; it.push({id:"learn-"+c1, t:"Учим: "+CMD[c1].name, d:"2–3 занятия по 3–5 минут. Начните с шага, на котором остановились, и закончите удачным повтором.", cmd:c1}); }
+  if (fresh.length && learning.length < 2){ var c2 = fresh[0]; it.push({id:"new-"+c2, t:"Новая команда: "+CMD[c2].name, d:"Посмотрите шаг 1 с анимацией и сделайте 5–10 повторов дома. Потом отметьте в команде статус «Учим».", cmd:c2}); }
+  if (known.length){ var c3 = known[(seed+1) % known.length]; it.push({id:"gen-"+c3, t:"В новом месте: "+CMD[c3].name, d:"5–10 повторов там, где ещё не занимались: подъезд, двор, парк. В новом месте снижайте требования.", cmd:c3}); }
+  if (lvl("recall") >= 1 && st !== "s1") it.push({id:"recall", t:"3–5 подзывов «просто так»", d:"Позвали — наградили — отпустили гулять. Так подзыв не означает конец веселья.", cmd:"recall"});
+  var stage = STAGES[si], open = stage.check.map(function(c,i){ return {c:c, i:i}; }).filter(function(x){ return !S.checks[stage.id+"-"+x.i]; });
+  if (open.length){ var x = open[seed % open.length]; it.push({id:"stage-"+stage.id+"-"+x.i, t:"Задача этапа", d:x.c, check:stage.id+"-"+x.i}); }
+  if (st === "s1") it.push({id:"rest", t:"Покой и распорядок", d:"Туалет после сна, еды и игры, много сна, спокойные знакомства. Команды подождут пару дней."});
+  if (S.d2 && S.d2.has){
+    var k2 = CMDS.filter(function(c){ return ((S.cmd2||{})[c.id]||0) >= 1; }).map(function(c){ return c.id; });
+    if (k2.length){ var c4 = k2[seed % k2.length]; it.push({id:"d2-"+c4, t:"{name2} — повторить: "+CMD[c4].name, d:"Пара повторов с наградой в течение дня поддерживает навык.", cmd:c4}); }
+    else it.push({id:"d2-time", t:"Время только для {n2.g}", d:"10–15 минут прогулки или игры без {n1.g}. Это бережёт ваши отношения и спокойствие в доме."});
+  }
+  return it;
+}
+function streak(){
+  var n = 0, d = new Date(), today = isoDay(d), has = function(k){ var o = S.done[k]; return o && Object.keys(o).some(function(x){ return o[x]; }); };
+  if (!has(today)) d.setDate(d.getDate()-1);
+  while (has(isoDay(d))){ n++; d.setDate(d.getDate()-1); }
+  return n;
+}
+var jl = {dog:1, cmd:"sit", place:"Дом", ok:4, n:5};
+function renderToday(){
+  var today = isoDay(), done = S.done[today] || {}, items = planItems(), cnt = items.filter(function(x){ return done[x.id]; }).length;
+  var st = currentStage(), stObj = STAGES.filter(function(x){ return x.id===st; })[0], sk = streak();
+  var html = '<div class="view-head"><div class="eyebrow">Сегодня, '+fmtD(new Date())+'</div><h1 class="h1">'+nm("План для {n1.g}")+'</h1>' +
+    '<p class="lead">'+(stObj ? 'Этап «'+stObj.title+'»'+(ageText() ? ', '+ageText() : '')+'. ' : '')+'Короткие занятия в течение дня, отмечайте сделанное.</p>' +
+    '<div class="meta-row"><span class="pill">Сделано: <b>'+cnt+' из '+items.length+'</b></span>'+(sk ? '<span class="pill">Серия: <b>'+sk+' '+plural(sk,["день","дня","дней"])+'</b></span>' : '')+'</div></div>';
+  var alerts = [];
+  var hs = heatApplies() && heatState(); if (hs && hs.active) alerts.push('<b>Течка, день '+hs.day+'.</b> Только на поводке, программа «Без поводка» на паузе.');
+  healthDue().filter(function(x){ return x.state !== "ok"; }).forEach(function(x){ alerts.push('<b>'+esc(dogLabel(x.r.dog))+': '+esc(hTitle(x.r))+'</b> — '+dueLabel(x)+'.'); });
+  if (alerts.length) html += '<div class="alerts">'+alerts.map(function(a){ return '<div class="alert">'+a+'</div>'; }).join("")+'</div>';
+  html += '<div class="sec"><div class="plan">' + items.map(function(x){
+    var on = !!done[x.id];
+    return '<div class="plan-item'+(on?' on':'')+'"><label class="plan-check"><input type="checkbox" id="pl-'+x.id+'" data-plan="'+x.id+'"'+(x.check?' data-stagecheck="'+x.check+'"':'')+(on?' checked':'')+' aria-label="Сделано"></label>' +
+      '<div class="plan-main"><b>'+nm(x.t)+'</b><span>'+nm(x.d)+'</span></div>' +
+      (x.cmd ? '<button class="plan-go" type="button" data-cmd="'+x.cmd+'" aria-label="Как учить">'+ICON_CHEV+'</button>' : '') + '</div>';
+  }).join("") + '</div></div>';
+  /* journal form */
+  var has2 = !!(S.d2 && S.d2.has);
+  html += '<div class="sec"><div class="sec-label">Записать занятие</div><div class="card jform">' +
+    (has2 ? '<div class="field full"><span class="flabel">Собака</span>'+dogSeg("jl-dog", jl.dog)+'</div>' : '') +
+    '<div class="fields"><div class="field"><label for="jl-cmd">Команда</label><select id="jl-cmd">'+CMDS.map(function(c){ return '<option value="'+c.id+'"'+(c.id===jl.cmd?' selected':'')+'>'+esc(c.name)+'</option>'; }).join("")+'<option value="other"'+(jl.cmd==="other"?' selected':'')+'>Другое</option></select></div>' +
+    '<div class="field"><label for="jl-place">Где</label><select id="jl-place">'+PLACES.map(function(p){ return '<option'+(p===jl.place?' selected':'')+'>'+p+'</option>'; }).join("")+'</select></div></div>' +
+    '<div class="steppers"><div class="stepper"><span class="flabel">Удачно</span><div><button type="button" data-step-k="ok" data-d="-1" aria-label="Меньше">−</button><output id="jl-ok">'+jl.ok+'</output><button type="button" data-step-k="ok" data-d="1" aria-label="Больше">+</button></div></div>' +
+    '<div class="stepper"><span class="flabel">Всего повторов</span><div><button type="button" data-step-k="n" data-d="-1" aria-label="Меньше">−</button><output id="jl-n">'+jl.n+'</output><button type="button" data-step-k="n" data-d="1" aria-label="Больше">+</button></div></div></div>' +
+    '<div class="field full"><label for="jl-note">Заметка</label><input id="jl-note" type="text" maxlength="120" autocomplete="off" placeholder="Например: отвлекалась на голубей"></div>' +
+    '<div><button class="btn" type="button" id="jl-add">Записать</button> <span class="saved" id="jl-ok-msg" hidden>Записано</span></div></div></div>';
+  /* week stats */
+  var weekAgo = isoDay(addDays(new Date(), -6)), wk = (S.log||[]).filter(function(e){ return e.d >= weekAgo; }), agg = {};
+  wk.forEach(function(e){ var k = e.dog+"|"+e.cmd; agg[k] = agg[k] || {dog:e.dog, cmd:e.cmd, ok:0, n:0, s:0}; agg[k].ok += e.ok; agg[k].n += e.n; agg[k].s++; });
+  var rows = Object.keys(agg).map(function(k){ return agg[k]; }).sort(function(a,b){ return b.s - a.s; });
+  html += '<div class="sec"><div class="sec-label">За 7 дней</div>';
+  if (!rows.length) html += '<div class="card"><p class="small muted">Здесь появится статистика, когда вы запишете первые занятия: сколько повторов удаётся по каждой команде.</p></div>';
+  else html += '<div class="card stats">' + rows.map(function(r){ var pct = r.n ? Math.round(r.ok/r.n*100) : 0;
+      return '<div class="stat-row"><span class="stat-name">'+(has2?'<i class="who">'+esc(dogLabel(r.dog).charAt(0))+'</i>':'')+esc(r.cmd==="other"?"Другое":CMD[r.cmd].name)+'</span><span class="stat-bar"><i class="'+(pct>=80?'good':pct>=50?'mid':'low')+'" style="width:'+pct+'%"></i></span><span class="stat-num">'+pct+'%</span></div>'; }).join("") +
+    '<p class="small muted">80 % и больше — пора усложнять. Меньше 50 % — вернитесь на шаг назад.</p></div>';
+  html += '</div>';
+  /* journal list */
+  var last = (S.log||[]).slice(0, 12);
+  if (last.length) html += '<div class="sec"><div class="sec-label">Журнал</div><div class="log">' + last.map(function(e){
+    return '<div class="log-row"><div><span><b>'+esc(e.cmd==="other"?"Другое":CMD[e.cmd].name)+'</b> '+(has2?'· '+esc(dogLabel(e.dog))+' ':'')+'· '+esc(e.place)+'</span><span class="small muted">'+fmtD(parseDate(e.d))+(e.note?' — '+esc(e.note):'')+'</span></div><span class="log-score">'+e.ok+'/'+e.n+'</span><button class="tr-reset" type="button" data-logdel="'+e.id+'" aria-label="Удалить запись">✕</button></div>'; }).join("") + '</div></div>';
+  var v = $("v-today"); v.innerHTML = html; bindSeg(v); bindCommon(v);
+  v.querySelectorAll("[data-plan]").forEach(function(c){ c.addEventListener("change", function(){
+    var t = isoDay(); S.done[t] = S.done[t] || {}; if (c.checked) S.done[t][c.getAttribute("data-plan")] = 1; else delete S.done[t][c.getAttribute("data-plan")];
+    var sc = c.getAttribute("data-stagecheck"); if (sc && c.checked) S.checks[sc] = 1;
+    save(); keepScroll(function(){ renderToday(); if (sc) renderPath(); });
+  }); });
+  v.querySelectorAll("[data-step-k]").forEach(function(b){ b.addEventListener("click", function(){
+    var k = b.getAttribute("data-step-k"); jl[k] = Math.max(k==="n"?1:0, Math.min(50, jl[k] + (+b.getAttribute("data-d"))));
+    if (jl.ok > jl.n){ if (k==="ok") jl.n = jl.ok; else jl.ok = jl.n; }
+    $("jl-ok").textContent = jl.ok; $("jl-n").textContent = jl.n;
+  }); });
+  $("jl-cmd").addEventListener("change", function(){ jl.cmd = this.value; });
+  $("jl-place").addEventListener("change", function(){ jl.place = this.value; });
+  $("jl-add").addEventListener("click", function(){
+    var dog = has2 ? (+radioVal("jl-dog") || 1) : 1; jl.dog = dog;
+    S.log = S.log || []; S.log.unshift({id: Date.now().toString(36), d: isoDay(), dog: dog, cmd: $("jl-cmd").value, place: $("jl-place").value, ok: jl.ok, n: jl.n, note: $("jl-note").value.trim()});
+    if (S.log.length > 500) S.log.length = 500;
+    save(); keepScroll(renderToday); var m = $("jl-ok-msg"); if (m){ m.hidden = false; setTimeout(function(){ if (m.isConnected) m.hidden = true; }, 1500); }
+  });
+  v.querySelectorAll("[data-logdel]").forEach(function(b){ b.addEventListener("click", function(){ var id = b.getAttribute("data-logdel"); S.log = S.log.filter(function(e){ return e.id !== id; }); save(); keepScroll(renderToday); }); });
+}
+
+/* ---------- health view ---------- */
+var hf = {dog:1, type:"vac"};
+function renderHealth(){
+  var has2 = !!(S.d2 && S.d2.has), due = healthDue();
+  var html = '<div class="view-head"><div class="eyebrow">Здоровье</div><h1 class="h1">Прививки, обработки и уход</h1>' +
+    '<p class="lead">Отмечайте прививки и обработки — приложение посчитает, когда следующие, и напомнит на экране «Сегодня» за неделю.</p></div>';
+  html += '<div class="sec"><div class="sec-label">Ближайшие даты</div>';
+  if (!due.length) html += '<div class="card"><p class="small muted">Пока пусто. Добавьте последнюю прививку и обработку от клещей и глистов ниже.</p></div>';
+  else html += '<div class="due">' + due.map(function(x){ return '<div class="due-row '+x.state+'"><div><b>'+esc(hTitle(x.r))+'</b>'+(has2?'<span class="small muted">'+esc(dogLabel(x.r.dog))+'</span>':'')+'</div><div class="due-when"><span>'+fmtD(x.next, true)+'</span><span class="small">'+dueLabel(x)+'</span></div></div>'; }).join("") + '</div>';
+  html += '</div>';
+  html += '<div class="sec"><div class="sec-label">Добавить запись</div><div class="card jform">' +
+    (has2 ? '<div class="field full"><span class="flabel">Собака</span>'+dogSeg("hf-dog", hf.dog)+'</div>' : '') +
+    '<div class="fields"><div class="field"><label for="hf-type">Что сделали</label><select id="hf-type">'+HTYPES.map(function(x){ return '<option value="'+x.id+'"'+(x.id===hf.type?' selected':'')+'>'+x.t+'</option>'; }).join("")+'</select></div>' +
+    '<div class="field"><label for="hf-date">Когда</label><input id="hf-date" type="date" value="'+isoDay()+'" max="'+isoDay()+'"></div>' +
+    '<div class="field"><label for="hf-every">Повторять через, дней</label><input id="hf-every" type="number" inputmode="numeric" min="0" max="730" value="'+HTYPE[hf.type].every+'"></div>' +
+    '<div class="field"><label for="hf-note">Препарат или заметка</label><input id="hf-note" type="text" maxlength="60" autocomplete="off" placeholder="Например, название таблетки"></div></div>' +
+    '<p class="small muted">Интервал обработок зависит от препарата: у одних средств от клещей — месяц, у других — 3 месяца. Смотрите инструкцию. 0 — без повтора.</p>' +
+    '<div><button class="btn" type="button" id="hf-add">Добавить</button></div></div></div>';
+  var hist = (S.health||[]).slice().sort(function(a,b){ return a.date < b.date ? 1 : -1; }).slice(0, 15);
+  if (hist.length) html += '<div class="sec"><div class="sec-label">История</div><div class="log">' + hist.map(function(r){
+    return '<div class="log-row"><div><span><b>'+esc(HTYPE[r.type].t)+'</b>'+(has2?' · '+esc(dogLabel(r.dog)):'')+'</span><span class="small muted">'+fmtD(parseDate(r.date), true)+(r.note?' — '+esc(r.note):'')+'</span></div><span></span><button class="tr-reset" type="button" data-hdel="'+r.id+'" aria-label="Удалить запись">✕</button></div>'; }).join("") + '</div></div>';
+  html += '<div class="sec"><div class="sec-label">Прививки щенку</div><div class="card"><p class="small">Щенков обычно прививают несколько раз с интервалом 3–4 недели, примерно с 8 до 16 недель, затем ревакцинация через год. Прививка от бешенства — по правилам вашей страны, она часто нужна и для поездок. Точную схему, а также когда начинать обработки от клещей и глистов, составит ветеринар.</p></div></div>';
+  html += '<div class="sec"><div class="sec-label">Срочно к ветеринару</div><div class="emergency">' + EMERGENCY.map(function(e){ return '<div class="em"><b>'+e[0]+'</b><span>'+e[1]+'</span></div>'; }).join("") +
+    '<p class="small muted">Норма: температура 37,5–39,0 °C, дёсны розовые и влажные; если нажать на десну, цвет возвращается за 1–2 секунды. Запишите телефон своей клиники и ближайшей круглосуточной.</p></div></div>';
+  var tp = TOPICS.filter(function(t){ return t.area === "health"; }).map(topicCard).join("");
+  html += '<div class="sec"><div class="sec-label">Уход, кормление, нагрузка</div>' + tp + '</div>';
+  var v = $("v-health"); v.innerHTML = html; bindSeg(v); bindCommon(v); bindTopics(v);
+  $("hf-type").addEventListener("change", function(){ hf.type = this.value; $("hf-every").value = HTYPE[hf.type].every; });
+  $("hf-add").addEventListener("click", function(){
+    var d = $("hf-date").value; if (!d) return;
+    var dog = has2 ? (+radioVal("hf-dog") || 1) : 1; hf.dog = dog;
+    S.health = S.health || []; S.health.push({id: Date.now().toString(36), dog: dog, type: $("hf-type").value, date: d, every: Math.max(0, +$("hf-every").value || 0), note: $("hf-note").value.trim()});
+    save(); keepScroll(function(){ renderHealth(); renderToday(); });
+  });
+  v.querySelectorAll("[data-hdel]").forEach(function(b){ b.addEventListener("click", function(){ var id = b.getAttribute("data-hdel"); S.health = S.health.filter(function(r){ return r.id !== id; }); save(); keepScroll(function(){ renderHealth(); renderToday(); }); }); });
+}
+function bindTopics(v){
+  v.querySelectorAll("[data-topic]").forEach(function(b){ b.addEventListener("click", function(){ var id=b.getAttribute("data-topic"); openTopic[id] = !openTopic[id]; keepScroll(function(){ renderPath(); renderHealth(); }); }); });
+}
+
+/* ---------- basics card (in Path) ---------- */
+var openBasics = false;
+function basicsCard(){
+  var h = '<article class="stage" id="basics-card"><button class="stage-head" type="button" data-basics aria-expanded="'+openBasics+'">' +
+    '<span class="stage-meta"><span class="range">Основы</span></span><span class="stage-title">Как собака учится</span><span class="stage-sub">Шесть принципов, правило трёх «Д», сигналы стресса</span></button>';
+  if (openBasics){
+    h += '<div class="stage-body"><div class="principles">' + PRINCIPLES.map(function(p){ return '<div class="pr"><h3>'+p[0]+'</h3><p>'+p[1]+'</p></div>'; }).join("") + '</div>' +
+      '<div class="list-block"><div class="list-title neutral">Правило трёх «Д»</div><p class="small">Любую команду усложняют по трём направлениям. Меняйте только одно за раз, остальные два на это время сделайте полегче.</p>' +
+      '<div class="three-d"><div><b>Длительность</b><span>2 сек → 10 → 30 → минута</span></div><div><b>Дистанция</b><span>1 шаг → 3 → 5 м → корда</span></div><div><b>Отвлечения</b><span>дом → двор → парк → собаки</span></div></div></div>' +
+      '<div class="list-block"><div class="list-title neutral">Сигналы стресса — пора сделать паузу</div><ul class="clean">'+STRESS.map(function(s){ return '<li>'+s+'</li>'; }).join("")+'</ul>' +
+      '<p class="small muted">Увидели 2–3 таких сигнала — отойдите подальше от раздражителя, дайте собаке понюхать землю, закончите занятие простой командой.</p></div>' +
+      '<p class="note">Это справочник для обычного воспитания. Если собака проявляет агрессию, сильный страх или не может оставаться одна, обратитесь к кинологу, который работает методами положительного подкрепления, или к ветеринарному поведенческому специалисту.</p></div>';
+  }
+  return h + '</article>';
 }
 
 /* ---------- command sheet ---------- */
@@ -1606,7 +1994,6 @@ function openCmd(id){
   cmdId = id; cmdStep = 0; playing = true; sheetOpen = true;
   if (offPlayer) offPlayer.stop();
   $("sheet-title").textContent = c.name;
-  var st = S.cmd[id]||0;
   var html = '<div class="cmd-head"><div class="eyebrow">'+c.group+'</div><h2 class="h1">'+c.name+'</h2>' +
     '<div class="meta-row"><span class="pill">Сигнал: <b>'+nm(c.cue)+'</b></span><span class="pill">Возраст: <b>'+c.age+'</b></span></div>' +
     '<p class="lead">'+c.why+'</p></div>' +
@@ -1619,7 +2006,10 @@ function openCmd(id){
     '<div class="sec"><div class="sec-label">Все шаги</div><ol class="steplist" id="steplist">'+c.steps.map(function(s,i){ return '<li class="'+(i===0?'on':'')+'"><button type="button" data-step="'+i+'"><span><b>'+s.t+'</b><span>'+nm(s.d)+'</span></span></button></li>'; }).join("")+'</ol></div>' +
     '<div class="sec"><div class="sec-label">Частые ошибки</div><div class="card"><ul class="clean dont">'+c.mistakes.map(function(m){return '<li>'+m+'</li>';}).join("")+'</ul></div></div>' +
     '<div class="sec"><div class="ready"><b>Команда готова, когда</b><span>'+c.ready+'</span></div></div>' +
-    '<div class="sec"><div class="sec-label">Ваш прогресс</div><div class="seg" role="radiogroup" aria-label="Статус команды">'+STATUS.map(function(s,i){ return '<button type="button" role="radio" aria-checked="'+(i===st)+'" class="'+(i===st?'on':'')+'" data-status="'+i+'">'+s+'</button>'; }).join("")+'</div></div>';
+    '<div class="sec"><div class="sec-label">Ваш прогресс</div>' + (S.d2 && S.d2.has ? [1,2] : [1]).map(function(n){
+      var cur = n === 1 ? (S.cmd[id]||0) : ((S.cmd2||{})[id]||0);
+      return (S.d2 && S.d2.has ? '<div class="flabel">'+esc(dogLabel(n))+'</div>' : '') + '<div class="seg" role="radiogroup" aria-label="Статус команды">'+STATUS.map(function(s,i){ return '<button type="button" role="radio" aria-checked="'+(i===cur)+'" class="'+(i===cur?'on':'')+'" data-status="'+i+'" data-dog="'+n+'">'+s+'</button>'; }).join("")+'</div>';
+    }).join("") + '</div>';
   $("sheet-body").innerHTML = html;
   var sh = $("sheet"); sh.hidden = false; $("sheet-scroll").scrollTop = 0;
   document.body.style.overflow = "hidden";
@@ -1628,9 +2018,9 @@ function openCmd(id){
   $("sheet-body").querySelectorAll("[data-step]").forEach(function(b){ b.addEventListener("click", function(){ setStep(+b.getAttribute("data-step")); if (b.closest("#steplist")) $("cmd-scene").scrollIntoView({behavior: RM?"auto":"smooth", block:"start"}); }); });
   $("play").addEventListener("click", function(){ playing = !playing; if (playing) cmdPlayer.play(); else cmdPlayer.stop(); updPlay(); });
   $("sheet-body").querySelectorAll("[data-status]").forEach(function(b){ b.addEventListener("click", function(){
-    S.cmd[cmdId] = +b.getAttribute("data-status"); save();
-    $("sheet-body").querySelectorAll("[data-status]").forEach(function(x){ var on = x===b; x.classList.toggle("on", on); x.setAttribute("aria-checked", on); });
-    renderCommands();
+    var dn = b.getAttribute("data-dog"); if (dn === "2") S.cmd2[cmdId] = +b.getAttribute("data-status"); else S.cmd[cmdId] = +b.getAttribute("data-status"); save();
+    $("sheet-body").querySelectorAll('[data-status][data-dog="'+dn+'"]').forEach(function(x){ var on = x===b; x.classList.toggle("on", on); x.setAttribute("aria-checked", on); });
+    renderCommands(); renderToday();
   }); });
   $("sheet-back").focus({preventScroll:true});
 }
@@ -1650,10 +2040,10 @@ function closeCmd(){
   if (currentTab==="offleash" && offPlayer) offPlayer.play();
 }
 $("sheet-back").addEventListener("click", closeCmd);
-document.addEventListener("keydown", function(e){ if (e.key==="Escape" && sheetOpen) closeCmd(); });
+document.addEventListener("keydown", function(e){ if (e.key!=="Escape") return; if (sheetOpen) closeCmd(); else if (S.onboarded && !$("onboard").hidden) closeOnboard(); });
 
 /* ---------- tabs ---------- */
-var currentTab = "path";
+var currentTab = "today";
 function setTab(t){
   currentTab = t;
   document.querySelectorAll("[data-view]").forEach(function(s){ s.hidden = s.getAttribute("data-view")!==t; });
@@ -1662,13 +2052,13 @@ function setTab(t){
   window.scrollTo(0,0);
 }
 document.querySelectorAll(".tab").forEach(function(b){ b.addEventListener("click", function(){ if (sheetOpen) closeCmd(); setTab(b.getAttribute("data-tab")); }); });
-$("dogchip").addEventListener("click", function(){ setTab("basics"); setTimeout(function(){ var i=$("ba-name"); if(i) i.focus({preventScroll:false}); }, 50); });
+$("dogchip").addEventListener("click", function(){ openOnboard("profile"); });
 document.addEventListener("visibilitychange", function(){
   if (document.hidden){ if (cmdPlayer) cmdPlayer.stop(); if (offPlayer) offPlayer.stop(); }
   else { if (sheetOpen && cmdPlayer && playing) cmdPlayer.play(); else if (currentTab==="offleash" && offPlayer) offPlayer.play(); }
 });
 
-function renderAll(){ renderChip(); renderPath(); renderCommands(); renderOff(); renderBasics(); }
+function renderAll(){ renderChip(); renderToday(); renderPath(); renderCommands(); renderOff(); renderHealth(); }
 renderAll();
 if (location.hash === "#sketch"){
   /* drawing preview: every pose at large size */
@@ -1681,10 +2071,12 @@ if (location.hash === "#sketch"){
 } else if (!S.onboarded) openOnboard();
 var h = (location.hash||"").replace("#","");
 if (h==="sketch"){}
-else if (["path","commands","offleash","basics"].indexOf(h) >= 0) setTab(h);
-else if (["sleep","alone","treats","chew"].indexOf(h) >= 0){ openTopic[h] = true; renderPath(); var tt=$("topic-"+h); if(tt) tt.scrollIntoView(); }
-else if (h==="heat"){ openHeat = true; renderPath(); var hc=$("heat-card"); if(hc) hc.scrollIntoView(); }
-else if (h==="two"){ openTwo = true; renderPath(); var tc=$("two-card"); if(tc) tc.scrollIntoView(); }
+else if (["today","path","commands","offleash","health"].indexOf(h) >= 0) setTab(h);
+else if (h==="basics"){ setTab("path"); openBasics = true; renderPath(); var bc=$("basics-card"); if(bc) bc.scrollIntoView(); }
+else if (h==="profile"){ openOnboard("profile"); }
+else if (["sleep","alone","treats","chew","problems","games"].indexOf(h) >= 0){ setTab("path"); openTopic[h] = true; renderPath(); var tt=$("topic-"+h); if(tt) tt.scrollIntoView(); }
+else if (h==="heat"){ setTab("path"); openHeat = true; renderPath(); var hc=$("heat-card"); if(hc) hc.scrollIntoView(); }
+else if (h==="two"){ setTab("path"); openTwo = true; renderPath(); var tc=$("two-card"); if(tc) tc.scrollIntoView(); }
 else if (CMD[h]) openCmd(h);
 })();
 </script>
