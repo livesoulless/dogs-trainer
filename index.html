@@ -1726,7 +1726,7 @@ function profileForm(idp, ob){
     '<div class="fields" id="'+idp+'d2"'+(d.has?'':' hidden')+'>' +
       '<div class="field full"><label for="'+idp+'name2">Кличка</label><input id="'+idp+'name2" type="text" maxlength="24" autocomplete="off" placeholder="Например, Рекс" value="'+esc(d.name||"")+'"></div>' +
       '<div class="field full"><span class="flabel">Пол</span>'+sexSeg(idp+'sex2', d.sex)+'</div>' +
-      '<div class="field full"><label for="'+idp+'breed2">Порода</label><input id="'+idp+'breed2" type="text" maxlength="40" autocomplete="off" placeholder="Например, вельш-корги пемброк" value="'+esc(d.breed||"")+'"></div>' +
+      '<div class="field full"><label for="'+idp+'breed2">Порода</label><input id="'+idp+'breed2" type="text" maxlength="40" autocomplete="off" placeholder="Например, вельш-корги кардиган" value="'+esc(d.breed||"")+'"></div>' +
       '<div class="field full"><label for="'+idp+'birth2">Дата рождения (можно примерно)</label><input id="'+idp+'birth2" type="date" value="'+esc(d.birth||"")+'"></div>' +
       '<label class="check full'+(d.fixed?' on':'')+'"><input type="checkbox" id="'+idp+'fixed2"'+(d.fixed?' checked':'')+'><span id="'+idp+'fixed2l">'+fixedLabel(d.sex)+'</span></label>' +
     '</div>' +
@@ -2060,7 +2060,7 @@ var CORGI_W = {
   f: [[2,3.2,4.1],[3,4.1,5],[4,5.2,6.5],[5,6.4,8],[6,7.5,9.3],[8,8.3,10.3],[10,8.8,11],[12,9.1,11.8],[18,10,12.7],[24,10,12.7]],
   m: [[2,3.6,4.5],[3,4.5,5.9],[4,5.8,7.6],[5,6.8,9.2],[6,7.7,10.9],[8,8.6,11.5],[10,9,12.5],[12,9.1,13.6],[18,10,14.1],[24,10,14.1]]
 };
-var CARDIGAN_ADULT = { f:[11,15.4], m:[13.5,17.2] };
+var CARDIGAN_ADULT = { f:[11.3,15.4], m:[13.6,17.2] }; /* AKC standard: 25–34 lb / 30–38 lb */
 /* share of adult weight by month, by size class (estimate for other breeds) */
 var GROW_FRAC = {
   s: [[2,.3],[3,.45],[4,.6],[5,.72],[6,.82],[8,.93],[10,.98],[12,1],[24,1]],
@@ -2091,7 +2091,8 @@ function targetW(n){ var t = (S.wTarget||{})[n]; if (t) return +t; var sx = dogS
 function weightRanges(n){
   var sx = dogSex(n) === "m" ? "m" : "f";
   if (golden(n)) return GOLDEN_W[sx];
-  if (corgi(n) && !cardigan(n)) return CORGI_W[sx];
+  if (cardigan(n)) return GROW_FRAC.m.map(function(q){ return [q[0], +(CARDIGAN_ADULT[sx][0]*q[1]).toFixed(1), +(CARDIGAN_ADULT[sx][1]*q[1]).toFixed(1)]; });
+  if (corgi(n)) return CORGI_W[sx];
   var a = targetW(n); if (!a) return null;
   var size = sizeOf(n);
   return GROW_FRAC[size].map(function(q){ return [q[0], +(a*q[1]*0.9).toFixed(1), +(a*q[1]*1.1).toFixed(1)]; });
@@ -2140,7 +2141,7 @@ function weightChart(n){
   if (pts.length > 1) g += '<polyline class="wc-line" points="'+pts.map(function(p){ return p[0].toFixed(1)+","+p[1].toFixed(1); }).join(" ")+'"/>';
   pts.forEach(function(p, i){ g += '<circle class="wc-pt'+(i===pts.length-1?' last':'')+'" cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(i===pts.length-1?5:3.5)+'"/>'; });
   g += '<text x="'+(W-r)+'" y="'+(H-8)+'" class="wc-t" text-anchor="end">мес</text><text x="'+(l-6)+'" y="'+(t-2)+'" class="wc-t" text-anchor="end">кг</text></svg>';
-  return '<figure class="wfig">'+g+'<figcaption><span><i class="sw band"></i>ориентир для '+(breedName(n) && !cardigan(n) ? (dogSex(n)==="m"?"мальчика ":"девочки ")+breedName(n) : "ожидаемого веса")+'</span><span><i class="sw pt"></i>взвешивания</span><span><i class="sw now"></i>сейчас</span></figcaption></figure>';
+  return '<figure class="wfig">'+g+'<figcaption><span><i class="sw band"></i>ориентир для '+(breedName(n) ? (dogSex(n)==="m"?"мальчика ":"девочки ")+breedName(n) : "ожидаемого веса")+'</span><span><i class="sw pt"></i>взвешивания</span><span><i class="sw now"></i>сейчас</span></figcaption></figure>';
 }
 function weightTable(n){
   var rs = weightRanges(n); if (!rs) return "";
@@ -2170,8 +2171,8 @@ function weightSection(){
     '<div class="field"><label for="wf-date">Дата</label><input id="wf-date" type="date" value="'+isoDay()+'" max="'+isoDay()+'"></div></div>' +
     '<div><button class="btn" type="button" id="wf-add">Записать вес</button></div>' +
     weightChart(n) +
-    ((golden(n) || (corgi(n) && !cardigan(n))) ? '' : '<div class="field"><label for="wf-target">Ожидаемый вес взрослой собаки, кг</label><input id="wf-target" type="number" inputmode="decimal" step="0.5" min="1" max="100" value="'+(targetW(n)||"")+'" placeholder="Спросите заводчика или ветеринара"></div>') +
-    (rs ? '<details class="faq wdet"><summary>Сколько должна весить по месяцам</summary><div class="faq-body">'+weightTable(n)+'<p class="small muted">'+(breedName(n) && !cardigan(n) ? 'Ориентир для '+(golden(n)?'золотистых ретриверов':'пемброк-корги')+'. Разброс внутри породы большой и зависит от линии: важнее, чтобы собака росла плавно, без скачков, и была в хорошей форме.' : 'Примерный расчёт от ожидаемого взрослого веса. Важнее плавный рост и хорошая форма, чем точное попадание в цифры.')+'</p></div></details>' : '') +
+    ((golden(n) || corgi(n)) ? '' : '<div class="field"><label for="wf-target">Ожидаемый вес взрослой собаки, кг</label><input id="wf-target" type="number" inputmode="decimal" step="0.5" min="1" max="100" value="'+(targetW(n)||"")+'" placeholder="Спросите заводчика или ветеринара"></div>') +
+    (rs ? '<details class="faq wdet"><summary>Сколько должна весить по месяцам</summary><div class="faq-body">'+weightTable(n)+'<p class="small muted">'+(breedName(n) ? 'Ориентир для '+(golden(n)?'золотистых ретриверов':cardigan(n)?'корги-кардиганов (взрослые по стандарту породы, щенки — примерная кривая)':'пемброк-корги')+'. Разброс внутри породы большой и зависит от линии: важнее, чтобы собака росла плавно, без скачков, и была в хорошей форме.' : 'Примерный расчёт от ожидаемого взрослого веса. Важнее плавный рост и хорошая форма, чем точное попадание в цифры.')+'</p></div></details>' : '') +
     '</div>';
   /* feeding */
   var fp = last ? feedPlan(n, last.kg) : null;
