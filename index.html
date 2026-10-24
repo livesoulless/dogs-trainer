@@ -139,10 +139,14 @@ p{margin:0}
 .log-row > div{display:grid;gap:1px;min-width:0}
 .log-score{font-family:var(--f-mono);font-size:13px}
 .due{display:grid;gap:8px}
-.due-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-left-width:5px;border-radius:12px;padding:10px 12px}
+.due-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-left-width:5px;border-radius:12px;padding:10px 12px}
 .due-row > div{display:grid;gap:1px;min-width:0}
 .due-row.ok{border-left-color:var(--ok)}.due-row.soon{border-left-color:var(--accent)}.due-row.late{border-left-color:var(--no)}
 .due-when{text-align:right;font-size:14px}
+.cal-btn{border:0;background:var(--sunk);color:var(--accent-ink);border-radius:10px;width:40px;height:40px;display:grid;place-items:center;cursor:pointer}
+.cal-btn svg{width:20px;height:20px}
+.cal-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cal-all{display:grid;gap:6px;margin-top:4px}
 .due-row.late .due-when .small{color:var(--no);font-weight:600}
 .emergency{display:grid;gap:8px}
 .em{background:var(--no-soft);border-radius:12px;padding:10px 14px;display:grid;gap:2px;font-size:14px}
@@ -1840,6 +1844,33 @@ function healthDue(){
 function dueLabel(x){ return x.left < 0 ? "просрочено на "+(-x.left)+" "+plural(-x.left,["день","дня","дней"]) : x.left === 0 ? "сегодня" : "через "+x.left+" "+plural(x.left,["день","дня","дней"]); }
 function hTitle(r){ return r.type === "other" && r.note ? r.note : HTYPE[r.type].t; }
 
+/* ---------- calendar export (.ics with alarms) ---------- */
+function inSandbox(){ return /claudeusercontent|claude\.ai|claude\.site/.test(location.hostname); }
+function icsDate(d){ return d.getFullYear()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0"); }
+function icsText(t){ return String(t).replace(/\\/g,"\\\\").replace(/;/g,"\;").replace(/,/g,"\\,").replace(/\n/g,"\\n"); }
+function buildIcs(list){
+  var now = new Date(), stamp = now.toISOString().replace(/[-:]/g,"").replace(/\.\d+Z$/,"Z");
+  var L = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Vospitanie sobaki//RU","CALSCALE:GREGORIAN","METHOD:PUBLISH"];
+  list.forEach(function(x){
+    var title = dogLabel(x.r.dog) + ": " + hTitle(x.r);
+    var desc = "Последний раз: " + fmtD(parseDate(x.r.date), true) + (x.r.note ? ". " + x.r.note : "") + ". После визита отметьте новую запись в приложении «Воспитание собаки».";
+    L.push("BEGIN:VEVENT", "UID:"+x.r.id+"-"+icsDate(x.next)+"@vospitanie-sobaki", "DTSTAMP:"+stamp,
+      "DTSTART;VALUE=DATE:"+icsDate(x.next), "DTEND;VALUE=DATE:"+icsDate(addDays(x.next,1)),
+      "SUMMARY:"+icsText(title), "DESCRIPTION:"+icsText(desc), "TRANSP:TRANSPARENT",
+      "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+icsText("Завтра: "+title),"TRIGGER:-PT14H","END:VALARM",
+      "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+icsText("Сегодня: "+title),"TRIGGER:PT9H","END:VALARM",
+      "END:VEVENT");
+  });
+  L.push("END:VCALENDAR");
+  /* fold long lines (RFC 5545): 35 chars keeps Cyrillic under 75 bytes */
+  return L.map(function(l){ var out = l.slice(0,35), r = l.slice(35); while (r.length){ out += "\r\n " + r.slice(0,35); r = r.slice(35); } return out; }).join("\r\n") + "\r\n";
+}
+function downloadIcs(list, name){
+  var blob = new Blob([buildIcs(list)], {type:"text/calendar;charset=utf-8"}), url = URL.createObjectURL(blob);
+  var a = document.createElement("a"); a.href = url; a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(function(){ a.remove(); URL.revokeObjectURL(url); }, 4000);
+}
+
 /* ---------- today ---------- */
 function planItems(){
   var it = [], seed = dayIndex(), st = currentStage() || "s3", si = STAGES.findIndex(function(x){ return x.id===st; });
@@ -1936,10 +1967,16 @@ var hf = {dog:1, type:"vac"};
 function renderHealth(){
   var has2 = !!(S.d2 && S.d2.has), due = healthDue();
   var html = '<div class="view-head"><div class="eyebrow">Здоровье</div><h1 class="h1">Прививки, обработки и уход</h1>' +
-    '<p class="lead">Отмечайте прививки и обработки — приложение посчитает, когда следующие, и напомнит на экране «Сегодня» за неделю.</p></div>';
+    '<p class="lead">Отмечайте прививки и обработки — приложение посчитает, когда следующие, покажет их на экране «Сегодня» за неделю и добавит напоминание в календарь iPhone.</p></div>';
   html += '<div class="sec"><div class="sec-label">Ближайшие даты</div>';
   if (!due.length) html += '<div class="card"><p class="small muted">Пока пусто. Добавьте последнюю прививку и обработку от клещей и глистов ниже.</p></div>';
-  else html += '<div class="due">' + due.map(function(x){ return '<div class="due-row '+x.state+'"><div><b>'+esc(hTitle(x.r))+'</b>'+(has2?'<span class="small muted">'+esc(dogLabel(x.r.dog))+'</span>':'')+'</div><div class="due-when"><span>'+fmtD(x.next, true)+'</span><span class="small">'+dueLabel(x)+'</span></div></div>'; }).join("") + '</div>';
+  else {
+    var sb = inSandbox();
+    html += '<div class="due">' + due.map(function(x, i){ return '<div class="due-row '+x.state+'"><div><b>'+esc(hTitle(x.r))+'</b>'+(has2?'<span class="small muted">'+esc(dogLabel(x.r.dog))+'</span>':'')+'</div><div class="due-when"><span>'+fmtD(x.next, true)+'</span><span class="small">'+dueLabel(x)+'</span></div>' +
+      (sb ? '' : '<button class="cal-btn" type="button" data-ics="'+i+'" aria-label="Добавить в календарь: '+esc(hTitle(x.r))+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17M12 13v5M9.5 15.5h5"/></svg></button>') + '</div>'; }).join("") + '</div>';
+    html += sb ? '<p class="small muted">Напоминания в календарь iPhone работают в версии приложения с GitHub: там у каждой даты появится кнопка календаря.</p>'
+              : '<div class="cal-all"><button class="btn ghost" type="button" id="ics-all">Все даты в календарь</button><span class="small muted">Календарь iPhone напомнит за день в 10:00 и в сам день в 9:00 — даже если приложение закрыто.</span></div>';
+  }
   html += '</div>';
   html += '<div class="sec"><div class="sec-label">Добавить запись</div><div class="card jform">' +
     (has2 ? '<div class="field full"><span class="flabel">Собака</span>'+dogSeg("hf-dog", hf.dog)+'</div>' : '') +
@@ -1958,6 +1995,8 @@ function renderHealth(){
   var tp = TOPICS.filter(function(t){ return t.area === "health"; }).map(topicCard).join("");
   html += '<div class="sec"><div class="sec-label">Уход, кормление, нагрузка</div>' + tp + '</div>';
   var v = $("v-health"); v.innerHTML = html; bindSeg(v); bindCommon(v); bindTopics(v);
+  v.querySelectorAll("[data-ics]").forEach(function(b){ b.addEventListener("click", function(){ var x = due[+b.getAttribute("data-ics")]; downloadIcs([x], "napominanie-"+icsDate(x.next)+".ics"); }); });
+  var ia = $("ics-all"); if (ia) ia.addEventListener("click", function(){ downloadIcs(due.filter(function(x){ return x.left >= 0; }).length ? due.filter(function(x){ return x.left >= 0; }) : due, "zdorovie-sobak.ics"); });
   $("hf-type").addEventListener("change", function(){ hf.type = this.value; $("hf-every").value = HTYPE[hf.type].every; });
   $("hf-add").addEventListener("click", function(){
     var d = $("hf-date").value; if (!d) return;
